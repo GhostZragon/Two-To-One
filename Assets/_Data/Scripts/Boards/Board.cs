@@ -39,8 +39,6 @@ public class Board : BoardLoader
     [Header("Random min max value")]
     [SerializeField] protected int minValue = -10;
     [SerializeField] protected int maxValue = 10;
-    [Header("Current True Answer")]
-    [SerializeField] protected int trueAnswer = 10;
 
     [Header("Row and col")]
     public int row = 2;
@@ -58,7 +56,11 @@ public class Board : BoardLoader
 
         CreateBoard();
     }
-
+    protected override void Reset()
+    {
+        base.Reset();
+        this.DeleteBoard();
+    }
     public void CreateBoard()
     {
         DeleteBoard();
