@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +21,16 @@ public class CalculatorSystem : QuangLibrary
     public int TrueValue { get => trueValue; }
     public Transform Btn1 { get => btn1; }
     public Transform Btn2 { get => btn2; }
+    enum MathOperation
+    {
+        // 0 1 2 3
+        // cong tru nhan chia
+        addition,
+        subtraction,
+        multiplication,
+        division,
+    }
+    MathOperation math = 0;
     protected override void Awake()
     {
         base.Awake();
@@ -56,12 +67,13 @@ public class CalculatorSystem : QuangLibrary
         header = FindObjectOfType<Header>();
     }
 
+
     public void ClickCell(Transform transform)
     {
         if (btn1 != null && btn1 != transform)
         {
             btn2 = transform;
-            //CheckValue(btn1, btn2);
+            //Calculation(btn1, btn2);
         }
         else if (btn1 == transform)
         {
@@ -77,17 +89,18 @@ public class CalculatorSystem : QuangLibrary
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CheckValue(btn1, btn2);
+            Calculation(btn1, btn2);
 
         }
     }
-    void CheckValue(Transform a, Transform b)
+    void Calculation(Transform a, Transform b)
     {
         // Neu 2 button khac null thi moi check
         if (btn1 == null || btn2 == null) return;
         Cell cell01 = btn1.GetComponent<Cell>();
         Cell cell02 = btn2.GetComponent<Cell>();
-        if (cell01.infor.value + cell02.infor.value == trueValue)
+
+        if (CheckValue(cell01, cell02))
         {
             // Neu 2 value cong lai bang gia tri dung thi xoa 2 button do di (tat button interact)
             cell01.btn.interactable = false;
@@ -95,7 +108,7 @@ public class CalculatorSystem : QuangLibrary
             // Them 2 button do vao list cac button khong the click 
             board.AddUnClickableCell(a, b);
             // Chon gia tri moi cho true value
-            trueValue = BoardCtrl.Instance.pickAnswer.PickRandom();
+            trueValue = pickAnswer.PickRandom();
             Debug.Log("Hai gia tri cong lai bang 10");
             // Neu so luong button co the click bang 0 thi ket thuc game
             if (board.clickableCell.Count == 0)
@@ -118,7 +131,26 @@ public class CalculatorSystem : QuangLibrary
         // Load lai text header (o day la true value)
         LoadTextHeader();
     }
-
+    bool CheckValue(Cell cell01, Cell cell02)
+    {
+        int a = cell01.infor.value, b = cell02.infor.value;
+        int c = trueValue;
+        switch (this.math)
+        {
+            case MathOperation.addition:
+                Debug.Log("add");
+                return a + b == c;
+            case MathOperation.subtraction:
+                return a - b == c;
+            case MathOperation.multiplication:
+                return a * b == c;
+            case MathOperation.division:
+                return a / b == c;
+            default:
+                break;
+        }
+        return false;
+    }
     public void ResetValue()
     {
         btn1 = null;
