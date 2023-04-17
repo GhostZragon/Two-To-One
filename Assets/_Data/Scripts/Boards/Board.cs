@@ -90,6 +90,7 @@ public class Board : BoardLoader
             for (int j = 0; j < col; j++)
             {
                 GameObject go = Instantiate(cellPrefab, board);
+                go.SetActive(true);
                 go.name = "Cell " + countCell;
                 Cell cell = go.GetComponent<Cell>();
                 cell.RandomValue(minValue, maxValue);

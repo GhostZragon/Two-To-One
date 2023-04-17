@@ -19,7 +19,7 @@ public class TimerPerTurn : QuangLibrary
     // Start is called before the first frame update
     void Start()
     {
-        
+        ShowTimerUI();
     }
 
     public void ShowTimerUI()

@@ -70,14 +70,19 @@ public class CalculatorSystem : QuangLibrary
 
     public void ClickCell(Transform transform)
     {
-        if (btn1 != null && btn1 != transform)
+        Debug.Log(transform.name);
+        if (btn1 != null && btn1 != transform && btn2 == null)
         {
             btn2 = transform;
             //Calculation(btn1, btn2);
         }
         else if (btn1 == transform)
         {
-            btn1 = null;
+            ResetValue();
+        }
+        else if (btn2 == transform)
+        {
+            ResetValue();
         }
         else if (btn1 == null)
         {
@@ -85,6 +90,11 @@ public class CalculatorSystem : QuangLibrary
         }
         LoadTextHeader();
     }
+    public void UpScale(Transform a)
+    {
+
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
