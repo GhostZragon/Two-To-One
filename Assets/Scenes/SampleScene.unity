@@ -534,8 +534,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 567332155}
-        m_TargetAssemblyTypeName: TimerClock, Assembly-CSharp
-        m_MethodName: StartTimer
+        m_TargetAssemblyTypeName: TimerPerTurn, Assembly-CSharp
+        m_MethodName: ResetTimer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1227,7 +1227,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 520208312}
-  - component: {fileID: 520208311}
   m_Layer: 0
   m_Name: _Board
   m_TagString: Untagged
@@ -1235,20 +1234,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &520208311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520208310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97494abd5da4f134f8e0efa2db3bdfb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  board: {fileID: 1510494842}
-  pickAnswer: {fileID: 525644488}
 --- !u!4 &520208312
 Transform:
   m_ObjectHideFlags: 0
@@ -1325,6 +1310,7 @@ GameObject:
   - component: {fileID: 567332153}
   - component: {fileID: 567332152}
   - component: {fileID: 567332155}
+  - component: {fileID: 567332156}
   m_Layer: 0
   m_Name: TimerClock
   m_TagString: Untagged
@@ -1430,12 +1416,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 1536755515}
   timerText: {fileID: 195368525}
+  sliderLerping: {fileID: 567332156}
   timeToEndTurn: 10
   timer: 10
   scaleSpeed: 1
   speed: 1
   currentVelocity: 0
-  isTimer: 1
+  isTimer: 0
+--- !u!114 &567332156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567332150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45d8b6113706dd041a4e0f52970274bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colors:
+  - {r: 0.07006645, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0.26024, b: 0, a: 1}
+  - {r: 1, g: 0.983102, b: 0, a: 1}
+  - {r: 0, g: 0, b: 0, a: 1}
+  image: {fileID: 2117592257}
+  colorIndex: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0

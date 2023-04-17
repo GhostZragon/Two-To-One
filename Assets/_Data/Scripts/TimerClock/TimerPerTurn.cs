@@ -6,14 +6,16 @@ using UnityEngine.UI;
 
 public class TimerPerTurn : QuangLibrary
 {
-    public Slider slider;
-    public TextMeshProUGUI timerText;
-    public float timeToEndTurn = 10f;
-    public float timer = 10;
-    public float scaleSpeed = 1;
-    public int speed = 1;
-    public float currentVelocity = 0f;
-    public bool isTimer = false;
+    [SerializeField] protected Slider slider;
+    [SerializeField] protected TextMeshProUGUI timerText;
+    [SerializeField] protected SliderLerping sliderLerping;
+    [SerializeField] protected float timeToEndTurn = 10f;
+    [SerializeField] protected float timer = 10;
+    [SerializeField] protected float scaleSpeed = 1;
+    [SerializeField] protected int speed = 1;
+    [SerializeField] protected float currentVelocity = 0f;
+    [SerializeField] protected bool isTimer = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,12 @@ public class TimerPerTurn : QuangLibrary
         base.LoadComponent();
         this.LoadTimerText();
         this.LoadSlider();
+        LoadSliderLerping();
+    }
+    protected virtual void LoadSliderLerping()
+    {
+        if (sliderLerping != null) return;
+        sliderLerping = GetComponent<SliderLerping>();
     }
     protected virtual void LoadTimerText()
     {
@@ -48,7 +56,7 @@ public class TimerPerTurn : QuangLibrary
     {
         TimerToText();
 
-
+        LoadColorSlider();
     }
     private void TimerToText()
     {
@@ -65,11 +73,17 @@ public class TimerPerTurn : QuangLibrary
             }
             //Mathf.Round(timer);
             //slider.value = Mathf.Lerp(slider.value, timer / 10, speed);
-            float currentTimer = Mathf.SmoothDamp(slider.value, timer / timeToEndTurn, ref currentVelocity, Time.deltaTime);
+            float currentTimer = Mathf.SmoothDamp(slider.value, timer / timeToEndTurn, ref currentVelocity, speed*Time.deltaTime);
             timerText.text = $"{Mathf.FloorToInt(timer / 60).ToString("00")} : {Mathf.FloorToInt(timer % 60).ToString("00")}";
             slider.value = currentTimer;
+
         }
     }
+    public void LoadColorSlider()
+    {
+        sliderLerping.LerpColor(slider.value);
+    }
+
     public void TimerPlus()
     {
         timer += 1;
