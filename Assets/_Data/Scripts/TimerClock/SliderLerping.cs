@@ -9,6 +9,7 @@ public class SliderLerping : MonoBehaviour
     [SerializeField] protected Color[] colors;
     [SerializeField] protected Image image;
     [SerializeField] protected int colorIndex;
+
     public void LerpColor(float newValue)
     {
         float value = newValue;
@@ -31,10 +32,10 @@ public class SliderLerping : MonoBehaviour
                 break;
         }
 
+        
         image.color = Color.Lerp(colors[colorIndex + 1], colors[colorIndex], time);
+
+
     }
-    
-
-
 }
 

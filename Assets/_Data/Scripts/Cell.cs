@@ -12,7 +12,6 @@ public class Cell : QuangLibrary ,IPointerEnterHandler, IPointerExitHandler
     public Text valueText;
     public Button btn;
     private Image image;
-    private Animator animator;
     bool isScale = false;
     private void Start()
     {
@@ -21,7 +20,6 @@ public class Cell : QuangLibrary ,IPointerEnterHandler, IPointerExitHandler
         this.SetValue(infor.value);
         //btn = GetComponent<Button>();
         //btn.onClick.AddListener(ClickDown);
-        animator = GetComponent<Animator>();
     }
     protected override void LoadComponent()
     {
