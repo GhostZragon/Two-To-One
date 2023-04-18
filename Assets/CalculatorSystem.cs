@@ -132,9 +132,12 @@ public class CalculatorSystem : QuangLibrary
                 {
                     this.timerPerTurn.StopTime();
                     Debug.Log("You complete a state");
-                    return;
                 }
-                this.timerPerTurn.ResetTimer();
+                else
+                {
+
+                    this.timerPerTurn.ResetTimer();
+                }
 
             }
             else
@@ -148,34 +151,24 @@ public class CalculatorSystem : QuangLibrary
             // Load lai text header (o day la true value)
             LoadTextHeader();
         }
-        
+
     }
     bool CheckValue(Cell cell01, Cell cell02)
     {
         int a = cell01.infor.value, b = cell02.infor.value;
         int c = trueValue;
-        Debug.Log($"{a} + {b} = {a+b}");
-        switch (this.math)
+        if(MathState.MathCaculation(a,b) == c)
         {
-            case MathOperation.addition:
-                Debug.Log("add");
-                return a + b == c;
-            case MathOperation.subtraction:
-                return a - b == c;
-            case MathOperation.multiplication:
-                return a * b == c;
-            case MathOperation.division:
-                return a / b == c;
-            default:
-                break;
+            return true;
         }
+        
         return false;
     }
     public void ResetValue()
     {
-        if(btn1 != null)
+        if (btn1 != null)
             btn1.GetComponent<Cell>().DownScale();
-        if(btn2 != null)
+        if (btn2 != null)
             btn2.GetComponent<Cell>().DownScale();
         btn1 = null;
         btn2 = null;
