@@ -1870,10 +1870,10 @@ MonoBehaviour:
   gridLayout: {fileID: 432072333}
   cellPrefab: {fileID: 1198342115}
   calculatorSystem: {fileID: 1821478327}
-  minValue: -10
+  minValue: 1
   maxValue: 10
-  row: 4
-  col: 6
+  row: 2
+  col: 4
   spawning: 1
   clickableCell: []
   unClickableCell: []

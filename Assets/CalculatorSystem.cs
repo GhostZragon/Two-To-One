@@ -70,7 +70,7 @@ public class CalculatorSystem : QuangLibrary
 
     public void ClickCell(Transform transform)
     {
-        Debug.Log(transform.name);
+        Debug.Log("Ham click cell duoc goi");
         if (btn1 != null && btn1 != transform && btn2 == null)
         {
             btn2 = transform;
@@ -78,10 +78,12 @@ public class CalculatorSystem : QuangLibrary
         }
         else if (btn1 == transform)
         {
+            Debug.Log("btn 1 = null");
             ResetValue();
         }
         else if (btn2 == transform)
         {
+            Debug.Log("btn 2 = null");
             ResetValue();
         }
         else if (btn1 == null)
@@ -97,7 +99,7 @@ public class CalculatorSystem : QuangLibrary
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             Calculation(btn1, btn2);
 
@@ -106,45 +108,53 @@ public class CalculatorSystem : QuangLibrary
     void Calculation(Transform a, Transform b)
     {
         // Neu 2 button khac null thi moi check
-        if (btn1 == null || btn2 == null) return;
-        Cell cell01 = btn1.GetComponent<Cell>();
-        Cell cell02 = btn2.GetComponent<Cell>();
-
-        if (CheckValue(cell01, cell02))
+        if (btn1 == null || btn2 == null)
         {
-            // Neu 2 value cong lai bang gia tri dung thi xoa 2 button do di (tat button interact)
-            cell01.btn.interactable = false;
-            cell02.btn.interactable = false;
-            // Them 2 button do vao list cac button khong the click 
-            board.AddUnClickableCell(a, b);
-            // Chon gia tri moi cho true value
-            trueValue = pickAnswer.PickRandom();
-            Debug.Log("Hai gia tri cong lai bang 10");
-            // Neu so luong button co the click bang 0 thi ket thuc game
-            if (board.clickableCell.Count == 0)
-            {
-                this.timerPerTurn.StopTime();
-                Debug.Log("You complete a state");
-                return;
-            }
-            this.timerPerTurn.ResetTimer();
-
+            Debug.Log("is null");
         }
         else
         {
-            Debug.Log("Hai gia tri cong lai khong bang 10");
+            Cell cell01 = btn1.GetComponent<Cell>();
+            Cell cell02 = btn2.GetComponent<Cell>();
+
+            if (CheckValue(cell01, cell02))
+            {
+                // Neu 2 value cong lai bang gia tri dung thi xoa 2 button do di (tat button interact)
+                cell01.btn.interactable = false;
+                cell02.btn.interactable = false;
+                // Them 2 button do vao list cac button khong the click 
+                board.AddUnClickableCell(a, b);
+                // Chon gia tri moi cho true value
+                trueValue = pickAnswer.PickRandom();
+                Debug.Log("Hai gia tri cong lai bang 10");
+                // Neu so luong button co the click bang 0 thi ket thuc game
+                if (board.clickableCell.Count == 0)
+                {
+                    this.timerPerTurn.StopTime();
+                    Debug.Log("You complete a state");
+                    return;
+                }
+                this.timerPerTurn.ResetTimer();
+
+            }
+            else
+            {
+                Debug.Log("Hai gia tri cong lai khong bang 10");
 
 
+            }
+            // Sau khi check xong thi reset lai gia tri cua 2 button
+            ResetValue();
+            // Load lai text header (o day la true value)
+            LoadTextHeader();
         }
-        // Sau khi check xong thi reset lai gia tri cua 2 button
-        ResetValue();
-        // Load lai text header (o day la true value)
-        LoadTextHeader();
+        
     }
     bool CheckValue(Cell cell01, Cell cell02)
     {
         int a = cell01.infor.value, b = cell02.infor.value;
         int c = trueValue;
+        Debug.Log($"{a} + {b} = {a+b}");
         switch (this.math)
         {
             case MathOperation.addition:
@@ -163,6 +173,10 @@ public class CalculatorSystem : QuangLibrary
     }
     public void ResetValue()
     {
+        if(btn1 != null)
+            btn1.GetComponent<Cell>().DownScale();
+        if(btn2 != null)
+            btn2.GetComponent<Cell>().DownScale();
         btn1 = null;
         btn2 = null;
 
