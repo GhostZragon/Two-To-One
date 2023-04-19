@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class MathState
 {
-    enum MathOperation
+    public enum MathOperation
     {
         // 0 1 2 3
         // cong tru nhan chia
@@ -13,24 +13,29 @@ public static class MathState
         multiplication,
         division,
     }
-    static MathOperation Math { get; set; }
+    [SerializeField]
+    public static MathOperation Math;
 
-    public static int MathCaculation(int a,int b)
+    public static int MathCaculation(int a,int b, MathOperation math)
     {
         int value = 0;
-        switch (Math)
+        switch (math)
         {
             case MathOperation.addition:
                 value = addition(a, b);
+                Debug.Log($"{a} + {b} = {value}");
                 break;
             case MathOperation.subtraction:
                 value = subtraction(a, b);
+                Debug.Log($"{a} - {b} = {value}");
                 break;
             case MathOperation.multiplication:
                 value = multiplication(a, b);
+                Debug.Log($"{a} * {b} = {value}");
                 break;
             case MathOperation.division:
                 value = division(a, b);
+                Debug.Log($"{a} / {b} = {value}");
                 break;
             default:
                 break;

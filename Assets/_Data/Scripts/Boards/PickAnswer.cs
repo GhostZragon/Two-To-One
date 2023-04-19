@@ -37,8 +37,8 @@ public class PickAnswer : QuangLibrary
         Cell cell02 = list[b].GetComponent<Cell>();
         int a_value = cell01.infor.value, b_value = cell02.infor.value;
         //int c = a_value + b_value;
-        int c = MathState.MathCaculation(a_value, b_value);
-        Debug.Log($"{cell01.infor.value} + {cell02.infor.value} = {c}");
+        int c = MathState.MathCaculation(a_value, b_value, calculator.math);
+        //Debug.Log($"{cell01.infor.value} + {cell02.infor.value} = {c}");
         return c;
     }
 

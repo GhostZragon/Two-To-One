@@ -41,8 +41,8 @@ public class Board : BoardLoader
     [SerializeField] protected int maxValue = 10;
 
     [Header("Row and col")]
-    public int row = 2;
-    public int col = 2;
+    [SerializeField][Range(2, 6)] int row = 2;
+    [SerializeField][Range(2, 12)] int col = 2;
 
     public bool spawning = true;
     public List<Transform> clickableCell;
@@ -64,7 +64,7 @@ public class Board : BoardLoader
     public void CreateBoard()
     {
         DeleteBoard();
-        CheckRowCol();
+        //CheckRowCol();
         gridLayout.constraintCount = col;
         if (spawning == false) return;
 

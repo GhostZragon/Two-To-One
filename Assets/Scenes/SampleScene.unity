@@ -553,7 +553,7 @@ MonoBehaviour:
   m_CellSize: {x: 76.67, y: 75}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 1
-  m_ConstraintCount: 6
+  m_ConstraintCount: 4
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,7 +1462,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3
+  m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1901,7 +1901,7 @@ MonoBehaviour:
   maxValue: 10
   row: 2
   col: 4
-  spawning: 1
+  spawning: 0
   clickableCell: []
   unClickableCell: []
 --- !u!4 &1510494843
@@ -2163,11 +2163,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btn1: {fileID: 0}
   btn2: {fileID: 0}
-  trueValue: 3
+  trueValue: 10
   board: {fileID: 1510494842}
   pickAnswer: {fileID: 525644488}
   header: {fileID: 720694469}
   timerPerTurn: {fileID: 567332155}
+  math: 0
 --- !u!1 &1908200912
 GameObject:
   m_ObjectHideFlags: 0

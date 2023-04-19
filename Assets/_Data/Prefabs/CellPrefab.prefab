@@ -180,7 +180,10 @@ MonoBehaviour:
     position: 0
   valueText: {fileID: 2039144879882265721}
   btn: {fileID: 2039144880311040416}
-  scaleSpeed: 0.2
+  scaleSpeed: 0.1
+  rorateUp: -720
+  rorateDown: 720
+  time: 0.3
 --- !u!61 &2039144880311040428
 BoxCollider2D:
   m_ObjectHideFlags: 0

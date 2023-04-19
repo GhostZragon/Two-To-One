@@ -21,16 +21,10 @@ public class CalculatorSystem : QuangLibrary
     public int TrueValue { get => trueValue; }
     public Transform Btn1 { get => btn1; }
     public Transform Btn2 { get => btn2; }
-    enum MathOperation
-    {
-        // 0 1 2 3
-        // cong tru nhan chia
-        addition,
-        subtraction,
-        multiplication,
-        division,
-    }
-    MathOperation math = 0;
+
+    public MathState.MathOperation math;
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -70,7 +64,7 @@ public class CalculatorSystem : QuangLibrary
 
     public void ClickCell(Transform transform)
     {
-        Debug.Log("Ham click cell duoc goi");
+        //Debug.Log("Ham click cell duoc goi");
         if (btn1 != null && btn1 != transform && btn2 == null)
         {
             btn2 = transform;
@@ -92,10 +86,7 @@ public class CalculatorSystem : QuangLibrary
         }
         LoadTextHeader();
     }
-    public void UpScale(Transform a)
-    {
 
-    }
 
     private void Update()
     {
@@ -105,6 +96,7 @@ public class CalculatorSystem : QuangLibrary
 
         }
     }
+
     void Calculation(Transform a, Transform b)
     {
         // Neu 2 button khac null thi moi check
@@ -157,7 +149,7 @@ public class CalculatorSystem : QuangLibrary
     {
         int a = cell01.infor.value, b = cell02.infor.value;
         int c = trueValue;
-        if(MathState.MathCaculation(a,b) == c)
+        if(MathState.MathCaculation(a,b, math) == c)
         {
             return true;
         }

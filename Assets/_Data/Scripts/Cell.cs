@@ -5,31 +5,25 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-public class Cell : QuangLibrary ,IPointerEnterHandler, IPointerExitHandler
+public class Cell : QuangLibrary 
 {
 
     public Infor infor;
     public Text valueText;
     public Button btn;
-    private Image image;
     bool isScale = false;
+    public float scaleSpeed = 0.3f;
+    public float rorateUp = -720;
+    public float rorateDown = 720;
+    public float time = 0.3f;
     private void Start()
     {
         this.valueText = GetComponentInChildren<Text>();
-        this.image = GetComponent<Image>();
         this.SetValue(infor.value);
         //btn = GetComponent<Button>();
         //btn.onClick.AddListener(ClickDown);
     }
-    protected override void LoadComponent()
-    {
-        base.LoadComponent();
-        
-    }
-    public bool ButtonInteractable()
-    {
-        return btn.interactable;
-    }
+
     public void SetValue(int a)
     {
         infor.value = a;
@@ -44,10 +38,15 @@ public class Cell : QuangLibrary ,IPointerEnterHandler, IPointerExitHandler
         }
         //Debug.Log(transform.name+" Value: "+infor.value);
         CalculatorSystem.Instance.ClickCell(transform);
-        
-        
+
+
     }
-    
+
+    public void Rorate(float rorate)
+    {
+        Vector3 next = new Vector3(0, 0, rorate);
+        LeanTween.rotateLocal(transform.gameObject, next, time).setEaseInOutBack();
+    }
     public void RandomValue(int min, int max)
     {
         max += 1;
@@ -58,30 +57,24 @@ public class Cell : QuangLibrary ,IPointerEnterHandler, IPointerExitHandler
         }
         SetValue(a);
     }
+
     private void UpScale()
     {
         //Debug.Log("On mouse enter");
         Vector3 vector = new Vector3(1.3f, 1.3f, 1.3f);
         transform.LeanScale(vector, scaleSpeed);
+        Rorate(rorateUp);
     }
-    public float scaleSpeed = 0.3f;
+
     public void DownScale()
     {
         transform.LeanScale(Vector3.one, scaleSpeed);
         isScale = false;
-    }
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        //Debug.Log("On mouse enter");
-        //Vector3 vector = new Vector3(1.3f, 1.3f, 1.3f);
-        //transform.LeanScale(vector, scaleSpeed);
+        Rorate(rorateDown);
     }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        //Debug.Log("On mouse exit");
-        //transform.LeanScale(Vector3.one, scaleSpeed);
-    }
+
+
 }
 [System.Serializable]
 public class Infor
