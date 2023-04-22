@@ -5,7 +5,7 @@ using UnityEngine;
 public class PickAnswer : QuangLibrary
 {
     public Board board;
-    public CalculatorSystem calculator;
+    public SelectionManager selectionManager;
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -14,8 +14,8 @@ public class PickAnswer : QuangLibrary
     }
     protected virtual void LoadCalculatorSystem()
     {
-        if (calculator != null) return;
-        calculator = FindObjectOfType<CalculatorSystem>();
+        if (selectionManager != null) return;
+        selectionManager = FindObjectOfType<SelectionManager>();
     }   
     protected virtual void LoadBoard()
     {
@@ -37,7 +37,7 @@ public class PickAnswer : QuangLibrary
         Cell cell02 = list[b].GetComponent<Cell>();
         int a_value = cell01.infor.value, b_value = cell02.infor.value;
         //int c = a_value + b_value;
-        int c = MathState.MathCaculation(a_value, b_value, calculator.math);
+        int c = MathState.MathCaculation(a_value, b_value, selectionManager.math);
         //Debug.Log($"{cell01.infor.value} + {cell02.infor.value} = {c}");
         return c;
     }

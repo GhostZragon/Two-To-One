@@ -37,12 +37,17 @@ public class Cell : QuangLibrary
             isScale = true;
         }
         //Debug.Log(transform.name+" Value: "+infor.value);
-        CalculatorSystem.Instance.ClickCell(transform);
+        SelectionManager.Instance.AddCell(transform);
 
 
     }
-
-    public void Rorate(float rorate)
+    public void AddScore(float score)
+    {
+        btn.interactable = false;
+        ScoreManager.Instance.AddScore(score);
+        Debug.Log("Add 1 score");
+    }
+    private void Rorate(float rorate)
     {
         Vector3 next = new Vector3(0, 0, rorate);
         LeanTween.rotateLocal(transform.gameObject, next, time).setEaseInOutBack();

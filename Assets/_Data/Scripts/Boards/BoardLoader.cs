@@ -8,12 +8,12 @@ public abstract class BoardLoader : QuangLibrary
     [SerializeField] protected Transform board;
     [SerializeField] protected GridLayoutGroup gridLayout;
     [SerializeField] protected GameObject cellPrefab;
-    [SerializeField] protected CalculatorSystem calculatorSystem;
+    [SerializeField] protected SelectionManager selectionManager;
 
     protected override void LoadComponent()
     {
         base.LoadComponent();
-        this.LoadCalculatorSystem();
+        this.LoadSelectionManager();
         this.LoadSpawnLocation();
         this.LoadGridLayout();
         this.LoadCellPrefab();
@@ -38,10 +38,10 @@ public abstract class BoardLoader : QuangLibrary
         cellPrefab = _transform.Find("CellPrefab").gameObject;
         Debug.Log(transform.name + ": LoadCellPrefab", gameObject);
     }
-    protected virtual void LoadCalculatorSystem()
+    protected virtual void LoadSelectionManager()
     {
-        if (calculatorSystem != null) return;
-        calculatorSystem = FindObjectOfType<CalculatorSystem>();
+        if (selectionManager != null) return;
+        selectionManager = FindObjectOfType<SelectionManager>();
 
     }
 }

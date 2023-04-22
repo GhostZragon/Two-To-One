@@ -23,14 +23,9 @@ public class CustomBoard : Editor
         {
             board.DeleteBoard();
         }
-        if ((GUILayout.Button("Random New Position And Sort")))
-        {
-            board.RandomNewPosBoard();
-            board.SortCell();
-        }
         if ((GUILayout.Button("Pick Answer")))
         {
-            board.B_SetTrueAnswer();
+            board.SetTrueAnswer();
         }
     }
 }
@@ -69,18 +64,12 @@ public class Board : BoardLoader
         if (spawning == false) return;
 
         SpawnCells();
-        RandomNewPosBoard();
-        SortCell();
-        B_SetTrueAnswer();
+        //RandomNewPosBoard();
+        //SortCell();
+        SetTrueAnswer();
 
     }
-    void CheckRowCol()
-    {
-        if (row > 6)
-            row = 6;
-        if (col > 10)
-            col = 10;
-    }
+
     void SpawnCells()
     {
         int countCell = 0;
@@ -102,63 +91,21 @@ public class Board : BoardLoader
         }
 
     }
-    public void RandomNewPosBoard()
-    {
-        List<int> pos = new List<int>();
-        foreach (Transform t in clickableCell)
-        {
-            Cell cell = t.GetComponent<Cell>();
-            int index = Random.Range(1, row * col + 1);
-            while (pos.Contains(index))
-            {
-                index = Random.Range(1, row * col + 1);
-            }
-            cell.infor.position = index;
 
-        }
-    }
-    public void SortCell()
-    {
-        clickableCell.Sort((x, y) =>
-        {
-            Cell a = x.GetComponent<Cell>();
-            Cell b = y.GetComponent<Cell>();
-            if (a.infor.position > b.infor.position)
-            {
-                int temp = a.infor.value;
-                a.SetValue(b.infor.value);
-                b.SetValue(temp);
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
 
-        });
-
-    }
     public void DeleteBoard()
     {
-        ClearClickableCell();
-        ClearUnClickableCell();
-    }
-    private void ClearClickableCell()
-    {
-        foreach (Transform obj in clickableCell)
-        {
-            DestroyImmediate(obj.gameObject);
-        }
-        clickableCell.Clear();
-    }
+        ClearListObject(clickableCell);
+        ClearListObject(unClickableCell);
 
-    private void ClearUnClickableCell()
+    }
+    private void ClearListObject(List<Transform> list)
     {
-        foreach (Transform obj in unClickableCell)
+        foreach (Transform obj in list)
         {
             DestroyImmediate(obj.gameObject);
         }
-        unClickableCell.Clear();
+        list.Clear();
     }
     public void AddUnClickableCell(Transform a, Transform b)
     {
@@ -168,8 +115,8 @@ public class Board : BoardLoader
         this.unClickableCell.Add(b);
     }
 
-    public void B_SetTrueAnswer()
+    public void SetTrueAnswer()
     {
-        calculatorSystem.GM_SetTrueAnswer();
+        selectionManager.GM_SetTrueAnswer();
     }
 }

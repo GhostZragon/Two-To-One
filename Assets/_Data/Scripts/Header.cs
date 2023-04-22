@@ -26,7 +26,7 @@ public class Header : QuangLibrary
 {
     public TextMeshProUGUI textMeshProUGUI;
 
-    public CalculatorSystem calculatorSystem;
+    public SelectionManager selectionManager;
 
     void Start()
     {
@@ -37,7 +37,7 @@ public class Header : QuangLibrary
     {
         base.LoadComponent();
         LoadText();
-        LoadCalculatorSystem();
+        LoadSelectionManager();
     }
     protected virtual void LoadText()
     {
@@ -45,29 +45,29 @@ public class Header : QuangLibrary
         textMeshProUGUI = GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    protected virtual void LoadCalculatorSystem()
+    protected virtual void LoadSelectionManager()
     {
-        if (calculatorSystem != null) return;
-        calculatorSystem = FindObjectOfType<CalculatorSystem>();
+        if (selectionManager != null) return;
+        selectionManager = FindObjectOfType<SelectionManager>();
         
     }
     public void StringToText()
     {
         //string a = "_";
         //string b = "_";
-        //if(calculatorSystem.Btn1 != null)
+        //if(selectionManager.Btn1 != null)
         //{
-        //    Cell cell = calculatorSystem.Btn1.GetComponent<Cell>();
-        //    a = cell.infor.value.ToString();
+        //    Cell Cell = selectionManager.Btn1.GetComponent<Cell>();
+        //    a = Cell.infor.value.ToString();
         //}
-        //if (calculatorSystem.Btn2 != null)
+        //if (selectionManager.Btn2 != null)
         //{
-        //    Cell cell = calculatorSystem.Btn2.GetComponent<Cell>();
-        //    b = cell.infor.value.ToString();
+        //    Cell Cell = selectionManager.Btn2.GetComponent<Cell>();
+        //    b = Cell.infor.value.ToString();
         //}
         string c = " ";
 
-        c = calculatorSystem.TrueValue.ToString();
+        c = selectionManager.TrueValue.ToString();
         textMeshProUGUI.text = c;
     }
 }
