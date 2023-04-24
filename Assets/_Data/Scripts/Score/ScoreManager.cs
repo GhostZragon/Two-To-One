@@ -58,8 +58,5 @@ public class ScoreManager : QuangLibrary
         this.scorePopUp.PopUp();
         //this.scoreText.text = this.score.ToString();
     }
-
-
-
 }
 

@@ -8,6 +8,7 @@ public class SelectionManagerLoader : QuangLibrary
     protected PickAnswer pickAnswer;
     protected Header header;
     protected TimerPerTurn timerPerTurn;
+    protected WaitForTime waitForTime;
 
     protected override void LoadComponent()
     {
@@ -16,6 +17,12 @@ public class SelectionManagerLoader : QuangLibrary
         this.LoadPickAnswer();
         this.LoadHeader();
         this.LoadTimerClock();
+        this.LoadSelectionWaitForTime();
+    }
+    protected virtual void LoadSelectionWaitForTime()
+    {
+        if (waitForTime != null) return;
+        waitForTime = GetComponentInChildren<WaitForTime>();
     }
     protected virtual void LoadTimerClock()
     {

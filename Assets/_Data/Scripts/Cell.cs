@@ -12,10 +12,11 @@ public class Cell : QuangLibrary
     public Text valueText;
     public Button btn;
     bool isScale = false;
-    public float scaleSpeed = 0.3f;
+    public float scaleSpeed = 0.1f;
     public float rorateUp = -720;
     public float rorateDown = 720;
     public float time = 0.3f;
+    public float score = 200f;
     private void Start()
     {
         this.valueText = GetComponentInChildren<Text>();
@@ -41,9 +42,9 @@ public class Cell : QuangLibrary
 
 
     }
-    public void AddScore(float score)
+    public void AddScore()
     {
-        ScoreManager.Instance.AddScore(score, transform.position);
+        ScoreManager.Instance.AddScore(this.score, transform.position);
         btn.interactable = false;
     }
     private void Rorate(float rorate)

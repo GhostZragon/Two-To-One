@@ -34,6 +34,7 @@ public class SelectionManager : SelectionManagerLoader
         base.Awake();
         Instance = this;
         ResetTwoBtn();
+        
     }
     private void ResetTwoBtn()
     {
@@ -42,26 +43,22 @@ public class SelectionManager : SelectionManagerLoader
     }
     public void AddCell(Transform _transform)
     {
-        
+
 
         if (btn1.Transform != null && btn1.Transform != _transform && btn2.Transform == null)
         {
-            Debug.Log("a");
             btn2 = new Btn(_transform);
         }
         else if (btn1.Transform == _transform || btn2.Transform == _transform)
         {
-            Debug.Log("b");
             ResetValue();
         }
         else if (btn1.Transform == null)
         {
-            Debug.Log("c");
             btn1 = new Btn(_transform);
         }
-        else if(btn1 != null && btn2 != null && btn1.Transform != _transform && btn2.Transform != _transform)
+        else if (btn1 != null && btn2 != null && btn1.Transform != _transform && btn2.Transform != _transform)
         {
-            Debug.Log("d");
             ResetValue();
             btn1 = new Btn(_transform);
         }
@@ -74,6 +71,7 @@ public class SelectionManager : SelectionManagerLoader
             Calculation();
         }
     }
+
     void Calculation()
     {
         if (btn1 == null || btn2 == null)
@@ -83,13 +81,13 @@ public class SelectionManager : SelectionManagerLoader
             return;
         }
 
+
         if (CheckValue())
         {
-            float a = 200f;
-            //btn1.Cell.AddScore(a);
-            //btn2.Cell.AddScore(a);
-            StartCoroutine(AddScoreForTime(btn1, 0));
-            StartCoroutine(AddScoreForTime(btn2, 0.3f));
+            
+            StartCoroutine(waitForTime.AddScoreForTime(btn1, 0));
+            StartCoroutine(waitForTime.AddScoreForTime(btn2, 0.3f));
+
             board.AddUnClickableCell(btn1.Transform, btn2.Transform);
             trueValue = pickAnswer.PickRandom();
             if (board.clickableCell.Count == 0)
@@ -105,14 +103,11 @@ public class SelectionManager : SelectionManagerLoader
         ResetValue();
         LoadTextHeader();
     }
-    IEnumerator AddScoreForTime(Btn btn,float time)
-    {
-        yield return new WaitForSeconds(time);
-        btn.Cell.AddScore(200);
-        Debug.Log("Time out");
-    }
+
     bool CheckValue()
     {
+        if (btn1.Cell == null || btn2.Cell == null) return false;
+
         int a = btn1.Cell.infor.value, b = btn2.Cell.infor.value;
         int c = this.trueValue;
         if (MathState.MathCaculation(a, b, math) == c)
@@ -124,16 +119,25 @@ public class SelectionManager : SelectionManagerLoader
     }
     public void ResetValue()
     {
-        if (btn1.Cell != null)
-            btn1.Cell.DownScale();
-        if (btn2.Cell != null)
-            btn2.Cell.DownScale();
+        if (btn1.Cell != null && btn2.Cell != null)
+        {
+            StartCoroutine(waitForTime.DownScaleForTime(btn1, 0));
+            StartCoroutine(waitForTime.DownScaleForTime(btn2, 0.2f));
+        }
+        else
+        {
+            if (btn1.Cell != null)
+                btn1.Cell.DownScale();
+            if (btn2.Cell != null)
+                btn2.Cell.DownScale();
+        }
+        
         this.ResetTwoBtn();
 
     }
     private void LoadTextHeader()
     {
-        if(header == null)
+        if (header == null)
         {
             this.LoadHeader();
         }
@@ -141,7 +145,7 @@ public class SelectionManager : SelectionManagerLoader
     }
     public void GM_SetTrueAnswer()
     {
-        if(pickAnswer == null)
+        if (pickAnswer == null)
         {
             this.LoadPickAnswer();
         }
