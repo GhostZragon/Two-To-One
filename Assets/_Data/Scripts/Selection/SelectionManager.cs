@@ -1,7 +1,4 @@
-using JetBrains.Annotations;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +11,10 @@ public class Btn
     {
         Transform = a;
         Cell = a.GetComponent<Cell>();
+    }
+    public Btn()
+    {
+
     }
     public Transform Transform;
     public Cell Cell;
@@ -32,29 +33,37 @@ public class SelectionManager : SelectionManagerLoader
     {
         base.Awake();
         Instance = this;
-
+        ResetTwoBtn();
     }
-
-    public void AddCell(Transform transform)
+    private void ResetTwoBtn()
+    {
+        btn1 = new Btn();
+        btn2 = new Btn();
+    }
+    public void AddCell(Transform _transform)
     {
         
 
-        if (btn1.Transform != null && btn1.Transform != transform && btn2.Transform == null)
+        if (btn1.Transform != null && btn1.Transform != _transform && btn2.Transform == null)
         {
-            btn2 = new Btn(transform);
+            Debug.Log("a");
+            btn2 = new Btn(_transform);
         }
-        else if (btn1.Transform == transform || btn2.Transform == transform)
+        else if (btn1.Transform == _transform || btn2.Transform == _transform)
         {
+            Debug.Log("b");
             ResetValue();
         }
         else if (btn1.Transform == null)
         {
-            btn1 = new Btn(transform);
+            Debug.Log("c");
+            btn1 = new Btn(_transform);
         }
-        else if(btn1 != null && btn2 != null && btn1.Transform != transform && btn2.Transform != transform)
+        else if(btn1 != null && btn2 != null && btn1.Transform != _transform && btn2.Transform != _transform)
         {
+            Debug.Log("d");
             ResetValue();
-            btn1 = new Btn(transform);
+            btn1 = new Btn(_transform);
         }
     }
 
@@ -76,8 +85,11 @@ public class SelectionManager : SelectionManagerLoader
 
         if (CheckValue())
         {
-            btn1.Cell.AddScore(1);
-            btn2.Cell.AddScore(1);
+            float a = 200f;
+            //btn1.Cell.AddScore(a);
+            //btn2.Cell.AddScore(a);
+            StartCoroutine(AddScoreForTime(btn1, 0));
+            StartCoroutine(AddScoreForTime(btn2, 0.3f));
             board.AddUnClickableCell(btn1.Transform, btn2.Transform);
             trueValue = pickAnswer.PickRandom();
             if (board.clickableCell.Count == 0)
@@ -92,6 +104,12 @@ public class SelectionManager : SelectionManagerLoader
         }
         ResetValue();
         LoadTextHeader();
+    }
+    IEnumerator AddScoreForTime(Btn btn,float time)
+    {
+        yield return new WaitForSeconds(time);
+        btn.Cell.AddScore(200);
+        Debug.Log("Time out");
     }
     bool CheckValue()
     {
@@ -110,16 +128,23 @@ public class SelectionManager : SelectionManagerLoader
             btn1.Cell.DownScale();
         if (btn2.Cell != null)
             btn2.Cell.DownScale();
-        btn1 = null;
-        btn2 = null;
+        this.ResetTwoBtn();
 
     }
     private void LoadTextHeader()
     {
+        if(header == null)
+        {
+            this.LoadHeader();
+        }
         header.StringToText();
     }
     public void GM_SetTrueAnswer()
     {
+        if(pickAnswer == null)
+        {
+            this.LoadPickAnswer();
+        }
         trueValue = pickAnswer.PickRandom();
         LoadTextHeader();
     }

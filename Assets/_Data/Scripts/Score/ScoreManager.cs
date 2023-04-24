@@ -1,18 +1,36 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using static UnityEditor.Progress;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
+[CustomEditor(typeof(ScoreManager))]
+public class CustomScoreManager : Editor
+{
+    private ScoreManager scoreManager;
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        ScoreManager scoreManager = (ScoreManager)target;
+
+        if (GUILayout.Button("Add score"))
+        {
+            scoreManager.AddScore();
+        }
+
+    }
+}
 public class ScoreManager : QuangLibrary
 {
     public static ScoreManager Instance;
     [SerializeField] private float score;
-    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] ScorePopUp scorePopUp;
 
 
-    ScorePopUp scorePopUp;
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -26,19 +44,22 @@ public class ScoreManager : QuangLibrary
 
         //this.LoadScoreText();
     }
-
-    protected virtual void LoadScoreText()
+    public void AddScore(float score, Vector3 pos)
     {
-        throw new NotImplementedException();
+        this.score++;
+        var go = this.scorePopUp.PopUp();
+        go.text = score.ToString();
+        go.transform.position = pos;
+        //this.scoreText.text = this.score.ToString();
+    }
+    public void AddScore()
+    {
+        this.score++;
+        this.scorePopUp.PopUp();
+        //this.scoreText.text = this.score.ToString();
     }
 
-    public void AddScore(float score)
-    {
-        this.score += score;
-        //scorePopUp.PopUp(score);
-        //scoreText.text = this.score.ToString();
-        Debug.Log("Score: " + this.score);
-    }
+
 
 }
 

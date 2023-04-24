@@ -22,17 +22,17 @@ public class SelectionManagerLoader : QuangLibrary
         if (timerPerTurn != null) return;
         timerPerTurn = FindObjectOfType<TimerPerTurn>();
     }
-    private void LoadBoard()
+    protected virtual void LoadBoard()
     {
         if (board != null) return;
         board = FindObjectOfType<Board>();
     }
-    private void LoadPickAnswer()
+    protected virtual void LoadPickAnswer()
     {
         if (pickAnswer != null) return;
         pickAnswer = FindObjectOfType<PickAnswer>();
     }
-    private void LoadHeader()
+    protected virtual void LoadHeader()
     {
         if (header != null) return;
         header = FindObjectOfType<Header>();

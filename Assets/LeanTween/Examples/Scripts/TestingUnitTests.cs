@@ -303,7 +303,7 @@ namespace DentedPixel.LTExamples
             yield return new WaitForSeconds(1.5f);
             LeanTest.expect(Mathf.Abs(timeElapsedNormalTimeScale - timeElapsedIgnoreTimeScale) < 0.7f, "START IGNORE TIMING", "timeElapsedIgnoreTimeScale:" + timeElapsedIgnoreTimeScale + " timeElapsedNormalTimeScale:" + timeElapsedNormalTimeScale);
 
-            //          yield return new WaitForSeconds(100f);
+            //          yield return new AddScoreForTime(100f);
             Time.timeScale = 4f;
 
             int pauseCount = 0;

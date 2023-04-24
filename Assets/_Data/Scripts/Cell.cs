@@ -20,8 +20,8 @@ public class Cell : QuangLibrary
     {
         this.valueText = GetComponentInChildren<Text>();
         this.SetValue(infor.value);
-        //btn = GetComponent<Button>();
-        //btn.onClick.AddListener(ClickDown);
+        btn = GetComponent<Button>();
+        btn.onClick.AddListener(ClickDown);
     }
 
     public void SetValue(int a)
@@ -43,9 +43,8 @@ public class Cell : QuangLibrary
     }
     public void AddScore(float score)
     {
+        ScoreManager.Instance.AddScore(score, transform.position);
         btn.interactable = false;
-        ScoreManager.Instance.AddScore(score);
-        Debug.Log("Add 1 score");
     }
     private void Rorate(float rorate)
     {
