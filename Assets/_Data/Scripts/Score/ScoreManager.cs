@@ -25,36 +25,53 @@ public class CustomScoreManager : Editor
 public class ScoreManager : QuangLibrary
 {
     public static ScoreManager Instance;
-    [SerializeField] private float score;
     [SerializeField] ScorePopUp scorePopUp;
-
-
-
+    public int[] scorelist = new int[] { 600, 400, 200 };
+    [SerializeField][Range(0, 2)] int currentIndex;
+    public void ScoreAddIndex(int a)
+    {
+        this.currentIndex = a;
+    }
 
     protected override void Awake()
     {
         base.Awake();
-        scorePopUp = GetComponent<ScorePopUp>();
     }
 
     protected override void LoadComponent()
     {
         base.LoadComponent();
         if (Instance == null) Instance = this;
-
+        this.LoadScorePopUp();
         //this.LoadScoreText();
     }
-    public void AddScore(float score, Vector3 pos)
+    protected virtual void LoadScorePopUp()
     {
-        this.score++;
-        var go = this.scorePopUp.PopUp();
-        go.text = score.ToString();
-        go.transform.position = pos;
-        //this.scoreText.text = this.score.ToString();
+        if (this.scorePopUp != null) return;
+        scorePopUp = GetComponent<ScorePopUp>();
     }
+    public TimerPerTurn timer;
+    public SliderLerping sliderLerping;
+    /// <summary>
+    /// Spawn a Text object and change text object to score 
+    /// </summary>
+    /// <param name="pos">Spawn position in Canvas</param>
+    public void AddScore(Vector3 pos)
+    {
+        var go = this.scorePopUp.PopUp();
+        go.text = this.scorelist[currentIndex].ToString();
+        go.transform.position = pos;
+    }
+    public void CheckScoreIndex()
+    {
+        
+    }
+
+    /// <summary>
+    /// Test function
+    /// </summary>
     public void AddScore()
     {
-        this.score++;
         this.scorePopUp.PopUp();
         //this.scoreText.text = this.score.ToString();
     }

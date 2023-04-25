@@ -92,12 +92,12 @@ public class SelectionManager : SelectionManagerLoader
             trueValue = pickAnswer.PickRandom();
             if (board.clickableCell.Count == 0)
             {
-                this.timerPerTurn.StopTime();
+                //this.timerPerTurn.StopTime();
                 Debug.Log("You complete a state");
             }
             else
             {
-                this.timerPerTurn.ResetTimer();
+                //this.timerPerTurn.ResetTimer();
             }
         }
         ResetValue();

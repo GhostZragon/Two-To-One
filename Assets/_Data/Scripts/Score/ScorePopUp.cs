@@ -37,6 +37,10 @@ public class ScorePopUp : QuangLibrary
         prefab = transform.GetComponentInChildren<Text>();
     }
 
+    /// <summary>
+    /// Instantiate a text prefab and pop up out, then fade out
+    /// </summary>
+    /// <returns>Return a text object</returns>
     public Text PopUp()
     {
         var go = Instantiate(prefab, SpawnLocation.transform);

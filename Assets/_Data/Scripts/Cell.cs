@@ -44,7 +44,7 @@ public class Cell : QuangLibrary
     }
     public void AddScore()
     {
-        ScoreManager.Instance.AddScore(this.score, transform.position);
+        ScoreManager.Instance.AddScore(transform.position);
         btn.interactable = false;
     }
     private void Rorate(float rorate)

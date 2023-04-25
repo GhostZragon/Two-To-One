@@ -16,25 +16,14 @@ public class TimerPerTurn : QuangLibrary
     [SerializeField] protected float currentVelocity = 0f;
     [SerializeField] protected bool isTimer = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        ShowTimerUI();
-    }
 
-    public void ShowTimerUI()
-    {
-        slider.transform.localScale = Vector3.zero;
-        slider.transform.LeanScale(Vector3.one, scaleSpeed).setEaseOutBack();
-        //slider.transform.LeanScale(Vector3.one, scaleSpeed).setEaseInOutQuint();
-    }
 
     protected override void LoadComponent()
     {
         base.LoadComponent();
         this.LoadTimerText();
         this.LoadSlider();
-        LoadSliderLerping();
+        this.LoadSliderLerping();
     }
     protected virtual void LoadSliderLerping()
     {
@@ -51,12 +40,27 @@ public class TimerPerTurn : QuangLibrary
         if (slider != null) return;
         slider = GetComponentInChildren<Slider>();
     }
-    // Update is called once per frame
+
+    public float GetTime()
+    {
+        return timer;
+    }
+    void Start()
+    {
+        ShowTimerUI();
+    }
+
     void Update()
     {
         TimerToText();
+        //LoadColorSlider();
+    }
 
-        LoadColorSlider();
+    public void ShowTimerUI()
+    {
+        slider.transform.localScale = Vector3.zero;
+        slider.transform.LeanScale(Vector3.one, scaleSpeed).setEaseOutBack();
+        //slider.transform.LeanScale(Vector3.one, scaleSpeed).setEaseInOutQuint();
     }
     private void TimerToText()
     {
@@ -71,35 +75,25 @@ public class TimerPerTurn : QuangLibrary
                 timerText.text = "00 : 00";
                 slider.value = 0;
             }
-            //Mathf.Round(timer);
-            //slider.value = Mathf.Lerp(slider.value, timer / 10, speed);
-            float currentTimer = Mathf.SmoothDamp(slider.value, timer / timeToEndTurn, ref currentVelocity, speed*Time.deltaTime);
+
+            float currentTimer = Mathf.SmoothDamp(slider.value, timer / timeToEndTurn, ref currentVelocity, speed * Time.deltaTime);
             timerText.text = $"{Mathf.FloorToInt(timer / 60).ToString("00")} : {Mathf.FloorToInt(timer % 60).ToString("00")}";
-            slider.value = currentTimer;
+            this.slider.value = currentTimer;
 
         }
     }
+
     public void LoadColorSlider()
     {
-        sliderLerping.LerpColor(slider.value);
-    }
-
-    public void TimerPlus()
-    {
-        timer += 1;
-    }
-    public void ResetTimer()
-    {
-        timer = 10f;
-    }
-
-    public void ResumeTime()
-    {
-        isTimer = true;
+        sliderLerping.LerpColor(this.slider.value);
     }
 
     public void StopTime()
     {
         isTimer = false;
+    }
+    public void ResetTimer()
+    {
+        timer = 10;
     }
 }
