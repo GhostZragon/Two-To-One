@@ -85,7 +85,7 @@ public class TimerPerTurn : QuangLibrary
 
     public void LoadColorSlider()
     {
-        sliderLerping.LerpColor(this.slider.value);
+        //sliderLerping.TimingSlider();
     }
 
     public void StopTime()

@@ -13,7 +13,7 @@ public class CustomSliderLerping : Editor
     {
         base.OnInspectorGUI();
         SliderLerping sliderLerping = (SliderLerping)target;
-        if(GUILayout.Button("Reset Timer"))
+        if (GUILayout.Button("Reset Timer"))
         {
             sliderLerping.ResetTimer();
         }
@@ -23,15 +23,20 @@ public class SliderLerping : QuangLibrary
 {
     [SerializeField] protected Color[] colors;
     [SerializeField] protected Image image;
-    [SerializeField] protected int colorIndex;
+    [SerializeField] bool isTimer = false;
     [SerializeField] protected ScoreManager scoreManager;
-    public Color currentColor;
-    public Slider slider;
-    [Min(-1)]
-    public int stateIndex = -1;
-    [Min(0)]
-    public float time = 10;
-    public float temp;
+    [SerializeField] protected Color currentColor;
+    [SerializeField] protected Slider slider;
+    [Min(-1)] public int stateIndex = -1;
+
+    [Min(0)] protected float time = 10;
+    [SerializeField][Min(0)] protected int timePerTurn = 10;
+    [Min(0)] protected float temp;
+    [Range(0, 2)] public float value;
+    [SerializeField] float maxTimeFadeColor = 2;
+    private bool lerpDone = false;
+
+    public Text timeText;
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -45,42 +50,46 @@ public class SliderLerping : QuangLibrary
     private void Start()
     {
         temp = colors.Length;
+        time = timePerTurn;
         slider.maxValue = time;
+        isTimer = true;
+        lerpDone = true;
     }
     public void ResetTimer()
     {
-        temp = colors.Length;
+        temp = colors.Length ;
         stateIndex = -1;
         value = 2;
         lerpDone = false;
-        time = 10;
-
+        time = timePerTurn;
+        slider.maxValue = time;
     }
     private void Update()
     {
+        if (!isTimer) return;
         GetTime();
-        //Test();
+        timeText.text = Mathf.Round(time).ToString();
     }
-    [SerializeField][Range(0, 2)] float value;
-    bool lerpDone = false;
-
-    public float _A;
+    [Range(0, 2)] float _A;
     public void GetTime()
     {
         if (time < 0) return;
         time -= Time.deltaTime;
         slider.value = time;
-
-        if (time <= (10 * (temp / colors.Length)) && time >= 0)
+        //Logic khi thoi gian cham moc thoi gian de chuyen mau
+        if (time <= (timePerTurn * (temp / colors.Length)) && time > 0)
         {
+            Debug.Log(timePerTurn * (temp / colors.Length));
+            //reset value for lerp color
             lerpDone = false;
             value = 2;
-            //LeanTween.value(gameObject, colors[stateIndex], colors[stateIndex + 1], 1f);
             temp--;
             stateIndex++;
             currentColor = colors[stateIndex];
-            
+
         }
+        
+        //logic for current image color
         if (lerpDone == false && stateIndex < colors.Length - 1 && stateIndex > -1)
         {
             value -= Time.deltaTime;
@@ -91,35 +100,20 @@ public class SliderLerping : QuangLibrary
                 lerpDone = true;
             }
         }
-        else if(stateIndex < colors.Length - 1 && stateIndex > -1)
+        else if (stateIndex < colors.Length - 1 && stateIndex > -1)
         {
             image.color = colors[stateIndex + 1];
         }
-        else
+        else if (stateIndex < colors.Length )
         {
             image.color = colors[stateIndex];
         }
     }
 
-    public void LerpColor(float newValue)
+    private void SetColor()
     {
-        float value = newValue;
-        float time = 0;
-        switch (value)
-        {
-            case >= (float)2 / 3:
-                time = Mathf.InverseLerp((float)2 / 3, 1, value);
-                break;
-            case >= (float)1 / 3:
-                time = Mathf.InverseLerp((float)1 / 3, (float)2 / 3, value);
-                break;
-            case >= 0:
-                time = Mathf.InverseLerp(0, (float)1 / 3, value);
-                break;
-            default:
-                break;
-        }
-        image.color = Color.Lerp(colors[colorIndex + 1], colors[colorIndex], time);
+
     }
+
 }
 
