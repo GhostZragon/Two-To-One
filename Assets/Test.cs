@@ -1,40 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Test : MonoBehaviour
+public class Test : QuangLibrary
 {
-    public Color[] colors;
-    public Color currentColor;
-    public int stateIndex = -1;
-    public float time = 10;
-    public float temp;
-    public Slider slider;
     public Image image;
+    public TextMeshProUGUI text;
+    [Range(0,1)]public float value;
+    public int textValue;
+    public float time = 10;
     private void Start()
     {
-        temp = colors.Length;
-        slider.maxValue = time;
+        value = 1;
+        textValue = 600;
     }
     private void Update()
     {
-        JustTest();
-
-    }
-    void JustTest()
-    {
-        if (time < 0) return;
         time -= Time.deltaTime;
-        slider.value = time;
+        if (time < 0) return;
+        image.fillAmount = ReturnLerpValue(1, 10, time);
 
-        if (time <= (10 * (temp / colors.Length)) && time >= 0)
-        {
-            temp--;
-            stateIndex++;
-            currentColor = colors[stateIndex];
-            
-            image.color = currentColor;
-        }
+        text.text = $"{textValue.ToString()}/600";
     }
 }
