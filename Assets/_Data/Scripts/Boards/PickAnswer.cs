@@ -24,7 +24,7 @@ public class PickAnswer : QuangLibrary
     }
     public int PickRandom()
     {
-        List<Transform> list = new List<Transform>();
+        List<Cell> list = new List<Cell>();
         list = board.clickableCells;
         if (list.Count == 0) return 0;
         int a = Random.Range(0, list.Count);
@@ -33,8 +33,8 @@ public class PickAnswer : QuangLibrary
         {
             a = Random.Range(0, list.Count);
         }
-        Cell cell01 = list[a].GetComponent<Cell>();
-        Cell cell02 = list[b].GetComponent<Cell>();
+        Cell cell01 = list[a];
+        Cell cell02 = list[b];
         int a_value = cell01.infor.value, b_value = cell02.infor.value;
         //int c = a_value + b_value;
         int c = MathState.MathCaculation(a_value, b_value, selectionManager.math);

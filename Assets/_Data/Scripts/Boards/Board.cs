@@ -40,9 +40,8 @@ public class Board : BoardLoader
     [SerializeField][Range(2, 12)] int col = 2;
 
     public bool spawning = true;
-    public List<Transform> clickableCells;
-    public List<Transform> unClickableCells;
-
+    public List<Cell> clickableCells;
+    public List<Cell> unClickableCells;
 
 
     // Start is called before the first frame update
@@ -84,11 +83,12 @@ public class Board : BoardLoader
                 Cell cell = go.GetComponent<Cell>();
                 cell.RandomValue(minValue, maxValue);
 
-                clickableCells.Add(go.transform);
+                clickableCells.Add(cell);
                 countCell++;
 
             }
         }
+
 
     }
 
@@ -99,15 +99,15 @@ public class Board : BoardLoader
         ClearListObject(unClickableCells);
 
     }
-    private void ClearListObject(List<Transform> list)
+    private void ClearListObject(List<Cell> list)
     {
-        foreach (Transform obj in list)
+        foreach (Cell obj in list)
         {
             DestroyImmediate(obj.gameObject);
         }
         list.Clear();
     }
-    public void TransferToUnClickableCells(Transform a, Transform b)
+    public void TransferToUnClickableCells(Cell a, Cell b)
     {
         this.clickableCells.Remove(a);
         this.clickableCells.Remove(b);
