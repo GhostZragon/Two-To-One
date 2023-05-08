@@ -10,7 +10,7 @@ public class ScorePopUp : QuangLibrary
     public float timeScale = 1f;
     public float timeMove = 1f;
     public float timeFade = 1f;
-    public float localMoveY = 30f;
+    public float localYPosition = 30f;
     public Color color = new Color(1, 1, 1, 0);
     public Text prefab;
     public GameObject SpawnLocation;
@@ -25,6 +25,14 @@ public class ScorePopUp : QuangLibrary
         base.LoadComponent();
         LoadPrefab();
         LoadSpawnLocation();
+        LoadTimeValue();
+    }
+    protected virtual void LoadTimeValue()
+    {
+        timeScale = 0.5f;
+        timeMove = 0.5f;
+        timeFade = 0.5f;
+        localYPosition = 30f;
     }
     protected virtual void LoadSpawnLocation()
     {
@@ -38,37 +46,44 @@ public class ScorePopUp : QuangLibrary
     }
 
     /// <summary>
-    /// Instantiate a text prefab and pop up out, then fade out
+    /// Spawn a Text with there effect : scale, move to Y, fade
     /// </summary>
-    /// <returns>Return a text object</returns>
-    public Text PopUp()
+    /// <returns>Return a Text GameObject </returns>
+    public Text CreatePopUpText()
     {
         var go = Instantiate(prefab, SpawnLocation.transform);
         go.transform.localScale = Vector3.zero;
         go.gameObject.SetActive(true);
-        MoveUpFade(go);
+        ScaleUpText(go);
         return go;
         
     }
-    public void MoveUpFade(Text go)
+    public void ScaleUpText(Text go)
     {
-        float a = 1.3f;
-        Vector3 to = new Vector3(a, a, a);
+        float scaleNumber = 1.3f;
+        Vector3 nextScale = new Vector3(scaleNumber, scaleNumber, scaleNumber);
 
-        go.transform.LeanScale(to, this.timeScale).setEaseInOutBounce().setOnComplete(() =>
+        go.transform.LeanScale(nextScale, this.timeScale).setEaseInOutBounce().setOnComplete(() =>
         {
             //Debug.Log("Text is scale");
-            float dis = go.rectTransform.localPosition.y;
-            dis += localMoveY;
-            go.transform.LeanMoveLocalY(dis, this.timeMove).setOnComplete(() =>
-            {
-                LeanTween.colorText(go.rectTransform, this.color, timeFade).setOnComplete(() =>
-                {
-                    Destroy(go.gameObject, 0.5f);
-                });
-                go.transform.LeanScale(Vector3.zero, this.timeFade).setEaseInBack();
-            });
+            MoveTextUp(go);
         });
     }
-
+    public void MoveTextUp(Text go)
+    {
+        float currentTextLocalPosition = go.rectTransform.localPosition.y;
+        currentTextLocalPosition += localYPosition;
+        go.transform.LeanMoveLocalY(currentTextLocalPosition, this.timeMove).setOnComplete(() =>
+        {
+            FadeText(go);
+        });
+    }
+    public void FadeText(Text go)
+    {
+        LeanTween.colorText(go.rectTransform, this.color, timeFade).setOnComplete(() =>
+        {
+            Destroy(go.gameObject, 0.5f);
+        });
+        go.transform.LeanScale(Vector3.zero, this.timeFade).setEaseInBack();
+    }
 }

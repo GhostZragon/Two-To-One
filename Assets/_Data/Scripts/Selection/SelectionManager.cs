@@ -33,37 +33,39 @@ public class SelectionManager : SelectionManagerLoader
     {
         base.Awake();
         Instance = this;
-        ResetTwoBtn();
+        ResetButtonState();
         
     }
-    private void ResetTwoBtn()
+    private void ResetButtonState()
     {
         btn1 = new Btn();
         btn2 = new Btn();
     }
-    public void AddCell(Transform _transform)
+
+    public void OnCellClick(Transform newCell)
     {
-
-
-        if (btn1.Transform != null && btn1.Transform != _transform && btn2.Transform == null)
+        ManageCellSelection(newCell);
+    }
+    private void ManageCellSelection(Transform newCell)
+    {
+        if (btn1.Transform != null && btn1.Transform != newCell && btn2.Transform == null)
         {
-            btn2 = new Btn(_transform);
+            btn2 = new Btn(newCell);
         }
-        else if (btn1.Transform == _transform || btn2.Transform == _transform)
+        else if (btn1.Transform == newCell || btn2.Transform == newCell)
         {
-            ResetValue();
+            ResetCellSizeAndState();
         }
         else if (btn1.Transform == null)
         {
-            btn1 = new Btn(_transform);
+            btn1 = new Btn(newCell);
         }
-        else if (btn1 != null && btn2 != null && btn1.Transform != _transform && btn2.Transform != _transform)
+        else if (btn1 != null && btn2 != null && btn1.Transform != newCell && btn2.Transform != newCell)
         {
-            ResetValue();
-            btn1 = new Btn(_transform);
+            ResetCellSizeAndState();
+            btn1 = new Btn(newCell);
         }
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
@@ -77,20 +79,20 @@ public class SelectionManager : SelectionManagerLoader
         if (btn1 == null || btn2 == null)
         {
             Debug.Log("is null");
-            ResetValue();
+            ResetCellSizeAndState();
             return;
         }
 
 
-        if (CheckValue())
+        if (PerformMathOperation())
         {
             
-            StartCoroutine(waitForTime.AddScoreForTime(btn1, 0));
-            StartCoroutine(waitForTime.AddScoreForTime(btn2, 0.3f));
+            StartCoroutine(waitForTime.DelayedScorePopUp(btn1, 0));
+            StartCoroutine(waitForTime.DelayedScorePopUp(btn2, 0.3f));
 
-            board.AddUnClickableCell(btn1.Transform, btn2.Transform);
+            board.TransferToUnClickableCells(btn1.Transform, btn2.Transform);
             trueValue = pickAnswer.PickRandom();
-            if (board.clickableCell.Count == 0)
+            if (board.clickableCells.Count == 0)
             {
                 //this.timerPerTurn.StopTime();
                 Debug.Log("You complete a state");
@@ -100,11 +102,11 @@ public class SelectionManager : SelectionManagerLoader
                 //this.timerPerTurn.ResetTimer();
             }
         }
-        ResetValue();
+        ResetCellSizeAndState();
         LoadTextHeader();
     }
 
-    bool CheckValue()
+    bool PerformMathOperation()
     {
         if (btn1.Cell == null || btn2.Cell == null) return false;
 
@@ -117,23 +119,27 @@ public class SelectionManager : SelectionManagerLoader
 
         return false;
     }
-    public void ResetValue()
+    public void ResetCellSizeAndState()
+    {
+
+        this.ResetCellSize();
+        this.ResetButtonState();
+
+    }
+    private void ResetCellSize()
     {
         if (btn1.Cell != null && btn2.Cell != null)
         {
-            StartCoroutine(waitForTime.DownScaleForTime(btn1, 0));
-            StartCoroutine(waitForTime.DownScaleForTime(btn2, 0.2f));
+            StartCoroutine(waitForTime.ScaleDownWithDelay(btn1, 0));
+            StartCoroutine(waitForTime.ScaleDownWithDelay(btn2, 0.2f));
         }
         else
         {
             if (btn1.Cell != null)
-                btn1.Cell.DownScale();
+                btn1.Cell.ScaleDown();
             if (btn2.Cell != null)
-                btn2.Cell.DownScale();
+                btn2.Cell.ScaleDown();
         }
-        
-        this.ResetTwoBtn();
-
     }
     private void LoadTextHeader()
     {

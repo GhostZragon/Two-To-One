@@ -20,34 +20,35 @@ public class Cell : QuangLibrary
     private void Start()
     {
         this.valueText = GetComponentInChildren<Text>();
-        this.SetValue(infor.value);
+        this.UpdateValue(infor.value);
         btn = GetComponent<Button>();
         btn.onClick.AddListener(ClickDown);
     }
 
-    public void SetValue(int a)
+    public void UpdateValue(int newValue)
     {
-        infor.value = a;
+        infor.value = newValue;
         valueText.text = infor.value.ToString();
     }
     public void ClickDown()
     {
         if (isScale == false)
         {
-            UpScale();
+            ScaleUp();
             isScale = true;
         }
         //Debug.Log(transform.name+" Value: "+infor.value);
-        SelectionManager.Instance.AddCell(transform);
+        SelectionManager.Instance.OnCellClick(transform);
 
 
     }
-    public void AddScore()
+    public void TriggerScorePopUp()
     {
-        ScoreManager.Instance.AddScore(transform.position);
+        // Active event score pop up
+        ScoreManager.Instance.DisplayScorePopUp(transform.position);
         btn.interactable = false;
     }
-    private void Rorate(float rorate)
+    private void Rotating(float rorate)
     {
         Vector3 next = new Vector3(0, 0, rorate);
         LeanTween.rotateLocal(transform.gameObject, next, time).setEaseInOutBack();
@@ -60,22 +61,22 @@ public class Cell : QuangLibrary
         {
             a = Random.Range(min, max);
         }
-        SetValue(a);
+        UpdateValue(a);
     }
 
-    private void UpScale()
+    private void ScaleUp()
     {
         //Debug.Log("On mouse enter");
         Vector3 vector = new Vector3(1.3f, 1.3f, 1.3f);
         transform.LeanScale(vector, scaleSpeed);
-        Rorate(rorateUp);
+        Rotating(rorateUp);
     }
 
-    public void DownScale()
+    public void ScaleDown()
     {
         transform.LeanScale(Vector3.one, scaleSpeed);
         isScale = false;
-        Rorate(rorateDown);
+        Rotating(rorateDown);
     }
 
 

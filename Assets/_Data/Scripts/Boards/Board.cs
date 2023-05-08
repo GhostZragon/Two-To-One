@@ -40,8 +40,8 @@ public class Board : BoardLoader
     [SerializeField][Range(2, 12)] int col = 2;
 
     public bool spawning = true;
-    public List<Transform> clickableCell;
-    public List<Transform> unClickableCell;
+    public List<Transform> clickableCells;
+    public List<Transform> unClickableCells;
 
 
 
@@ -84,7 +84,7 @@ public class Board : BoardLoader
                 Cell cell = go.GetComponent<Cell>();
                 cell.RandomValue(minValue, maxValue);
 
-                clickableCell.Add(go.transform);
+                clickableCells.Add(go.transform);
                 countCell++;
 
             }
@@ -95,8 +95,8 @@ public class Board : BoardLoader
 
     public void DeleteBoard()
     {
-        ClearListObject(clickableCell);
-        ClearListObject(unClickableCell);
+        ClearListObject(clickableCells);
+        ClearListObject(unClickableCells);
 
     }
     private void ClearListObject(List<Transform> list)
@@ -107,12 +107,12 @@ public class Board : BoardLoader
         }
         list.Clear();
     }
-    public void AddUnClickableCell(Transform a, Transform b)
+    public void TransferToUnClickableCells(Transform a, Transform b)
     {
-        this.clickableCell.Remove(a);
-        this.clickableCell.Remove(b);
-        this.unClickableCell.Add(a);
-        this.unClickableCell.Add(b);
+        this.clickableCells.Remove(a);
+        this.clickableCells.Remove(b);
+        this.unClickableCells.Add(a);
+        this.unClickableCells.Add(b);
     }
 
     public void SetTrueAnswer()

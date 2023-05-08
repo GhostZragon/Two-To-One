@@ -15,7 +15,7 @@ public class CustomScoreManager : Editor
         base.OnInspectorGUI();
         ScoreManager scoreManager = (ScoreManager)target;
 
-        if (GUILayout.Button("Add score"))
+        if (GUILayout.Button("Add currentScore"))
         {
             scoreManager.AddScore();
         }
@@ -26,12 +26,7 @@ public class ScoreManager : QuangLibrary
 {
     public static ScoreManager Instance;
     [SerializeField] ScorePopUp scorePopUp;
-    public int[] scorelist = new int[] { 600, 400, 200 };
-    [SerializeField][Range(0, 2)] int currentIndex;
-    public void ScoreAddIndex(int a)
-    {
-        this.currentIndex = a;
-    }
+    [SerializeField] protected float currentScore;
 
     protected override void Awake()
     {
@@ -50,30 +45,22 @@ public class ScoreManager : QuangLibrary
         if (this.scorePopUp != null) return;
         scorePopUp = GetComponent<ScorePopUp>();
     }
-    public TimerPerTurn timer;
-    public SliderLerping sliderLerping;
-    /// <summary>
-    /// Spawn a Text object and change text object to score 
-    /// </summary>
-    /// <param name="pos">Spawn position in Canvas</param>
-    public void AddScore(Vector3 pos)
+
+
+    public void DisplayScorePopUp(Vector3 pos)
     {
-        var go = this.scorePopUp.PopUp();
-        go.text = this.scorelist[currentIndex].ToString();
+        float score = 600;
+        var go = this.scorePopUp.CreatePopUpText();
+        go.text = score.ToString();
         go.transform.position = pos;
     }
-    public void CheckScoreIndex()
-    {
-        
-    }
 
-    /// <summary>
-    /// Test function
-    /// </summary>
+
+
     public void AddScore()
     {
-        this.scorePopUp.PopUp();
-        //this.scoreText.text = this.score.ToString();
+        this.scorePopUp.CreatePopUpText();
+        //this.scoreText.TimeText = this.currentScore.ToString();
     }
 }
 

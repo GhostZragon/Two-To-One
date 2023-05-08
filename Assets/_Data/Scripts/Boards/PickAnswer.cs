@@ -25,7 +25,7 @@ public class PickAnswer : QuangLibrary
     public int PickRandom()
     {
         List<Transform> list = new List<Transform>();
-        list = board.clickableCell;
+        list = board.clickableCells;
         if (list.Count == 0) return 0;
         int a = Random.Range(0, list.Count);
         int b = Random.Range(0, list.Count);

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class WaitForTime : MonoBehaviour
 {
-    public IEnumerator AddScoreForTime(Btn btn, float time)
+    public IEnumerator DelayedScorePopUp(Btn btn, float time)
     {
         yield return new WaitForSeconds(time);
-        btn.Cell.AddScore();
+        btn.Cell.TriggerScorePopUp();
     }
-    public IEnumerator DownScaleForTime(Btn btn, float time)
+    public IEnumerator ScaleDownWithDelay(Btn btn, float time)
     {
         yield return new WaitForSeconds(time);
-        btn.Cell.DownScale();
+        btn.Cell.ScaleDown();
     }
 }
