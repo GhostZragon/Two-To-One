@@ -90,7 +90,7 @@ public class SelectionManager : SelectionManagerLoader
             StartCoroutine(waitForTime.DelayedScorePopUp(btn1, 0));
             StartCoroutine(waitForTime.DelayedScorePopUp(btn2, 0.3f));
 
-            board.TransferToUnClickableCells(btn1.Transform, btn2.Transform);
+            board.TransferToUnClickableCells(btn1.Cell, btn2.Cell);
             trueValue = pickAnswer.PickRandom();
             if (board.clickableCells.Count == 0)
             {
