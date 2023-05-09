@@ -26,7 +26,7 @@ public class Header : QuangLibrary
 {
     public TextMeshProUGUI textMeshProUGUI;
 
-    public SelectionManager selectionManager;
+    public CellCalculation cellCalculation;
 
     void Start()
     {
@@ -47,8 +47,8 @@ public class Header : QuangLibrary
 
     protected virtual void LoadSelectionManager()
     {
-        if (selectionManager != null) return;
-        selectionManager = FindObjectOfType<SelectionManager>();
+        if (cellCalculation != null) return;
+        cellCalculation = FindObjectOfType<CellCalculation>();
         
     }
     public void StringToText()
@@ -67,7 +67,7 @@ public class Header : QuangLibrary
         //}
         string c = " ";
 
-        c = selectionManager.TrueValue.ToString();
+        c = cellCalculation.trueValue.ToString();
         textMeshProUGUI.text = c;
     }
 }

@@ -23,10 +23,7 @@ public class CustomBoard : Editor
         {
             board.DeleteBoard();
         }
-        if ((GUILayout.Button("Pick Answer")))
-        {
-            board.SetTrueAnswer();
-        }
+
     }
 }
 public class Board : BoardLoader
@@ -65,7 +62,7 @@ public class Board : BoardLoader
         SpawnCells();
         //RandomNewPosBoard();
         //SortCell();
-        SetTrueAnswer();
+        cellCalculation.MakeTrueAnswer();
 
     }
 
@@ -115,8 +112,5 @@ public class Board : BoardLoader
         this.unClickableCells.Add(b);
     }
 
-    public void SetTrueAnswer()
-    {
-        selectionManager.GM_SetTrueAnswer();
-    }
+
 }

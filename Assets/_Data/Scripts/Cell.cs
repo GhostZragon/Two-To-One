@@ -39,7 +39,7 @@ public class Cell : QuangLibrary
         }
         //Debug.Log(transform.name+" Value: "+infor.value);
         SelectionManager.Instance.OnCellClick(transform);
-
+        //MultiSelection.Instance.OnCellClick(transform);
 
     }
     public void TriggerScorePopUp()
@@ -56,12 +56,12 @@ public class Cell : QuangLibrary
     public void RandomValue(int min, int max)
     {
         max += 1;
-        int a = Random.Range(min, max);
-        while(a == 0)
+        int _newValue = Random.Range(min, max);
+        while(_newValue == 0)
         {
-            a = Random.Range(min, max);
+            _newValue = Random.Range(min, max);
         }
-        UpdateValue(a);
+        UpdateValue(_newValue);
     }
 
     private void ScaleUp()

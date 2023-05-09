@@ -77,7 +77,7 @@ public class Test : QuangLibrary
     }
     protected virtual void NextScoreState()
     {
-        //Score state will decrease from Perfect -> Good -> Bad -> None
+        //Score state will decrease from PERFECT -> GOOD -> BAD -> None
         if(currentScoreState == ScoreState.Perfect)
         {
             currentScoreState = ScoreState.Good;

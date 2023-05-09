@@ -13,7 +13,7 @@ public class ScorePopUp : QuangLibrary
     public float localYPosition = 30f;
     public Color color = new Color(1, 1, 1, 0);
     public Text prefab;
-    public GameObject SpawnLocation;
+    public GameObject TextsHolder;
 
     protected override void Awake()
     {
@@ -24,7 +24,7 @@ public class ScorePopUp : QuangLibrary
     {
         base.LoadComponent();
         LoadPrefab();
-        LoadSpawnLocation();
+        LoadTextsHolder();
         LoadTimeValue();
     }
     protected virtual void LoadTimeValue()
@@ -34,10 +34,10 @@ public class ScorePopUp : QuangLibrary
         timeFade = 0.5f;
         localYPosition = 30f;
     }
-    protected virtual void LoadSpawnLocation()
+    protected virtual void LoadTextsHolder()
     {
-        if (this.SpawnLocation != null) return;
-        this.SpawnLocation = transform.Find("SpawnLocation").gameObject;
+        if (this.TextsHolder != null) return;
+        this.TextsHolder = transform.Find("TextsHolder").gameObject;
     }
     protected virtual void LoadPrefab()
     {
@@ -51,7 +51,7 @@ public class ScorePopUp : QuangLibrary
     /// <returns>Return a Text GameObject </returns>
     public Text CreatePopUpText()
     {
-        var go = Instantiate(prefab, SpawnLocation.transform);
+        var go = Instantiate(prefab, TextsHolder.transform);
         go.transform.localScale = Vector3.zero;
         go.gameObject.SetActive(true);
         ScaleUpText(go);

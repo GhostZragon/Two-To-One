@@ -27,26 +27,40 @@ public class ScoreManager : QuangLibrary
     public static ScoreManager Instance;
     [SerializeField] ScorePopUp scorePopUp;
     [SerializeField] protected float currentScore;
-
-    protected override void Awake()
+    public ScoreDisplay scoreDisplay;
+    public enum ScoreGrade
     {
-        base.Awake();
+        BAD,
+        GOOD,
+        PERFECT
     }
+    public ScoreGrade currentScoreGrade = ScoreGrade.PERFECT;
 
     protected override void LoadComponent()
     {
         base.LoadComponent();
         if (Instance == null) Instance = this;
         this.LoadScorePopUp();
+        this.LoadScoreDisplay();
         //this.LoadScoreText();
     }
+
+    private void LoadScoreDisplay()
+    {
+        if(this.scoreDisplay != null) return;
+        scoreDisplay = GetComponent<ScoreDisplay>();
+    }
+
     protected virtual void LoadScorePopUp()
     {
         if (this.scorePopUp != null) return;
-        scorePopUp = GetComponent<ScorePopUp>();
+        scorePopUp = GetComponentInChildren<ScorePopUp>();
     }
 
-
+    public void Start()
+    {
+        ResetScoreGrade();
+    }
     public void DisplayScorePopUp(Vector3 pos)
     {
         float score = 600;
@@ -55,8 +69,29 @@ public class ScoreManager : QuangLibrary
         go.transform.position = pos;
     }
 
-
-
+    public void ResetScore()
+    {
+        this.currentScore = 0;
+    }
+    public void ResetScoreGrade()
+    {
+        this.currentScoreGrade = ScoreGrade.PERFECT;
+    }
+    public void UpdateScoreGrade()
+    {
+        if (currentScoreGrade == ScoreGrade.PERFECT)
+        {
+            currentScoreGrade = ScoreGrade.GOOD;
+        }
+        else if (currentScoreGrade == ScoreGrade.GOOD)
+        {
+            currentScoreGrade = ScoreGrade.BAD;
+        }
+        else if (currentScoreGrade == ScoreGrade.BAD)
+        {
+            Debug.Log("You lose");
+        }
+    }
     public void AddScore()
     {
         this.scorePopUp.CreatePopUpText();
