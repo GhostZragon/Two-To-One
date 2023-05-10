@@ -32,6 +32,7 @@ public class Cell : QuangLibrary
     }
     public void ClickDown()
     {
+        if (!SelectionManager.Instance.CanBeClicked()) return;
         if (isScale == false)
         {
             ScaleUp();

@@ -7,9 +7,11 @@ public class CellCalculation : CellCalculationLoader
 {
     public MathState.MathOperation math;
     public double trueValue;
-    private void Start()
+    public static CellCalculation Instance;
+    protected override void Awake()
     {
-        
+        base.Awake();
+        if (Instance == null) Instance = this;
     }
     void Update()
     {
@@ -31,6 +33,10 @@ public class CellCalculation : CellCalculationLoader
         if (PerformMathOperation())
         {
             PerformTrue();
+        }
+        else
+        {
+            PerformWrong();
         }
         SelectionManager.Instance.ResetCellSizeAndState();
         //SelectionManager.Instance.LoadTextHeader();
@@ -56,20 +62,29 @@ public class CellCalculation : CellCalculationLoader
         StartCoroutine(waitForTime.DelayedScorePopUp(_btn2, 0.3f));
 
         board.TransferToUnClickableCells(_btn1.Cell, _btn2.Cell);
-
-        MakeTrueAnswer();
+        Debug.Log("Dap an dung");
         if (board.clickableCells.Count == 0)
         {
             //this.timerPerTurn.StopTime();
             Debug.Log("You complete a state");
+            calculationAction.FinishedGame();
         }
         else
         {
+            calculationAction.Correct();
             //this.timerPerTurn.ResetTimer();
         }
+        MakeTrueAnswer();
+
+    }
+    protected virtual void PerformWrong()
+    {
+        Debug.Log("Dap an sai");
+        calculationAction.Wrong();
     }
     public void MakeTrueAnswer()
     {
         trueValue = pickAnswer.PickRandom();
+        header.StringToText();
     }
 }

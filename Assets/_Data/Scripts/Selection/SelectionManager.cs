@@ -25,7 +25,7 @@ public class SelectionManager : SelectionManagerLoader
     public static Btn btn1;
     public static Btn btn2;
     public static SelectionManager Instance;
-
+    public bool canSelecting = true;
 
 
     protected override void Awake()
@@ -88,7 +88,15 @@ public class SelectionManager : SelectionManagerLoader
                 btn2.Cell.ScaleDown();
         }
     }
-
+    //write function to change canSelecting
+    public void ChangeCanSelecting(bool currentState)
+    {
+        this.canSelecting = currentState;
+    }
+    public bool CanBeClicked()
+    {
+        return this.canSelecting;
+    }
 
 }
 

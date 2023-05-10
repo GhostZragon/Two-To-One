@@ -486,7 +486,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
@@ -1589,6 +1589,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1099289735}
   - component: {fileID: 1099289736}
+  - component: {fileID: 1099289737}
   m_Layer: 0
   m_Name: CalculationManager
   m_TagString: Untagged
@@ -1628,8 +1629,21 @@ MonoBehaviour:
   pickAnswer: {fileID: 525644488}
   header: {fileID: 720694469}
   waitForTime: {fileID: 195014926}
+  calculationAction: {fileID: 1099289737}
   math: 0
   trueValue: 0
+--- !u!114 &1099289737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099289734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1991b918bc79f34289e68f8fd6a5882, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1109527811
 GameObject:
   m_ObjectHideFlags: 0
@@ -2069,8 +2083,8 @@ MonoBehaviour:
   cellCalculation: {fileID: 1099289736}
   minValue: 1
   maxValue: 10
-  row: 3
-  col: 4
+  row: 2
+  col: 2
   spawning: 1
   clickableCells: []
   unClickableCells: []
@@ -2137,7 +2151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitForTime: {fileID: 195014926}
-  trueValue: 0
+  canSelecting: 1
 --- !u!1 &1835511077
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,16 +47,19 @@ public class TimerManager : QuangLibrary
     public void ResetTime()
     {
         _currentPlayTime = _defaultPlayTime;
+        hasBeenCalled = false;
     }
     public void ChangeCountingStatement(bool _state)
     {
         isCounting = _state;
     }
+    bool hasBeenCalled = false;
     public void CheckOverTime()
     {
         //List call back function
-        if (_currentPlayTime < 0)
+        if (_currentPlayTime < 0 && !hasBeenCalled)
         {
+            hasBeenCalled = true;
             EndTimePhase();
             ResetTime();
             Debug.Log("End time phase");
@@ -75,6 +78,6 @@ public class TimerManager : QuangLibrary
     {
         //call back function
         ScoreManager.Instance.UpdateScoreGrade();
-        ScoreManager.Instance.scoreDisplay.RefreshText();
+        //ScoreManager.Instance.scoreDisplay.RefreshText();
     }
 }

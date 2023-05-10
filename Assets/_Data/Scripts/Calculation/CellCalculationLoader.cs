@@ -8,7 +8,7 @@ public class CellCalculationLoader : QuangLibrary
     [SerializeField] protected PickAnswer pickAnswer;
     [SerializeField] protected Header header;
     [SerializeField] protected WaitForTime waitForTime;
-
+    [SerializeField] public CalculationAction calculationAction;
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -16,6 +16,12 @@ public class CellCalculationLoader : QuangLibrary
         this.LoadPickAnswer();
         this.LoadHeader();
         this.WaitForTime();
+        this.CalculationAction();
+    }
+    protected virtual void CalculationAction()
+    {
+        if (calculationAction != null) return;
+        calculationAction = GetComponent<CalculationAction>();
     }
     protected virtual void WaitForTime()
     {

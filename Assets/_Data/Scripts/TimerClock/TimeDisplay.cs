@@ -41,7 +41,23 @@ public class TimeDisplay : QuangLibrary
     // Update is called once per frame
     void Update()
     {
-        image.fillAmount = Mathf.InverseLerp(0, timerManager._defaultPlayTime, timerManager._currentPlayTime);
+        if (!timerManager.isCounting) return;
+        UpdateFillAmount(0, timerManager._defaultPlayTime, timerManager._currentPlayTime);
     }
-
+    public void UpdateFillAmount(float minValue, float maxValue,float currentValue)
+    {
+        image.fillAmount = Mathf.InverseLerp(minValue, maxValue, currentValue);
+    }
+    public IEnumerator FillRefreshTime()
+    {
+        float time = 1;
+        image.fillAmount = 1;
+        while(time >= 0)
+        {
+            image.fillAmount = time;
+            time -= Time.deltaTime;
+            yield return null;
+        }
+    }
+    
 }

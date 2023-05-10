@@ -82,20 +82,27 @@ public class ScoreManager : QuangLibrary
         if (currentScoreGrade == ScoreGrade.PERFECT)
         {
             currentScoreGrade = ScoreGrade.GOOD;
+            scoreDisplay.RefreshText();
         }
         else if (currentScoreGrade == ScoreGrade.GOOD)
         {
             currentScoreGrade = ScoreGrade.BAD;
+            scoreDisplay.RefreshText();
         }
         else if (currentScoreGrade == ScoreGrade.BAD)
         {
             Debug.Log("You lose");
+            CellCalculation.Instance.calculationAction.Wrong();
+            return;
         }
+
     }
     public void AddScore()
     {
         this.scorePopUp.CreatePopUpText();
         //this.scoreText.TimeText = this.currentScore.ToString();
     }
+
+    
 }
 

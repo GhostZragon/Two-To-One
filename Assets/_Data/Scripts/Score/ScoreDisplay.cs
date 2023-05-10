@@ -37,4 +37,29 @@ public class ScoreDisplay : QuangLibrary
         scoreRateText.transform.localScale = Vector3.zero;
         scoreRateText.transform.LeanScale(Vector3.one, 0.5f).setEaseOutBack();
     }
+    public void RefreshText(string str, Color color)
+    {
+        scoreRateText.text = str;
+        scoreRateText.color = color;
+        ShowPopUpText();
+    }
+    public void RefreshText(string str)
+    {
+        scoreRateText.text = str;
+        ShowPopUpText();
+    }
+    public void Result(bool _isCorrect)
+    {
+        if (_isCorrect)
+        {
+            scoreRateText.text = "Correct";
+            scoreRateText.color = Color.green;
+        }
+        else if(!_isCorrect)
+        {
+            scoreRateText.text = "Wrong";
+            scoreRateText.color = Color.red;
+        }
+        ShowPopUpText();
+    }
 }
