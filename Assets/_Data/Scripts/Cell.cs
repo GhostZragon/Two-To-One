@@ -1,28 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
-public class Cell : QuangLibrary 
+public class Cell : QuangLibrary
 {
 
     public Infor infor;
     public Text valueText;
     public Button btn;
     bool isScale = false;
-    public float scaleSpeed = 0.1f;
-    public float rorateUp = -720;
-    public float rorateDown = 720;
-    public float time = 0.3f;
-    public float score = 200f;
+    public Image image;
+    [HideInInspector] public float scaleSpeed = 0.1f;
+    [HideInInspector] public float rorateUp = -720;
+    [HideInInspector] public float rorateDown = 720;
+    [HideInInspector] public float time = 0.3f;
+    public SpriteCellSO spriteCellSO;
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        CreateSprite();
+    }
     private void Start()
     {
-        this.valueText = GetComponentInChildren<Text>();
         this.UpdateValue(infor.value);
-        btn = GetComponent<Button>();
         btn.onClick.AddListener(ClickDown);
+
+    }
+    protected override void LoadComponent()
+    {
+        base.LoadComponent();
+        LoadText();
+        LoadButton();
+    }
+    protected virtual void LoadText()
+    {
+        if (this.valueText != null)
+        {
+            valueText = GetComponentInChildren<Text>();
+        }
+    }
+    protected virtual void LoadButton()
+    {
+        if (this.btn != null)
+        {
+            btn = GetComponent<Button>();
+        }
+    }
+    private void CreateSprite()
+    {
+        image.sprite = spriteCellSO.GetRandomSprite();
     }
 
     public void UpdateValue(int newValue)
@@ -58,7 +83,7 @@ public class Cell : QuangLibrary
     {
         max += 1;
         int _newValue = Random.Range(min, max);
-        while(_newValue == 0)
+        while (_newValue == 0)
         {
             _newValue = Random.Range(min, max);
         }
@@ -68,7 +93,7 @@ public class Cell : QuangLibrary
     private void ScaleUp()
     {
         //Debug.Log("On mouse enter");
-        Vector3 vector = new Vector3(1.3f, 1.3f, 1.3f);
+        Vector3 vector = new Vector3(1.2f, 1.2f, 1.2f);
         transform.LeanScale(vector, scaleSpeed);
         Rotating(rorateUp);
     }

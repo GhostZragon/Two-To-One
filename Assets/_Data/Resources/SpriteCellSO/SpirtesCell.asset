@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9891ccd1ba17054aa710205cb75f7ab, type: 3}
   m_Name: SpirtesCell
   m_EditorClassIdentifier: 
-  sprite: []
+  sprite:
+  - {fileID: 1294629810, guid: 94af9f9717f9b5c489217c606986b989, type: 3}
+  - {fileID: -2100704333, guid: 94af9f9717f9b5c489217c606986b989, type: 3}
+  - {fileID: 244915337, guid: 94af9f9717f9b5c489217c606986b989, type: 3}
+  - {fileID: 1409674263, guid: 94af9f9717f9b5c489217c606986b989, type: 3}
+  - {fileID: 206225079, guid: 94af9f9717f9b5c489217c606986b989, type: 3}

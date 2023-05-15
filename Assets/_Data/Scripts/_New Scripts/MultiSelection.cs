@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class MultiSelection : MonoBehaviour
@@ -28,20 +26,20 @@ public class MultiSelection : MonoBehaviour
             UpdateCurrentCell();
             MoveNextCurrentCell();
         }
-        
-        
+
+
     }
     private void UpdateCurrentCell()
     {
         buttonsList[currentIndex] = new Btn(_newCell);
-        if(currentIndex == 0)
+        if (currentIndex == 0)
         {
             ResetButtonsListState();
         }
     }
     private void MoveNextCurrentCell()
     {
-        if(currentIndex < buttonsList.Count - 1)
+        if (currentIndex < buttonsList.Count - 1)
         {
             currentIndex++;
         }
@@ -52,7 +50,7 @@ public class MultiSelection : MonoBehaviour
     }
     private void ResetButtonsListState()
     {
-        for (int i = 0; i < buttonsList.Count;i++)
+        for (int i = 0; i < buttonsList.Count; i++)
         {
             buttonsList[i] = new Btn();
         }

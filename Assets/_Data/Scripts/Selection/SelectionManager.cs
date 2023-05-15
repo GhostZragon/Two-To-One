@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 [System.Serializable]
 public class Btn
@@ -22,8 +17,8 @@ public class Btn
 }
 public class SelectionManager : SelectionManagerLoader
 {
-    public static Btn btn1;
-    public static Btn btn2;
+    public Btn btn1;
+    public Btn btn2;
     public static SelectionManager Instance;
     public bool canSelecting = true;
 
@@ -33,14 +28,21 @@ public class SelectionManager : SelectionManagerLoader
         base.Awake();
         Instance = this;
         ResetButtonState();
-        
+
     }
     private void ResetButtonState()
     {
         btn1 = new Btn();
         btn2 = new Btn();
     }
-
+    public bool CellsIsNull()
+    {
+        if (btn1.Cell == null || btn2.Cell == null)
+        {
+            return true;
+        }
+        return false;
+    }
     public void OnCellClick(Transform newCell)
     {
         ManageCellSelection(newCell);

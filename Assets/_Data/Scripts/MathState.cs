@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class MathState
 {
@@ -16,7 +14,7 @@ public static class MathState
     [SerializeField]
     public static MathOperation Math;
 
-    public static double MathCaculation(int a,int b, MathOperation math)
+    public static double MathCaculation(int a, int b, MathOperation math)
     {
         double value = 0;
         double _a = (double)a, _b = (double)b;

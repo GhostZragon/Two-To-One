@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CellCalculation : CellCalculationLoader
 {
     public MathState.MathOperation math;
-    public double trueValue;
+    public double correctValue;
     public static CellCalculation Instance;
-    protected override void Awake()
+
+    protected override void LoadComponent()
     {
-        base.Awake();
-        if (Instance == null) Instance = this;
+        base.LoadComponent();
+        Instance = this;
     }
     void Update()
     {
@@ -22,7 +20,7 @@ public class CellCalculation : CellCalculationLoader
     }
     void Calculation()
     {
-        if (SelectionManager.btn1 == null || SelectionManager.btn2 == null)
+        if (SelectionManager.Instance.CellsIsNull())
         {
             Debug.Log("is null");
             SelectionManager.Instance.ResetCellSizeAndState();
@@ -43,10 +41,11 @@ public class CellCalculation : CellCalculationLoader
     }
     bool PerformMathOperation()
     {
-        if (SelectionManager.btn1.Cell == null || SelectionManager.btn2.Cell == null) return false;
+        if (SelectionManager.Instance.CellsIsNull()) return false;
 
-        int a = SelectionManager.btn1.Cell.infor.value, b = SelectionManager.btn2.Cell.infor.value;
-        double c = trueValue;
+        int a = SelectionManager.Instance.btn1.Cell.infor.value,
+            b = SelectionManager.Instance.btn2.Cell.infor.value;
+        double c = correctValue;
         if (MathState.MathCaculation(a, b, math) == c)
         {
             return true;
@@ -56,8 +55,8 @@ public class CellCalculation : CellCalculationLoader
     }
     protected virtual void PerformTrue()
     {
-        Btn _btn1 = SelectionManager.btn1;
-        Btn _btn2 = SelectionManager.btn2;
+        Btn _btn1 = SelectionManager.Instance.btn1;
+        Btn _btn2 = SelectionManager.Instance.btn2;
         StartCoroutine(waitForTime.DelayedScorePopUp(_btn1, 0));
         StartCoroutine(waitForTime.DelayedScorePopUp(_btn2, 0.3f));
 
@@ -74,9 +73,10 @@ public class CellCalculation : CellCalculationLoader
             calculationAction.Correct();
             //this.timerPerTurn.ResetTimer();
         }
-        MakeTrueAnswer();
+
 
     }
+
     protected virtual void PerformWrong()
     {
         Debug.Log("Dap an sai");
@@ -84,7 +84,7 @@ public class CellCalculation : CellCalculationLoader
     }
     public void MakeTrueAnswer()
     {
-        trueValue = pickAnswer.PickRandom();
-        header.StringToText();
+        correctValue = pickAnswer.PickRandom();
+        CellDisplayManager.Instance.RefreshTrueValueText();
     }
 }

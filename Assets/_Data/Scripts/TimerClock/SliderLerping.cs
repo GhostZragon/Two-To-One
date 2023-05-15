@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 [CustomEditor(typeof(SliderLerping))]
 public class CustomSliderLerping : Editor
@@ -57,7 +54,7 @@ public class SliderLerping : QuangLibrary
     }
     public void ResetTimer()
     {
-        temp = colors.Length ;
+        temp = colors.Length;
         stateIndex = -1;
         value = 2;
         lerpDone = false;
@@ -88,7 +85,7 @@ public class SliderLerping : QuangLibrary
             currentColor = colors[stateIndex];
 
         }
-        
+
         //logic for current image color
         if (lerpDone == false && stateIndex < colors.Length - 1 && stateIndex > -1)
         {
@@ -104,7 +101,7 @@ public class SliderLerping : QuangLibrary
         {
             image.color = colors[stateIndex + 1];
         }
-        else if (stateIndex < colors.Length )
+        else if (stateIndex < colors.Length)
         {
             image.color = colors[stateIndex];
         }

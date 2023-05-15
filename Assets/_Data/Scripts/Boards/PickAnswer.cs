@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +15,7 @@ public class PickAnswer : QuangLibrary
     {
         if (cellCalculation != null) return;
         cellCalculation = FindObjectOfType<CellCalculation>();
-    }   
+    }
     protected virtual void LoadBoard()
     {
         if (board != null) return;

@@ -1,10 +1,5 @@
-using System;
-using static UnityEditor.Progress;
-using TMPro;
 using UnityEditor;
 using UnityEngine;
-using System.Collections.Generic;
-using UnityEngine.UI;
 
 [CustomEditor(typeof(ScoreManager))]
 public class CustomScoreManager : Editor
@@ -47,8 +42,8 @@ public class ScoreManager : QuangLibrary
 
     private void LoadScoreDisplay()
     {
-        if(this.scoreDisplay != null) return;
-        scoreDisplay = GetComponent<ScoreDisplay>();
+        if (this.scoreDisplay != null) return;
+        scoreDisplay = GetComponentInChildren<ScoreDisplay>();
     }
 
     protected virtual void LoadScorePopUp()
@@ -103,6 +98,6 @@ public class ScoreManager : QuangLibrary
         //this.scoreText.TimeText = this.currentScore.ToString();
     }
 
-    
+
 }
 

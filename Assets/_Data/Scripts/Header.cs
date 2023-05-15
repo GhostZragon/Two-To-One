@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 [CustomEditor(typeof(Header))]
 public class CustomHeader : Editor
@@ -49,7 +45,7 @@ public class Header : QuangLibrary
     {
         if (cellCalculation != null) return;
         cellCalculation = FindObjectOfType<CellCalculation>();
-        
+
     }
     public void StringToText()
     {
@@ -67,7 +63,7 @@ public class Header : QuangLibrary
         //}
         string c = " ";
 
-        c = cellCalculation.trueValue.ToString();
+        c = cellCalculation.correctValue.ToString();
         textMeshProUGUI.text = c;
     }
 }

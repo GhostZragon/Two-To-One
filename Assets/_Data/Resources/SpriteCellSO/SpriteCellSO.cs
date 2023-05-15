@@ -1,15 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-[CreateAssetMenu(fileName ="SpirtesCell")]
+[CreateAssetMenu(fileName = "SpirtesCell")]
 public class SpriteCellSO : ScriptableObject
 {
-    [System.Serializable]
-    public struct CellSpirte
+    public Sprite[] sprite;
+
+    public Sprite GetRandomSprite()
     {
-        public string name;
-        public Sprite sprite;
+        int index = Random.Range(0, sprite.Length);
+        return sprite[index];
     }
-    public CellSpirte[] sprite;
 }

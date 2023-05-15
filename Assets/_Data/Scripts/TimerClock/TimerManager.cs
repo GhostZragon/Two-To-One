@@ -1,14 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TimerManager : QuangLibrary
 {
     public float _currentPlayTime = 10;
     public float _defaultPlayTime = 3;
-    public bool isCounting = false;
     public static TimerManager instance;
     public TimeDisplay timeDisplay;
     protected override void Awake()
@@ -25,7 +20,7 @@ public class TimerManager : QuangLibrary
     private void LoadTimeDisplay()
     {
         if (timeDisplay != null) return;
-        timeDisplay = GetComponent<TimeDisplay>();
+        timeDisplay = GetComponentInChildren<TimeDisplay>();
     }
 
     public void Start()
@@ -41,7 +36,7 @@ public class TimerManager : QuangLibrary
 
     private void TimeCounting()
     {
-        if (!isCounting) return;
+        if (!GameManager.Instance.IsCounting) return;
         _currentPlayTime -= Time.deltaTime;
     }
     public void ResetTime()
@@ -49,9 +44,17 @@ public class TimerManager : QuangLibrary
         _currentPlayTime = _defaultPlayTime;
         hasBeenCalled = false;
     }
+    public void StopTimer()
+    {
+        GameManager.Instance.IsCounting = false;
+    }
+    public void StartTimer()
+    {
+        GameManager.Instance.IsCounting = true;
+    }
     public void ChangeCountingStatement(bool _state)
     {
-        isCounting = _state;
+        GameManager.Instance.IsCounting = _state;
     }
     bool hasBeenCalled = false;
     public void CheckOverTime()
@@ -67,7 +70,7 @@ public class TimerManager : QuangLibrary
     }
     public float GetCurrentTime()
     {
-        if(_currentPlayTime < 0)
+        if (_currentPlayTime < 0)
         {
             return 0;
         }
@@ -78,6 +81,6 @@ public class TimerManager : QuangLibrary
     {
         //call back function
         ScoreManager.Instance.UpdateScoreGrade();
-        //ScoreManager.Instance.scoreDisplay.RefreshText();
+        //ScoreManager.Instance.scoreDisplay.RefreshTrueValueText();
     }
 }

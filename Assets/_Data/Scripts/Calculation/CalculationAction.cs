@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CalculationAction : MonoBehaviour
@@ -15,7 +13,7 @@ public class CalculationAction : MonoBehaviour
     }
     public void Wrong()
     {
-        ProcessResult("Wrong",Color.red);
+        ProcessResult("Wrong", Color.red);
     }
     private void ProcessResult(string str, Color color)
     {
@@ -31,11 +29,12 @@ public class CalculationAction : MonoBehaviour
         float waitTime = 1f;
         TimerManager.instance.timeDisplay.StartCoroutine("FillRefreshTime");
         yield return new WaitForSeconds(waitTime);
+        CellDisplayManager.Instance.RefreshTrueValueText("");
         // Counter 3 seconds
         int count = 3;
         while (count > 0)
         {
-            ScoreManager.Instance.scoreDisplay.RefreshText(count.ToString(),Color.green);
+            ScoreManager.Instance.scoreDisplay.RefreshText(count.ToString(), Color.green);
             yield return new WaitForSeconds(waitTime);
             count--;
         }
@@ -45,6 +44,7 @@ public class CalculationAction : MonoBehaviour
         StartTimerAction();
         SelectionManager.Instance.ChangeCanSelecting(true);
         ScoreManager.Instance.scoreDisplay.RefreshText();
+        CellCalculation.Instance.MakeTrueAnswer();
     }
 
     public void FinishedGame()

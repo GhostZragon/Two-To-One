@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Custom
+  - name: Cell
+    uniqueID: 193569597
+    locked: 0
+  - name: ScoreText
     uniqueID: 3791531683
     locked: 0

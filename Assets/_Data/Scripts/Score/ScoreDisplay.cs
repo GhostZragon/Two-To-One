@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -55,7 +52,7 @@ public class ScoreDisplay : QuangLibrary
             scoreRateText.text = "Correct";
             scoreRateText.color = Color.green;
         }
-        else if(!_isCorrect)
+        else if (!_isCorrect)
         {
             scoreRateText.text = "Wrong";
             scoreRateText.color = Color.red;
