@@ -1,8 +1,4 @@
-using System.Collections;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 [System.Serializable]
 public class Btn
@@ -24,24 +20,29 @@ public class SelectionManager : SelectionManagerLoader
     public Btn btn1;
     public Btn btn2;
     public static SelectionManager Instance;
+    public bool canSelecting = true;
 
-    [SerializeField] protected int trueValue;
-    public int TrueValue { get => trueValue; }
-    public MathState.MathOperation math;
 
     protected override void Awake()
     {
         base.Awake();
         Instance = this;
         ResetButtonState();
-        
+
     }
     private void ResetButtonState()
     {
         btn1 = new Btn();
         btn2 = new Btn();
     }
-
+    public bool CellsIsNull()
+    {
+        if (btn1.Cell == null || btn2.Cell == null)
+        {
+            return true;
+        }
+        return false;
+    }
     public void OnCellClick(Transform newCell)
     {
         ManageCellSelection(newCell);
@@ -66,59 +67,7 @@ public class SelectionManager : SelectionManagerLoader
             btn1 = new Btn(newCell);
         }
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Calculation();
-        }
-    }
 
-    void Calculation()
-    {
-        if (btn1 == null || btn2 == null)
-        {
-            Debug.Log("is null");
-            ResetCellSizeAndState();
-            return;
-        }
-
-
-        if (PerformMathOperation())
-        {
-            
-            StartCoroutine(waitForTime.DelayedScorePopUp(btn1, 0));
-            StartCoroutine(waitForTime.DelayedScorePopUp(btn2, 0.3f));
-
-            board.TransferToUnClickableCells(btn1.Cell, btn2.Cell);
-            trueValue = pickAnswer.PickRandom();
-            if (board.clickableCells.Count == 0)
-            {
-                //this.timerPerTurn.StopTime();
-                Debug.Log("You complete a state");
-            }
-            else
-            {
-                //this.timerPerTurn.ResetTimer();
-            }
-        }
-        ResetCellSizeAndState();
-        LoadTextHeader();
-    }
-
-    bool PerformMathOperation()
-    {
-        if (btn1.Cell == null || btn2.Cell == null) return false;
-
-        int a = btn1.Cell.infor.value, b = btn2.Cell.infor.value;
-        int c = this.trueValue;
-        if (MathState.MathCaculation(a, b, math) == c)
-        {
-            return true;
-        }
-
-        return false;
-    }
     public void ResetCellSizeAndState()
     {
 
@@ -126,7 +75,7 @@ public class SelectionManager : SelectionManagerLoader
         this.ResetButtonState();
 
     }
-    private void ResetCellSize()
+    public void ResetCellSize()
     {
         if (btn1.Cell != null && btn2.Cell != null)
         {
@@ -141,22 +90,15 @@ public class SelectionManager : SelectionManagerLoader
                 btn2.Cell.ScaleDown();
         }
     }
-    private void LoadTextHeader()
+    //write function to change canSelecting
+    public void ChangeCanSelecting(bool currentState)
     {
-        if (header == null)
-        {
-            this.LoadHeader();
-        }
-        header.StringToText();
+        this.canSelecting = currentState;
     }
-    public void GM_SetTrueAnswer()
+    public bool CanBeClicked()
     {
-        if (pickAnswer == null)
-        {
-            this.LoadPickAnswer();
-        }
-        trueValue = pickAnswer.PickRandom();
-        LoadTextHeader();
+        return this.canSelecting;
     }
+
 }
 

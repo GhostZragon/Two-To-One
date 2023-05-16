@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 [CustomEditor(typeof(Header))]
 public class CustomHeader : Editor
@@ -26,7 +22,7 @@ public class Header : QuangLibrary
 {
     public TextMeshProUGUI textMeshProUGUI;
 
-    public SelectionManager selectionManager;
+    public CellCalculation cellCalculation;
 
     void Start()
     {
@@ -47,9 +43,9 @@ public class Header : QuangLibrary
 
     protected virtual void LoadSelectionManager()
     {
-        if (selectionManager != null) return;
-        selectionManager = FindObjectOfType<SelectionManager>();
-        
+        if (cellCalculation != null) return;
+        cellCalculation = FindObjectOfType<CellCalculation>();
+
     }
     public void StringToText()
     {
@@ -67,7 +63,7 @@ public class Header : QuangLibrary
         //}
         string c = " ";
 
-        c = selectionManager.TrueValue.ToString();
+        c = cellCalculation.correctValue.ToString();
         textMeshProUGUI.text = c;
     }
 }

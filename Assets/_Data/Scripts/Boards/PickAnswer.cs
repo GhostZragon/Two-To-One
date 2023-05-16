@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PickAnswer : QuangLibrary
 {
     public Board board;
-    public SelectionManager selectionManager;
+    public CellCalculation cellCalculation;
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -14,15 +13,15 @@ public class PickAnswer : QuangLibrary
     }
     protected virtual void LoadCalculatorSystem()
     {
-        if (selectionManager != null) return;
-        selectionManager = FindObjectOfType<SelectionManager>();
-    }   
+        if (cellCalculation != null) return;
+        cellCalculation = FindObjectOfType<CellCalculation>();
+    }
     protected virtual void LoadBoard()
     {
         if (board != null) return;
-        board = GameObject.Find("BoardManager").GetComponent<Board>();
+        board = FindObjectOfType<Board>();
     }
-    public int PickRandom()
+    public double PickRandom()
     {
         List<Cell> list = new List<Cell>();
         list = board.clickableCells;
@@ -37,7 +36,7 @@ public class PickAnswer : QuangLibrary
         Cell cell02 = list[b];
         int a_value = cell01.infor.value, b_value = cell02.infor.value;
         //int c = a_value + b_value;
-        int c = MathState.MathCaculation(a_value, b_value, selectionManager.math);
+        double c = MathState.MathCaculation(a_value, b_value, cellCalculation.math);
         //Debug.Log($"{cell01.infor.value} + {cell02.infor.value} = {c}");
         return c;
     }

@@ -1,71 +1,43 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEditor.Progress;
 
-[CustomEditor(typeof(Board))]
-public class CustomBoard : Editor
-{
-    private Board board;
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        Board board = (Board)target;
 
-        if (GUILayout.Button("Create Board"))
-        {
-            board.CreateBoard();
-        }
-
-        if ((GUILayout.Button("Delete Board")))
-        {
-            board.DeleteBoard();
-        }
-        if ((GUILayout.Button("Pick Answer")))
-        {
-            board.SetTrueAnswer();
-        }
-    }
-}
 public class Board : BoardLoader
 {
     [Header("Random min max value")]
-    [SerializeField] protected int minValue = -10;
-    [SerializeField] protected int maxValue = 10;
+    [SerializeField] public int minValue = -10;
+    [SerializeField] public int maxValue = 10;
 
     [Header("Row and col")]
-    [SerializeField][Range(2, 6)] int row = 2;
-    [SerializeField][Range(2, 12)] int col = 2;
+    [SerializeField][Range(2, 6)] public int row = 2;
+    [SerializeField][Range(2, 12)] public int col = 2;
 
-    public bool spawning = true;
     public List<Cell> clickableCells;
     public List<Cell> unClickableCells;
-
 
     // Start is called before the first frame update
     void Start()
     {
 
-        CreateBoard();
     }
     protected override void Reset()
     {
         base.Reset();
         this.DeleteBoard();
     }
+    
     public void CreateBoard()
     {
         DeleteBoard();
         //CheckRowCol();
         gridLayout.constraintCount = col;
-        if (spawning == false) return;
+        //if (GameManager.Instance.SpawningBoard == false) return;
 
         SpawnCells();
         //RandomNewPosBoard();
         //SortCell();
-        SetTrueAnswer();
+        //cellCalculation.MakeTrueAnswer();
 
     }
 
@@ -115,8 +87,5 @@ public class Board : BoardLoader
         this.unClickableCells.Add(b);
     }
 
-    public void SetTrueAnswer()
-    {
-        selectionManager.GM_SetTrueAnswer();
-    }
+
 }

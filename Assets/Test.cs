@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 [CustomEditor(typeof(Test))]
 public class CusstomTest : Editor
@@ -25,7 +22,7 @@ public class Test : QuangLibrary
 {
     public Image image;
     public TextMeshProUGUI TimeText;
-    [Range(0,1)]public float value;
+    [Range(0, 1)] public float value;
     public int scoreRewardText;
     public float _currentPlayTime = 10;
     public float _defaultPlayTime = 3;
@@ -77,16 +74,16 @@ public class Test : QuangLibrary
     }
     protected virtual void NextScoreState()
     {
-        //Score state will decrease from Perfect -> Good -> Bad -> None
-        if(currentScoreState == ScoreState.Perfect)
+        //Score state will decrease from PERFECT -> GOOD -> BAD -> None
+        if (currentScoreState == ScoreState.Perfect)
         {
             currentScoreState = ScoreState.Good;
         }
-        else if(currentScoreState == ScoreState.Good)
+        else if (currentScoreState == ScoreState.Good)
         {
             currentScoreState = ScoreState.Bad;
         }
-        else if(currentScoreState == ScoreState.Bad)
+        else if (currentScoreState == ScoreState.Bad)
         {
             currentScoreState = ScoreState.None;
         }

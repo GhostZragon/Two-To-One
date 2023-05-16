@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class MathState
 {
@@ -16,17 +14,19 @@ public static class MathState
     [SerializeField]
     public static MathOperation Math;
 
-    public static int MathCaculation(int a,int b, MathOperation math)
+    public static double MathCaculation(int a, int b, MathOperation math)
     {
-        int value = 0;
+        double value = 0;
+        double _a = (double)a, _b = (double)b;
+
         switch (math)
         {
             case MathOperation.addition:
-                value = addition(a, b);
+                value = addition(_a, _b);
                 Debug.Log($"{a} + {b} = {value}");
                 break;
             case MathOperation.subtraction:
-                value = subtraction(a, b);
+                value = subtraction(_a, _a);
                 Debug.Log($"{a} - {b} = {value}");
                 break;
             case MathOperation.multiplication:
@@ -42,19 +42,19 @@ public static class MathState
         }
         return value;
     }
-    public static int addition(int a, int b)
+    public static double addition(double a, double b)
     {
         return a + b;
     }
-    public static int subtraction(int a, int b)
+    public static double subtraction(double a, double b)
     {
         return a - b;
     }
-    public static int multiplication(int a, int b)
+    public static double multiplication(double a, double b)
     {
         return a * b;
     }
-    public static int division(int a, int b)
+    public static double division(double a, double b)
     {
         return a / b;
     }

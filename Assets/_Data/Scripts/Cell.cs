@@ -1,28 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
-public class Cell : QuangLibrary 
+public class Cell : QuangLibrary
 {
 
     public Infor infor;
     public Text valueText;
     public Button btn;
     bool isScale = false;
-    public float scaleSpeed = 0.1f;
-    public float rorateUp = -720;
-    public float rorateDown = 720;
-    public float time = 0.3f;
-    public float score = 200f;
+    public Image image;
+    [HideInInspector] public float scaleSpeed = 0.1f;
+    [HideInInspector] public float rorateUp = -720;
+    [HideInInspector] public float rorateDown = 720;
+    [HideInInspector] public float time = 0.3f;
+    public SpriteCellSO spriteCellSO;
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        CreateSprite();
+    }
     private void Start()
     {
-        this.valueText = GetComponentInChildren<Text>();
         this.UpdateValue(infor.value);
-        btn = GetComponent<Button>();
         btn.onClick.AddListener(ClickDown);
+
+    }
+    protected override void LoadComponent()
+    {
+        base.LoadComponent();
+        LoadText();
+        LoadButton();
+    }
+    protected virtual void LoadText()
+    {
+        if (this.valueText != null)
+        {
+            valueText = GetComponentInChildren<Text>();
+        }
+    }
+    protected virtual void LoadButton()
+    {
+        if (this.btn != null)
+        {
+            btn = GetComponent<Button>();
+        }
+    }
+    private void CreateSprite()
+    {
+        image.sprite = spriteCellSO.GetRandomSprite();
     }
 
     public void UpdateValue(int newValue)
@@ -32,6 +57,7 @@ public class Cell : QuangLibrary
     }
     public void ClickDown()
     {
+        if (!SelectionManager.Instance.CanBeClicked()) return;
         if (isScale == false)
         {
             ScaleUp();
@@ -39,7 +65,7 @@ public class Cell : QuangLibrary
         }
         //Debug.Log(transform.name+" Value: "+infor.value);
         SelectionManager.Instance.OnCellClick(transform);
-
+        //MultiSelection.Instance.OnCellClick(transform);
 
     }
     public void TriggerScorePopUp()
@@ -56,18 +82,18 @@ public class Cell : QuangLibrary
     public void RandomValue(int min, int max)
     {
         max += 1;
-        int a = Random.Range(min, max);
-        while(a == 0)
+        int _newValue = Random.Range(min, max);
+        while (_newValue == 0)
         {
-            a = Random.Range(min, max);
+            _newValue = Random.Range(min, max);
         }
-        UpdateValue(a);
+        UpdateValue(_newValue);
     }
 
     private void ScaleUp()
     {
         //Debug.Log("On mouse enter");
-        Vector3 vector = new Vector3(1.3f, 1.3f, 1.3f);
+        Vector3 vector = new Vector3(1.2f, 1.2f, 1.2f);
         transform.LeanScale(vector, scaleSpeed);
         Rotating(rorateUp);
     }
