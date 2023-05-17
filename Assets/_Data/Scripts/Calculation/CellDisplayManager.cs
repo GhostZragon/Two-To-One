@@ -30,41 +30,41 @@ public class CellDisplayManager : QuangLibrary
     protected virtual void LoadDisplayHolder()
     {
         if (displayHolder != null) return;
-        displayHolder = transform.Find("DisplayHolder");
+        displayHolder = GameObject.Find("_DisplayHolder").transform;
     }
     protected virtual void LoadCorrectValue()
     {
-        displayHolder = transform.Find("DisplayHolder");
         if (correctValue != null) return;
         correctValue = displayHolder.Find("CorrectValue").GetComponent<TextMeshProUGUI>();
     }
     private void Update()
     {
-        if (!GameManager.Instance.PlayAble) return;
+        if(!GameManager.Instance.IsCounting) return;
         RefreshCellValue();
 
     }
     public void RefreshCellValue()
     {
         string a, b, c;
-        string d = "";
-        switch (CellCalculation.Instance.math)
-        {
-            case MathState.MathOperation.addition:
-                d = "+";
-                break;
-            case MathState.MathOperation.subtraction:
-                d = "-";
-                break;
-            case MathState.MathOperation.multiplication:
-                d = "x";
-                break;
-            case MathState.MathOperation.division:
-                d = "/";
-                break;
-            default:
-                break;
-        }
+        //string d = "";
+        string d = MathState.GetStringMathOperation(CellCalculation.Instance.math);
+        //switch (CellCalculation.Instance.math)
+        //{
+        //    case MathState.MathOperation.addition:
+        //        d = "+";
+        //        break;
+        //    case MathState.MathOperation.subtraction:
+        //        d = "-";
+        //        break;
+        //    case MathState.MathOperation.multiplication:
+        //        d = "x";
+        //        break;
+        //    case MathState.MathOperation.division:
+        //        d = "/";
+        //        break;
+        //    default:
+        //        break;
+        //}
         Btn btn1 = SelectionManager.Instance.btn1;
         Btn btn2 = SelectionManager.Instance.btn2;
         if (btn1.Cell == null)

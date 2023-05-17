@@ -10,10 +10,12 @@ public class CalculationAction : MonoBehaviour
     public void Correct()
     {
         ProcessResult("Correct", Color.green);
+        ScoreManager.Instance.IncreaseScore();
     }
     public void Wrong()
     {
         ProcessResult("Wrong", Color.red);
+        ScoreManager.Instance.DecreaseScore();
     }
     private void ProcessResult(string str, Color color)
     {

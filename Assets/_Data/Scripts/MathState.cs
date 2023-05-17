@@ -42,6 +42,28 @@ public static class MathState
         }
         return value;
     }
+    public static string GetStringMathOperation(MathOperation math)
+    {
+        string d = "";
+        switch (math)
+        {
+            case MathOperation.addition:
+                d = "+";
+                break;
+            case MathOperation.subtraction:
+                d = "-";
+                break;
+            case MathOperation.multiplication:
+                d = "x";
+                break;
+            case MathOperation.division:
+                d = "/";
+                break;
+            default:
+                break;
+        }
+        return d;
+    }
     public static double addition(double a, double b)
     {
         return a + b;
