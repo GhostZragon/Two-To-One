@@ -34,7 +34,7 @@ public class PickAnswer : QuangLibrary
         }
         Cell cell01 = list[a];
         Cell cell02 = list[b];
-        int a_value = cell01.infor.value, b_value = cell02.infor.value;
+        int a_value = cell01.value, b_value = cell02.value;
         //int c = a_value + b_value;
         double c = MathState.MathCaculation(a_value, b_value, cellCalculation.math);
         //Debug.Log($"{cell01.infor.value} + {cell02.infor.value} = {c}");

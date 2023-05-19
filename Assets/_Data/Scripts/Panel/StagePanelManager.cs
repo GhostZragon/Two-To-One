@@ -9,7 +9,6 @@ public class StagePanelManager : QuangLibrary
     public GameObject stagePanelPrefab;
     public GameObject holder;
     public StageManager stageManager;
-    public bool isTesting = true;
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -35,17 +34,9 @@ public class StagePanelManager : QuangLibrary
     }
     private void Start()
     {
-        if (!isTesting)
-        {
-            transform.gameObject.SetActive(false);
-        }
-        else
-        {
-            stagePanelPrefab.gameObject.SetActive(false);
+        SpawnStagePanel();
 
-            Invoke(nameof(SpawnStagePanel), 0.5f);
-        }
-        
+
     }
     private void SpawnStagePanel()
     {
@@ -58,11 +49,10 @@ public class StagePanelManager : QuangLibrary
         }
         for(int i = 0; i < stageManager.GetStageCount(); i++)
         {
-            var go = Instantiate(stagePanelPrefab, holder.transform);
-            StagePanel stagePanel = go.GetComponent<StagePanel>();
-            stagePanel.LoadStage(stageManager.GetStage(i));
-            stagePanel.SetIndexPanel(i);
-            go.SetActive(true);
+            var go = Instantiate(stagePanelPrefab, holder.transform).GetComponent<StagePanel>();
+            go.gameObject.SetActive(true);
+            go.LoadStage(stageManager.GetStage(i));
+            go.SetIndexPanel(i);
         }
     }
 

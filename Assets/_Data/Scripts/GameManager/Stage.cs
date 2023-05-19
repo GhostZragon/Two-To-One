@@ -5,7 +5,7 @@ public class Stage
 {
     // Start is called before the first frame update
     public MathState.MathOperation operation;
-    public float bestScore;
+    public int bestScore;
     public int minValue;
     public int maxValue;
     [Range(2, 6)] public int row;
@@ -13,5 +13,17 @@ public class Stage
     public int MaxScore()
     {
         return (row * col) / 2 * 500;
+    }
+    public void SetMaxScore(int newScore)
+    {
+        if(newScore >= bestScore)
+        {
+            bestScore = newScore;
+        }
+    }
+
+    public float GetBestScore()
+    {
+        return bestScore;
     }
 }

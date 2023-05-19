@@ -70,12 +70,12 @@ public class CellDisplayManager : QuangLibrary
         if (btn1.Cell == null)
             a = "_";
         else
-            a = btn1.Cell.infor.value.ToString();
+            a = btn1.Cell.value.ToString();
 
         if (btn2.Cell == null)
             b = "_";
         else
-            b = btn2.Cell.infor.value.ToString();
+            b = btn2.Cell.value.ToString();
 
         c = $"{a} {d} {b}";
         cellValue.text = c.ToString();

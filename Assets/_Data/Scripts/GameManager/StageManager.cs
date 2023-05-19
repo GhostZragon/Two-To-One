@@ -64,10 +64,34 @@ public class StageManager : QuangLibrary
         board.maxValue = currentStage.maxValue;
         cellCalculation.math = currentStage.operation;
     }
+    public void SetMaxScore()
+    {
+        currentStage.SetMaxScore(ScoreManager.Instance.GetScore());
+    }
     public void SetCurrentStage(int index)
     {
         currentIndex = index;
         LoadStage();
+    }
+    private bool CanLoadNextStage()
+    {
+        if (currentIndex + 1 >= stages.Count)
+        {
+            return false;
+        }
+        return true;
+    }
+    public void SetNextStage()
+    {
+        if(CanLoadNextStage())
+        {
+            SetCurrentStage(currentIndex + 1);
+        }
+        else
+        {
+            currentIndex = 0;
+            SetCurrentStage(currentIndex);
+        }
     }
     public void InitBoard()
     {

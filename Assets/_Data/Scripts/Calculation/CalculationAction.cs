@@ -1,11 +1,16 @@
 using System.Collections;
 using UnityEngine;
 
-public class CalculationAction : MonoBehaviour
+public class CalculationAction : QuangLibrary
 {
     // Handle score and time event when calculation is correct or wrong
+    public static CalculationAction Instance;
 
-
+    protected override void Awake()
+    {
+        base.Awake();
+        Instance = this;
+    }
 
     public void Correct()
     {
@@ -49,7 +54,7 @@ public class CalculationAction : MonoBehaviour
         CellCalculation.Instance.MakeTrueAnswer();
     }
 
-    public void FinishedGame()
+    public void FinishedStage()
     {
         ResetTimeAndScoreGrade();
         StopTimerAction();
@@ -60,12 +65,12 @@ public class CalculationAction : MonoBehaviour
         this.ResetScoreGradeAction();
         this.ResetTimerAction();
     }
-    private void StopTimerAction()
+    public static void StopTimerAction()
     {
         // dung bo dem thoi gian
         TimerManager.instance.ChangeCountingStatement(false);
     }
-    private void StartTimerAction()
+    public static void StartTimerAction()
     {
         // bat dau bo dem thoi gian
         TimerManager.instance.ChangeCountingStatement(true);

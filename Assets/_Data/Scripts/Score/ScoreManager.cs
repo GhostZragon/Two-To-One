@@ -6,9 +6,9 @@ public class ScoreManager : QuangLibrary
 {
     public static ScoreManager Instance;
     [SerializeField] ScorePopUp scorePopUp;
-    [SerializeField] protected float currentScore;
+    [SerializeField] protected int currentScore;
     //[SerializeField] protected float currentScoreMax;
-    [SerializeField] protected float scoreEveryGrade;
+    [SerializeField] protected int scoreEveryGrade;
     public ScoreDisplay scoreDisplay;
     public TextMeshProUGUI scoreText;
     public enum ScoreGrade
@@ -54,6 +54,10 @@ public class ScoreManager : QuangLibrary
         this.currentScore = 0;
         ScoreTextToString(currentScore);
 
+    }
+    public int GetScore()
+    {
+        return this.currentScore;
     }
     public void ResetScoreGrade()
     {

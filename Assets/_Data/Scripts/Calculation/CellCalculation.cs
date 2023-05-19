@@ -43,8 +43,8 @@ public class CellCalculation : CellCalculationLoader
     {
         if (SelectionManager.Instance.CellsIsNull()) return false;
 
-        int a = SelectionManager.Instance.btn1.Cell.infor.value,
-            b = SelectionManager.Instance.btn2.Cell.infor.value;
+        int a = SelectionManager.Instance.btn1.Cell.value,
+            b = SelectionManager.Instance.btn2.Cell.value;
         double c = correctValue;
         if (MathState.MathCaculation(a, b, math) == c)
         {
@@ -66,7 +66,7 @@ public class CellCalculation : CellCalculationLoader
         {
             //this.timerPerTurn.StopTime();
             Debug.Log("You complete a state");
-            calculationAction.FinishedGame();
+            GameManager.Instance.EndStage();
         }
         else
         {

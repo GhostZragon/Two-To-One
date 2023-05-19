@@ -44,6 +44,10 @@ public class TimeDisplay : QuangLibrary
     {
         image.fillAmount = Mathf.InverseLerp(minValue, maxValue, currentValue);
     }
+    public void SetFillAmount(float value)
+    {
+        image.fillAmount = value;
+    }
     public IEnumerator FillRefreshTime()
     {
         float time = 1;
