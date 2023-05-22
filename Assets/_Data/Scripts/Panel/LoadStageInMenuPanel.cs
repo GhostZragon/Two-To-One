@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class StagePanelManager : QuangLibrary
+public class LoadStageInMenuPanel : QuangLibrary
 {
     public List<StagePanel> stagePanels;
     public GameObject stagePanelPrefab;
@@ -51,7 +51,7 @@ public class StagePanelManager : QuangLibrary
         {
             var go = Instantiate(stagePanelPrefab, holder.transform).GetComponent<StagePanel>();
             go.gameObject.SetActive(true);
-            go.LoadStage(stageManager.GetStage(i));
+            go.LoadStage(stageManager.GetStageFormList(i));
             go.SetIndexPanel(i);
         }
     }

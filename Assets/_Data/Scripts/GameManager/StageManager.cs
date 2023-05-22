@@ -22,18 +22,30 @@ public class StageManagerCustom : Editor
 }
 public class StageManager : QuangLibrary
 {
+    public static StageManager Instance;
     public Stage currentStage;
     public List<Stage> stages;
     public StageSO stageSO;
     [Range(0, 3)] public int currentIndex;
     public Board board;
     public CellCalculation cellCalculation;
+    protected override void Awake()
+    {
+        base.Awake();
+        Instance = this;
+    }
     protected override void LoadComponent()
     {
         base.LoadComponent();
         this.LoadBoard();
         this.LoadStageSO();
         this.LoadCellCalculation();
+        this.LoadList();
+    }
+    protected virtual void LoadList()
+    {
+        stages = new List<Stage>();
+        stages = stageSO.GetStageList();
     }
     protected virtual void LoadCellCalculation()
     {
@@ -67,6 +79,7 @@ public class StageManager : QuangLibrary
     public void SetMaxScore()
     {
         currentStage.SetMaxScore(ScoreManager.Instance.GetScore());
+        LoadList();
     }
     public void SetCurrentStage(int index)
     {
@@ -110,7 +123,7 @@ public class StageManager : QuangLibrary
     {
         return stages.Count;
     }
-    public Stage GetStage(int i)
+    public Stage GetStageFormList(int i)
     {
         return stages[i];
     }

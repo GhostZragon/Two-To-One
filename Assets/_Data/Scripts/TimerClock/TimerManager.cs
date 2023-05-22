@@ -51,7 +51,7 @@ public class TimerManager : QuangLibrary
         GameManager.Instance.IsCounting = _state;
     }
     bool hasBeenCalled = false;
-    public void CheckOverTime()
+    private void CheckOverTime()
     {
         //List call back function
         if (_currentPlayTime < 0 && !hasBeenCalled)

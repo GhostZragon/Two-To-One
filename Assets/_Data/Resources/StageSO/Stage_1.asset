@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stages:
   - operation: 0
-    bestScore: 230
+    bestScore: 650
     minValue: 1
     maxValue: 10
-    row: 3
-    col: 4
+    row: 2
+    col: 2
   - operation: 1
     bestScore: 123
     minValue: 1

@@ -67,10 +67,24 @@ public class GameManager : QuangLibrary
     private void Start()
     {
         timerManager.ChangeCountingStatement(false);
-        MenuManager.Instance.ShowChooseStageMenu();
+        //MenuManager.Instance.ShowChooseStageMenu();
+        StartCoroutine(TestTime());
     }
-    public IEnumerator StartPlayGame(float time)
+
+    IEnumerator TestTime()
     {
+        yield return new WaitForSeconds(3);
+        MenuManager.Instance.ShowChooseStageMenu();
+
+    }
+    public void StartNewStage()
+    {
+        StartCoroutine(StartNewStageCoroutine());
+    }
+    public IEnumerator StartNewStageCoroutine()
+    {
+        int time = 3;
+        Debug.Log("first time");
         // bat Canvas chua cac thong tin
         MenuManager.Instance.ShowPlayGameMenu();
         // reset diem va score grade
@@ -87,13 +101,14 @@ public class GameManager : QuangLibrary
         // time = 0
         // bat dau dem thoi gian
         timerManager.ChangeCountingStatement(true);
+        Debug.Log("start game");
         // tao cau hoi cho player
         stageManager.CreateAnswer();
     }
     public void BackToMenu()
     {
+        // button
         ResetScoreAndTimeValue();
-
         stageManager.DeleteBoard();
         MenuManager.Instance.ShowChooseStageMenu();
     }
@@ -102,12 +117,13 @@ public class GameManager : QuangLibrary
         timerManager.ChangeCountingStatement(false);
         stageManager.DeleteBoard();
         stageManager.SetMaxScore();
-        EndGamePanel.LoadScore();
+        EndGamePanel.Instance.LoadStringScore();
         CalculationAction.Instance.FinishedStage();
         MenuManager.Instance.ShowEndStageMenu();
     }
     public void NextStage()
     {
+        //button
         stageManager.SetNextStage();
     }
     public void ResetScoreAndTimeValue()

@@ -67,7 +67,6 @@ public class Cell : QuangLibrary
         
         valueText.text = value.ToString();
 
-        Debug.Log("Update "+newValue);
     }
     public void ClickDown()
     {

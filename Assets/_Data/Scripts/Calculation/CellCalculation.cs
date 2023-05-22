@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CellCalculation : CellCalculationLoader
@@ -66,7 +67,7 @@ public class CellCalculation : CellCalculationLoader
         {
             //this.timerPerTurn.StopTime();
             Debug.Log("You complete a state");
-            GameManager.Instance.EndStage();
+            StartCoroutine(EndStageEnum(0.4f));
         }
         else
         {
@@ -77,6 +78,11 @@ public class CellCalculation : CellCalculationLoader
 
     }
 
+    IEnumerator EndStageEnum(float t)
+    {
+        yield return new WaitForSeconds(t);
+        GameManager.Instance.EndStage();
+    }
     protected virtual void PerformWrong()
     {
         Debug.Log("Dap an sai");
