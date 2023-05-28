@@ -23,10 +23,9 @@ public class StageManagerCustom : Editor
 public class StageManager : QuangLibrary
 {
     public static StageManager Instance;
-    public Stage currentStage;
-    public List<Stage> stages;
+    [SerializeField] protected Stage currentStage;
     public StageSO stageSO;
-    [Range(0, 3)] public int currentIndex;
+    [SerializeField]protected int currentIndex;
     public Board board;
     public CellCalculation cellCalculation;
     protected override void Awake()
@@ -40,13 +39,8 @@ public class StageManager : QuangLibrary
         this.LoadBoard();
         this.LoadStageSO();
         this.LoadCellCalculation();
-        this.LoadList();
     }
-    protected virtual void LoadList()
-    {
-        stages = new List<Stage>();
-        stages = stageSO.GetStageList();
-    }
+
     protected virtual void LoadCellCalculation()
     {
         if (cellCalculation != null) return;
@@ -59,8 +53,7 @@ public class StageManager : QuangLibrary
     }
     public virtual void LoadStage()
     {
-        stages = stageSO.GetStageList();
-        currentStage = stages[currentIndex];
+        currentStage = stageSO.stages[currentIndex];
     }
     public virtual void LoadStageSO()
     {
@@ -79,7 +72,6 @@ public class StageManager : QuangLibrary
     public void SetMaxScore()
     {
         currentStage.SetMaxScore(ScoreManager.Instance.GetScore());
-        LoadList();
     }
     public void SetCurrentStage(int index)
     {
@@ -88,7 +80,7 @@ public class StageManager : QuangLibrary
     }
     private bool CanLoadNextStage()
     {
-        if (currentIndex + 1 >= stages.Count)
+        if (currentIndex + 1 >= stageSO.stages.Count)
         {
             return false;
         }
@@ -121,11 +113,23 @@ public class StageManager : QuangLibrary
     }
     public int GetStageCount()
     {
-        return stages.Count;
+        return stageSO.stages.Count;
     }
     public Stage GetStageFormList(int i)
     {
-        return stages[i];
+        return stageSO.stages[i];
+    }
+    public bool CheckIndexPanel(int panelIndex)
+    {
+        if(panelIndex == currentIndex)
+        {
+            return true;
+        }
+        return false;
+    }
+    public int ReturnCurrentIndex()
+    {
+        return this.currentIndex;
     }
 }
 

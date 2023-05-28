@@ -5,30 +5,45 @@ using UnityEngine.UI;
 
 public class MenuPanelButtons : GameManagerButtonAction
 {
+
     [SerializeField] protected Button ExitButton;
     [SerializeField] protected Button PlayButton;
+    [SerializeField] protected Button TutorialButton;
+    [SerializeField] protected CanvasTranstionActive TutorialCanvas;
     protected override void LoadComponent()
     {
         base.LoadComponent();
         this.LoadButtons();
+
     }
     private void Start()
     {
         PlayButton.onClick.AddListener(PlayGameAction);
         ExitButton.onClick.AddListener(ExitGameAction);
     }
+
     protected virtual void LoadButtons()
     {
-        Transform _trans = transform.Find("ButtonHolder");
         if( ExitButton == null)
         {
-            ExitButton = _trans.Find("ExitButton").GetComponent<Button>();
+            LoadButton(out ExitButton, "ExitButton");
         }
         if(  PlayButton == null)
         {
-            PlayButton = _trans.Find("PlayButton").GetComponent<Button>();
+            LoadButton(out PlayButton, "PlayButton");
+        }
+        if(TutorialButton == null)
+        {
+            LoadButton(out TutorialButton, "TutorialButton");
         }
     }
+    protected virtual void LoadButton(out Button button, string name)
+    {
+        Transform _trans = transform.Find("ButtonHolder");
+
+        button = _trans.Find(name).GetComponent<Button>();
+    }
+
     public void PlayGameAction()
     {
         GameManager.StartNewStage();
@@ -36,5 +51,13 @@ public class MenuPanelButtons : GameManagerButtonAction
     public void ExitGameAction()
     {
         Application.Quit();
+    }
+    public void ShowTutorialCanvas()
+    {
+        TutorialCanvas.PopOut();
+    }
+    public void HideTutorialCanvas()
+    {
+        TutorialCanvas.PopIn();
     }
 }

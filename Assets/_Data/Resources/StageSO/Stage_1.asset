@@ -14,25 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stages:
   - operation: 0
-    bestScore: 650
+    bestScore: 2
     minValue: 1
     maxValue: 10
     row: 2
     col: 2
   - operation: 1
-    bestScore: 123
+    bestScore: 0
     minValue: 1
     maxValue: 10
     row: 3
     col: 4
   - operation: 0
-    bestScore: 321
+    bestScore: 0
     minValue: -10
     maxValue: 10
     row: 4
     col: 6
   - operation: 1
-    bestScore: 421
+    bestScore: 0
     minValue: -10
     maxValue: 10
     row: 4

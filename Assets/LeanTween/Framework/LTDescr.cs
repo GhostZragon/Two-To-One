@@ -1132,6 +1132,7 @@ public class LTDescr
     public static float val;
     public static float dt;
     public static Vector3 newVect;
+    internal object tween;
 
     /**
 	* If you need a tween to happen immediately instead of waiting for the next Update call, you can force it with this method

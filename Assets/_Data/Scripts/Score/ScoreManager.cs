@@ -11,6 +11,7 @@ public class ScoreManager : QuangLibrary
     [SerializeField] protected int scoreEveryGrade;
     public ScoreDisplay scoreDisplay;
     public TextMeshProUGUI scoreText;
+    public HeartControll heartControll;
     public enum ScoreGrade
     {
         BAD,
@@ -27,7 +28,13 @@ public class ScoreManager : QuangLibrary
         this.LoadScoreDisplay();
         //this.LoadScoreText();
     }
+    protected virtual void LoadHeartControll()
+    {
+        if (this.heartControll != null) return;
 
+        heartControll = GetComponentInChildren<HeartControll>();
+
+    }
     private void LoadScoreDisplay()
     {
         if (this.scoreDisplay != null) return;
@@ -82,6 +89,8 @@ public class ScoreManager : QuangLibrary
     {
         currentScore -= scoreEveryGrade;
         UpdateScoreText();
+        heartControll.DecreaseHeart();
+
     }
     void UpdateScoreText()
     {
@@ -90,7 +99,7 @@ public class ScoreManager : QuangLibrary
     }
     void ScoreTextToString(float _score)
     {
-        
+
         scoreText.text = "Score: " + _score.ToString();
     }
     private void PopUpScoreText()

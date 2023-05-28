@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoadStageInMenuPanel : QuangLibrary
 {
@@ -9,6 +10,7 @@ public class LoadStageInMenuPanel : QuangLibrary
     public GameObject stagePanelPrefab;
     public GameObject holder;
     public StageManager stageManager;
+    private GridLayoutGroup gridLayoutGroup;
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -34,6 +36,7 @@ public class LoadStageInMenuPanel : QuangLibrary
     }
     private void Start()
     {
+        gridLayoutGroup = holder.GetComponent<GridLayoutGroup>();
         SpawnStagePanel();
 
 
@@ -51,9 +54,25 @@ public class LoadStageInMenuPanel : QuangLibrary
         {
             var go = Instantiate(stagePanelPrefab, holder.transform).GetComponent<StagePanel>();
             go.gameObject.SetActive(true);
-            go.LoadStage(stageManager.GetStageFormList(i));
+            go.LoadStage(stageManager.stageSO.stages[i]);
             go.SetIndexPanel(i);
+            stagePanels.Add(go);
+        }
+        //gridLayoutGroup.enabled = false;
+    }
+    public void CheckStageIndex(int index)
+    {
+        foreach(var item in stagePanels)
+        {
+            if(item.index == stageManager.ReturnCurrentIndex())
+            {
+                item.MoveUp();
+            }
+            else
+            {
+                item.MoveDown();
+            }
         }
     }
-
+    
 }

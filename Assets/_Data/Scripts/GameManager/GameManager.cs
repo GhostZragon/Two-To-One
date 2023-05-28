@@ -68,6 +68,8 @@ public class GameManager : QuangLibrary
     {
         timerManager.ChangeCountingStatement(false);
         //MenuManager.Instance.ShowChooseStageMenu();
+        //MenuManager.Instance.ShowPlayGameMenu();
+        //return;
         StartCoroutine(TestTime());
     }
 
@@ -85,6 +87,7 @@ public class GameManager : QuangLibrary
     {
         int time = 3;
         Debug.Log("first time");
+
         // bat Canvas chua cac thong tin
         MenuManager.Instance.ShowPlayGameMenu();
         // reset diem va score grade
@@ -124,7 +127,11 @@ public class GameManager : QuangLibrary
     public void NextStage()
     {
         //button
+        //scoreManager.heartControll.ResetIndex();
+        //scoreManager.heartControll.ResetHeart();
+        ResetScoreAndTimeValue();
         stageManager.SetNextStage();
+        StartNewStage();
     }
     public void ResetScoreAndTimeValue()
     {
