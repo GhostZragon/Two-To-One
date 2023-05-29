@@ -10,6 +10,7 @@ public class MenuPanelButtons : GameManagerButtonAction
     [SerializeField] protected Button PlayButton;
     [SerializeField] protected Button TutorialButton;
     [SerializeField] protected CanvasTranstionActive TutorialCanvas;
+    bool isTutorialCanvasActive = false;
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -54,10 +55,19 @@ public class MenuPanelButtons : GameManagerButtonAction
     }
     public void ShowTutorialCanvas()
     {
-        TutorialCanvas.PopOut();
+        if (!isTutorialCanvasActive)
+        {
+            ;
+            StartCoroutine(TutorialCanvas.PopOut());
+            isTutorialCanvasActive = true;
+            
+        }
+        else
+        {
+            StartCoroutine(TutorialCanvas.PopIn());
+            isTutorialCanvasActive = false;
+        }
+        
     }
-    public void HideTutorialCanvas()
-    {
-        TutorialCanvas.PopIn();
-    }
+
 }

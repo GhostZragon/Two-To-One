@@ -87,10 +87,9 @@ public class ScoreManager : QuangLibrary
     }
     public void DecreaseScore()
     {
-        currentScore -= scoreEveryGrade;
+        currentScore -= 100;
         UpdateScoreText();
-        heartControll.DecreaseHeart();
-
+        HeartControll.DecreaseHeartAction();
     }
     void UpdateScoreText()
     {

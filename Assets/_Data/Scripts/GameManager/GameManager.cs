@@ -72,16 +72,28 @@ public class GameManager : QuangLibrary
         //return;
         StartCoroutine(TestTime());
     }
-
+    public float LoadTime = 1.5f;
     IEnumerator TestTime()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(LoadTime);
         MenuManager.Instance.ShowChooseStageMenu();
 
     }
     public void StartNewStage()
     {
         StartCoroutine(StartNewStageCoroutine());
+    }
+    public void BackToMenu()
+    {
+        StartCoroutine(BackToMenuCoroutine(0.5f));
+    }
+    public void NextStage()
+    {
+        StartCoroutine(NextStageCoroutine(0.5f));
+    }
+    public void EndStage()
+    {
+        StartCoroutine(EndStageCoroutine(0.5f));
     }
     public IEnumerator StartNewStageCoroutine()
     {
@@ -107,28 +119,32 @@ public class GameManager : QuangLibrary
         Debug.Log("start game");
         // tao cau hoi cho player
         stageManager.CreateAnswer();
+        SelectionManager.Instance.ChangeCanSelecting(true);
     }
-    public void BackToMenu()
+
+    IEnumerator BackToMenuCoroutine(float time)
     {
-        // button
+        yield return new WaitForSeconds(time);
         ResetScoreAndTimeValue();
         stageManager.DeleteBoard();
         MenuManager.Instance.ShowChooseStageMenu();
     }
-    public void EndStage()
+
+    IEnumerator EndStageCoroutine(float time)
     {
+        yield return new WaitForSeconds(time);
         timerManager.ChangeCountingStatement(false);
         stageManager.DeleteBoard();
         stageManager.SetMaxScore();
         EndGamePanel.Instance.LoadStringScore();
-        CalculationAction.Instance.FinishedStage();
+        CalculationAction.Instance.FinishedCurrentGameSession();
         MenuManager.Instance.ShowEndStageMenu();
+        HeartControll.ResetHeartsAction();
     }
-    public void NextStage()
+
+    IEnumerator NextStageCoroutine(float time)
     {
-        //button
-        //scoreManager.heartControll.ResetIndex();
-        //scoreManager.heartControll.ResetHeart();
+        yield return new WaitForSeconds(time);
         ResetScoreAndTimeValue();
         stageManager.SetNextStage();
         StartNewStage();

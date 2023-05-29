@@ -13,7 +13,7 @@ public class Cell : QuangLibrary
     [HideInInspector] public float scaleSpeed = 0.1f;
     [HideInInspector] public float rorateUp = -720;
     [HideInInspector] public float rorateDown = 720;
-    [HideInInspector] public float time = 0.3f;
+    [HideInInspector] public float time = 0.15f;
     public int value = 0;
     public SpriteCellSO spriteCellSO;
     protected override void OnEnable()
@@ -38,7 +38,7 @@ public class Cell : QuangLibrary
     protected virtual void LoadSpriteCellSO()
     {
         if (spriteCellSO != null) return;
-        spriteCellSO = Resources.Load<SpriteCellSO>("SpriteCellSO/SpritesCell");
+        spriteCellSO = Resources.Load<SpriteCellSO>("SpriteCellSO/SpritesCell 1");
     }
     protected virtual void LoadImage()
     {
@@ -56,7 +56,7 @@ public class Cell : QuangLibrary
         if (this.btn != null) return;
         btn = GetComponent<Button>();
     }
-    private void CreateSprite()
+    public void CreateSprite()
     {
         image.sprite = spriteCellSO.GetRandomSprite();
     }
@@ -85,7 +85,11 @@ public class Cell : QuangLibrary
     {
         // Active event score pop up
         ScoreManager.Instance.DisplayScorePopUp(transform.position);
-        btn.interactable = false;
+        SetButtonState(false);
+    }
+    public void SetButtonState(bool state)
+    {
+        btn.interactable = state;
     }
     private void Rotating(float rorate)
     {

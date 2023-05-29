@@ -6,6 +6,7 @@ public class AudioGameSO : ScriptableObject
 {
     public AudioClip[] audioClips;
     public AudioSource audioSource;
+    [SerializeField]
     public AudioSettings audioSettings;
 
 }

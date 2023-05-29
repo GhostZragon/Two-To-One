@@ -72,14 +72,14 @@ public class MenuManager : QuangLibrary
         {
             if (panel.inScreen)
             {
-                panel.PopIn();
+                StartCoroutine(panel.PopIn(0f));
             }
         }
         foreach(var panel in PanelList)
         {
             if (panel.gameObject == _obj)
             {
-                panel.PopOut();
+                StartCoroutine(panel.PopOut(0.6f));
             }
         }
     }

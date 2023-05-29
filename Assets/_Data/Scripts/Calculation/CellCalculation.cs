@@ -21,25 +21,33 @@ public class CellCalculation : CellCalculationLoader
     }
     void Calculation()
     {
+        // Start calculation
         if (SelectionManager.Instance.CellsIsNull())
         {
+            // If cells is null, reset cell size and state
             Debug.Log("is null");
             SelectionManager.Instance.ResetCellSizeAndState();
             return;
         }
-
+        // if cells is not null, perform math operation
 
         if (PerformMathOperation())
         {
+            // if true call this function
             PerformTrue();
         }
         else
         {
+            // if wrong call this function
             PerformWrong();
         }
         SelectionManager.Instance.ResetCellSizeAndState();
         //SelectionManager.Instance.LoadTextHeader();
     }
+    /// <summary>
+    /// Calculate two cell value and return true or false if correct or not
+    /// </summary>
+    /// <returns></returns>
     bool PerformMathOperation()
     {
         if (SelectionManager.Instance.CellsIsNull()) return false;
@@ -56,6 +64,13 @@ public class CellCalculation : CellCalculationLoader
     }
     protected virtual void PerformTrue()
     {
+        /*
+         * 1. Set two btn ref to btn1 and btn2 in selection manager
+         * 2. Show score pop up with time
+         * 3. Add 2 two btn to unclickable list
+         * 3. If clickable list is empty, end stage
+         * 4. If clickable list is not empty, Show correct text in screen 
+         */
         Btn _btn1 = SelectionManager.Instance.btn1;
         Btn _btn2 = SelectionManager.Instance.btn2;
         StartCoroutine(waitForTime.DelayedScorePopUp(_btn1, 0));
@@ -67,7 +82,7 @@ public class CellCalculation : CellCalculationLoader
         {
             //this.timerPerTurn.StopTime();
             Debug.Log("You complete a state");
-            StartCoroutine(EndStageEnum(0.4f));
+            GameManager.Instance.EndStage();
         }
         else
         {
@@ -78,16 +93,14 @@ public class CellCalculation : CellCalculationLoader
 
     }
 
-    IEnumerator EndStageEnum(float t)
-    {
-        yield return new WaitForSeconds(t);
-        GameManager.Instance.EndStage();
-    }
     protected virtual void PerformWrong()
     {
         Debug.Log("Dap an sai");
         calculationAction.Wrong();
     }
+    /// <summary>
+    /// Create new answer and display it in screen
+    /// </summary>
     public void MakeTrueAnswer()
     {
         correctValue = pickAnswer.PickRandom();

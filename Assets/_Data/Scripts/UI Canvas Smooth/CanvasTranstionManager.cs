@@ -12,17 +12,21 @@ public class CanvasTranstionManager : QuangLibrary
         base.Awake();
         localScale = transform.localScale;
     }
-    public virtual void PopIn()
+    public IEnumerator PopIn(float time = 0)
     {
+        yield return new WaitForSeconds(time);
         PopInCoroutine();
+
     }
-    public virtual void PopOut()
+    public IEnumerator PopOut(float time = 0)
     {
+        yield return new WaitForSeconds(time);
         PopOutCoroutine();
     }
+
     protected virtual void PopInCoroutine()
     {
-        _object.transform.LeanScale(Vector3.zero, time).setEaseInBack().setOnComplete(() =>
+        _object.transform.LeanScale(Vector3.zero, time).setEaseInExpo().setOnComplete(() =>
         {
             _object.SetActive(false);
             inScreen = false;
@@ -34,10 +38,11 @@ public class CanvasTranstionManager : QuangLibrary
     {
         //float a = 0.56f;
         //Vector3 vector = new Vector3(a, a, a);
+        _object.SetActive(true);
+
         _object.transform.localScale = Vector3.zero;
-        _object.transform.LeanScale(localScale, time).setEaseOutBack().setOnComplete(() =>
+        _object.transform.LeanScale(localScale, time).setEaseOutExpo().setOnComplete(() =>
         {
-            _object.SetActive(true);
             inScreen = true;
         });
         //yield return new WaitForSeconds(time);

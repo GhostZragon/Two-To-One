@@ -1,33 +1,46 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(HeartControll))]
-public class HeartControllCustom : Editor
-{
-    HeartControll heartControll;
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        heartControll = (HeartControll)target;
-        if(GUILayout.Button("Show effect"))
-        {
-            heartControll.DecreaseHeart();
-            heartControll.SetColor();
-        }
-        if (GUILayout.Button("Reset Heart"))
-        {
-            heartControll.ResetHeart();
-        }
-    }
-}
+
 public class HeartControll : DisplayCanvasLoader
 {
-    public List<Heart> HeartList;
     int index;
-    public Color newColor = new Color(0.7f, 0.7f, 0.7f);
+    public Color newColor = new Color(0.4f, 0.4f, 0.4f);
     public float force = 10f;
+    [SerializeField] Transform HeartHolder;
+    public List<Heart> HeartList;
+    // write delegate function here, then call it in the function below
+    public static Action ResetHeartsAction;
+    public static Action DecreaseHeartAction;
+    protected override void Awake()
+    {
+        base.Awake();
+        ResetHeartsAction += ResetHeart;
+        ResetHeartsAction += ResetIndex;
+        DecreaseHeartAction += DecreaseHeart;
+    }
+
+    protected override void LoadComponent()
+    {
+        base.LoadComponent();
+        this.LoadHeartHolder();
+        this.LoadHeartList();
+    }
+    protected virtual void LoadHeartHolder()
+    {
+        this.HeartHolder = displayHolder.transform.Find("HeartHolder");
+    }
+    protected virtual void LoadHeartList()
+    {
+        this.HeartList = new List<Heart>();
+        foreach (Transform item in HeartHolder)
+        {
+            HeartList.Add(item.GetComponent<Heart>());
+        }
+    }
     private void Start()
     {
         ResetIndex();
@@ -36,7 +49,7 @@ public class HeartControll : DisplayCanvasLoader
     {
         index = HeartList.Count-1;
     }
-    public void DecreaseHeart()
+    private void DecreaseHeart()
     {
         //if(index < 0) return;
         //HeartList[index].enabled = false;
@@ -50,7 +63,7 @@ public class HeartControll : DisplayCanvasLoader
             
         }
     }
-    public void ResetHeart()
+    private void ResetHeart()
     {
         Color color = new Color(1, 1, 1);
         foreach(var item in HeartList)

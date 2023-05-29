@@ -17,10 +17,6 @@ public class Board : BoardLoader
     public List<Cell> unClickableCells;
 
     // Start is called before the first frame update
-    void Start()
-    {
-
-    }
     protected override void Reset()
     {
         base.Reset();
@@ -29,10 +25,13 @@ public class Board : BoardLoader
     
     public void CreateBoard()
     {
-        DeleteBoard();
+
+        //DeleteBoard();
         //CheckRowCol();
+        StartCoroutine(CanvasTranstionActive.PopOut(0.5f));
         gridLayout.constraintCount = col;
         //if (GameManager.Instance.SpawningBoard == false) return;
+        
 
         SpawnCells();
         //RandomNewPosBoard();
@@ -43,6 +42,7 @@ public class Board : BoardLoader
 
     void SpawnCells()
     {
+
         int countCell = 0;
 
         for (int i = 0; i < row; i++)
@@ -67,9 +67,33 @@ public class Board : BoardLoader
 
     public void DeleteBoard()
     {
+        StartCoroutine(CanvasTranstionActive.PopIn(0.4f));
         ClearListObject(clickableCells);
         ClearListObject(unClickableCells);
+        //SetObjectInPool();
 
+    }
+    private void SetObjectInPool()
+    {
+        // Add object in unclickablecells to clickablecells
+
+        foreach (var item in unClickableCells)
+        {
+            clickableCells.Add(item);
+            unClickableCells.Remove(item);
+            item.gameObject.SetActive(false);
+        }
+        
+    }
+    private void PoolingObject()
+    {
+        foreach(Cell item in unClickableCells)
+        {
+            item.gameObject.SetActive(true);
+            item.SetButtonState(true);
+            item.RandomValue(minValue, maxValue);
+            item.CreateSprite();
+        }
     }
     private void ClearListObject(List<Cell> list)
     {
