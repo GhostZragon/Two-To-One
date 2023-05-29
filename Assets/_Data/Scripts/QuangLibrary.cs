@@ -18,6 +18,7 @@ public class QuangLibrary : MonoBehaviour
     {
 
     }
+
     /// <summary>
     /// Return value between 0 and 1 from min and max value
     /// </summary>

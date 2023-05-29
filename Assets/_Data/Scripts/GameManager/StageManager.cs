@@ -22,12 +22,17 @@ public class StageManagerCustom : Editor
 }
 public class StageManager : QuangLibrary
 {
-    public Stage currentStage;
-    public List<Stage> stages;
+    public static StageManager Instance;
+    [SerializeField] protected Stage currentStage;
     public StageSO stageSO;
-    [Range(0, 3)] public int currentIndex;
+    [SerializeField]protected int currentIndex;
     public Board board;
     public CellCalculation cellCalculation;
+    protected override void Awake()
+    {
+        base.Awake();
+        Instance = this;
+    }
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -35,6 +40,7 @@ public class StageManager : QuangLibrary
         this.LoadStageSO();
         this.LoadCellCalculation();
     }
+
     protected virtual void LoadCellCalculation()
     {
         if (cellCalculation != null) return;
@@ -47,8 +53,7 @@ public class StageManager : QuangLibrary
     }
     public virtual void LoadStage()
     {
-        stages = stageSO.GetStageList();
-        currentStage = stages[currentIndex];
+        currentStage = stageSO.stages[currentIndex];
     }
     public virtual void LoadStageSO()
     {
@@ -64,14 +69,67 @@ public class StageManager : QuangLibrary
         board.maxValue = currentStage.maxValue;
         cellCalculation.math = currentStage.operation;
     }
+    public void SetMaxScore()
+    {
+        currentStage.SetMaxScore(ScoreManager.Instance.GetScore());
+    }
+    public void SetCurrentStage(int index)
+    {
+        currentIndex = index;
+        LoadStage();
+    }
+    private bool CanLoadNextStage()
+    {
+        if (currentIndex + 1 >= stageSO.stages.Count)
+        {
+            return false;
+        }
+        return true;
+    }
+    public void SetNextStage()
+    {
+        if(CanLoadNextStage())
+        {
+            SetCurrentStage(currentIndex + 1);
+        }
+        else
+        {
+            currentIndex = 0;
+            SetCurrentStage(currentIndex);
+        }
+    }
     public void InitBoard()
     {
         board.CreateBoard();
 
     }
+    public void DeleteBoard()
+    {
+        board.DeleteBoard();
+    }
     public void CreateAnswer()
     {
         cellCalculation.MakeTrueAnswer();
+    }
+    public int GetStageCount()
+    {
+        return stageSO.stages.Count;
+    }
+    public Stage GetStageFormList(int i)
+    {
+        return stageSO.stages[i];
+    }
+    public bool CheckIndexPanel(int panelIndex)
+    {
+        if(panelIndex == currentIndex)
+        {
+            return true;
+        }
+        return false;
+    }
+    public int ReturnCurrentIndex()
+    {
+        return this.currentIndex;
     }
 }
 

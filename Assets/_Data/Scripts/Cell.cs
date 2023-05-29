@@ -1,18 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class Cell : QuangLibrary
 {
 
     public Infor infor;
-    public Text valueText;
-    public Button btn;
+    //public Text valueText;
+    [SerializeField] protected TextMeshProUGUI valueText;
+    [SerializeField] protected Button btn;
     bool isScale = false;
     public Image image;
     [HideInInspector] public float scaleSpeed = 0.1f;
     [HideInInspector] public float rorateUp = -720;
     [HideInInspector] public float rorateDown = 720;
-    [HideInInspector] public float time = 0.3f;
+    [HideInInspector] public float time = 0.15f;
+    public int value = 0;
     public SpriteCellSO spriteCellSO;
     protected override void OnEnable()
     {
@@ -21,39 +23,50 @@ public class Cell : QuangLibrary
     }
     private void Start()
     {
-        this.UpdateValue(infor.value);
+        this.UpdateValue(value);
         btn.onClick.AddListener(ClickDown);
 
     }
     protected override void LoadComponent()
     {
         base.LoadComponent();
-        LoadText();
-        LoadButton();
+        this.LoadText();
+        this.LoadButton();
+        this.LoadImage();
+        this.LoadSpriteCellSO();
+    }
+    protected virtual void LoadSpriteCellSO()
+    {
+        if (spriteCellSO != null) return;
+        spriteCellSO = Resources.Load<SpriteCellSO>("SpriteCellSO/SpritesCell 1");
+    }
+    protected virtual void LoadImage()
+    {
+        if (this.image != null) return;
+        image = GetComponent<Image>();
     }
     protected virtual void LoadText()
     {
-        if (this.valueText != null)
-        {
-            valueText = GetComponentInChildren<Text>();
-        }
+        if (this.valueText != null) return;
+        valueText = GetComponentInChildren<TextMeshProUGUI>();
+
     }
     protected virtual void LoadButton()
     {
-        if (this.btn != null)
-        {
-            btn = GetComponent<Button>();
-        }
+        if (this.btn != null) return;
+        btn = GetComponent<Button>();
     }
-    private void CreateSprite()
+    public void CreateSprite()
     {
         image.sprite = spriteCellSO.GetRandomSprite();
     }
 
     public void UpdateValue(int newValue)
     {
-        infor.value = newValue;
-        valueText.text = infor.value.ToString();
+        value = newValue;
+        
+        valueText.text = value.ToString();
+
     }
     public void ClickDown()
     {
@@ -72,7 +85,11 @@ public class Cell : QuangLibrary
     {
         // Active event score pop up
         ScoreManager.Instance.DisplayScorePopUp(transform.position);
-        btn.interactable = false;
+        SetButtonState(false);
+    }
+    public void SetButtonState(bool state)
+    {
+        btn.interactable = state;
     }
     private void Rotating(float rorate)
     {
@@ -111,8 +128,5 @@ public class Cell : QuangLibrary
 [System.Serializable]
 public class Infor
 {
-    public int x;
-    public int y;
     public int value;
-    public int position;
 }

@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class ScorePopUp : QuangLibrary
 {
-    public float timeScale = 1f;
-    public float timeMove = 1f;
-    public float timeFade = 1f;
+    [SerializeField] protected float timeScale = 1f;
+    [SerializeField] protected float timeMove = 1f;
+    [SerializeField] protected float timeFade = 1f;
     public float localYPosition = 30f;
     public Color color = new Color(1, 1, 1, 0);
     public Text TextPrefab;

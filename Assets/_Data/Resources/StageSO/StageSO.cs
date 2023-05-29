@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "State_")]
+[CreateAssetMenu(fileName = "State_",menuName = "ScriptableObjects/StageSO",order = 2)]
 public class StageSO : ScriptableObject
 {
     public List<Stage> stages;

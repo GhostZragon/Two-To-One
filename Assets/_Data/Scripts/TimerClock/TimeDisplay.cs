@@ -1,23 +1,17 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-public class TimeDisplay : QuangLibrary
+public class TimeDisplay : DisplayCanvasLoader
 {
     public Image image;
     [SerializeField] protected TimerManager timerManager;
-    public Transform displayHolder;
     protected override void LoadComponent()
     {
         base.LoadComponent();
         this.LoadTimerManager();
-        this.LoadDisplayHolder();
         this.LoadImage();
     }
-    private void LoadDisplayHolder()
-    {
-        if (displayHolder != null) return;
-        displayHolder = GameObject.Find("_DisplayHolder").transform;
-    }
+
     private void LoadImage()
     {
         if (image != null) return;
@@ -43,6 +37,10 @@ public class TimeDisplay : QuangLibrary
     public void UpdateFillAmount(float minValue, float maxValue, float currentValue)
     {
         image.fillAmount = Mathf.InverseLerp(minValue, maxValue, currentValue);
+    }
+    public void SetFillAmount(float value)
+    {
+        image.fillAmount = value;
     }
     public IEnumerator FillRefreshTime()
     {

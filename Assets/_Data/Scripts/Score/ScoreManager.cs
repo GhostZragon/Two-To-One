@@ -1,28 +1,17 @@
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ScoreManager))]
-public class CustomScoreManager : Editor
-{
-    private ScoreManager scoreManager;
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        ScoreManager scoreManager = (ScoreManager)target;
-
-        if (GUILayout.Button("Add currentScore"))
-        {
-            scoreManager.AddScore();
-        }
-
-    }
-}
 public class ScoreManager : QuangLibrary
 {
     public static ScoreManager Instance;
     [SerializeField] ScorePopUp scorePopUp;
-    [SerializeField] protected float currentScore;
+    [SerializeField] protected int currentScore;
+    //[SerializeField] protected float currentScoreMax;
+    [SerializeField] protected int scoreEveryGrade;
     public ScoreDisplay scoreDisplay;
+    public TextMeshProUGUI scoreText;
+    public HeartControll heartControll;
     public enum ScoreGrade
     {
         BAD,
@@ -39,7 +28,13 @@ public class ScoreManager : QuangLibrary
         this.LoadScoreDisplay();
         //this.LoadScoreText();
     }
+    protected virtual void LoadHeartControll()
+    {
+        if (this.heartControll != null) return;
 
+        heartControll = GetComponentInChildren<HeartControll>();
+
+    }
     private void LoadScoreDisplay()
     {
         if (this.scoreDisplay != null) return;
@@ -55,23 +50,63 @@ public class ScoreManager : QuangLibrary
     public void Start()
     {
         ResetScoreGrade();
+        ResetScore();
     }
-    public void DisplayScorePopUp(Vector3 pos)
+    private void Update()
     {
-        float score = 600;
-        var go = this.scorePopUp.CreatePopUpText();
-        go.text = score.ToString();
-        go.transform.position = pos;
+        ScoreEveryGrade();
     }
-
     public void ResetScore()
     {
         this.currentScore = 0;
+        ScoreTextToString(currentScore);
+
+    }
+    public int GetScore()
+    {
+        return this.currentScore;
     }
     public void ResetScoreGrade()
     {
         this.currentScoreGrade = ScoreGrade.PERFECT;
     }
+
+
+    public void DisplayScorePopUp(Vector3 pos)
+    {
+        var go = this.scorePopUp.CreatePopUpText();
+        float score = scoreEveryGrade / 2;
+        go.text = score.ToString();
+        go.transform.position = pos;
+    }
+    public void IncreaseScore()
+    {
+        currentScore += scoreEveryGrade;
+        UpdateScoreText();
+        //this.scoreText.TimeText = this.currentScore.ToString();
+    }
+    public void DecreaseScore()
+    {
+        currentScore -= 100;
+        UpdateScoreText();
+        HeartControll.DecreaseHeartAction();
+    }
+    void UpdateScoreText()
+    {
+        ScoreTextToString(currentScore);
+        PopUpScoreText();
+    }
+    void ScoreTextToString(float _score)
+    {
+
+        scoreText.text = "Score: " + _score.ToString();
+    }
+    private void PopUpScoreText()
+    {
+        scoreText.transform.localScale = Vector3.zero;
+        scoreText.transform.LeanScale(Vector3.one, 0.5f).setEaseOutBack();
+    }
+
     public void UpdateScoreGrade()
     {
         if (currentScoreGrade == ScoreGrade.PERFECT)
@@ -92,12 +127,22 @@ public class ScoreManager : QuangLibrary
         }
 
     }
-    public void AddScore()
+    void ScoreEveryGrade()
     {
-        this.scorePopUp.CreatePopUpText();
-        //this.scoreText.TimeText = this.currentScore.ToString();
+        switch (currentScoreGrade)
+        {
+            case ScoreGrade.BAD:
+                scoreEveryGrade = 100;
+                break;
+            case ScoreGrade.GOOD:
+                scoreEveryGrade = 250;
+                break;
+            case ScoreGrade.PERFECT:
+                scoreEveryGrade = 500;
+                break;
+            default:
+                break;
+        }
     }
-
-
 }
 

@@ -1,14 +1,12 @@
 using TMPro;
 using UnityEngine;
 
-public class ScoreDisplay : QuangLibrary
+public class ScoreDisplay : DisplayCanvasLoader
 {
     public TextMeshProUGUI scoreRateText;
-    public Transform displayHolder;
     protected override void LoadComponent()
     {
         base.LoadComponent();
-        this.LoadDisplayHolder();
         this.LoadScoreRateText();
     }
 
@@ -18,11 +16,7 @@ public class ScoreDisplay : QuangLibrary
         this.scoreRateText = displayHolder.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    private void LoadDisplayHolder()
-    {
-        if (displayHolder != null) return;
-        displayHolder = GameObject.Find("_DisplayHolder").transform;
-    }
+
 
     public void RefreshText()
     {

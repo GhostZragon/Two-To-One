@@ -42,22 +42,16 @@ public class TimerManager : QuangLibrary
     public void ResetTime()
     {
         _currentPlayTime = _defaultPlayTime;
+        timeDisplay.SetFillAmount(1);
         hasBeenCalled = false;
     }
-    public void StopTimer()
-    {
-        GameManager.Instance.IsCounting = false;
-    }
-    public void StartTimer()
-    {
-        GameManager.Instance.IsCounting = true;
-    }
+
     public void ChangeCountingStatement(bool _state)
     {
         GameManager.Instance.IsCounting = _state;
     }
     bool hasBeenCalled = false;
-    public void CheckOverTime()
+    private void CheckOverTime()
     {
         //List call back function
         if (_currentPlayTime < 0 && !hasBeenCalled)

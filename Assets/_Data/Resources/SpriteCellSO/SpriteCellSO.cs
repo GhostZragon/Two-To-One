@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SpirtesCell")]
+[CreateAssetMenu(fileName = "SpirtesCell", menuName = "ScriptableObjects/SpriteCellSO", order = 1)]
 public class SpriteCellSO : ScriptableObject
 {
     public Sprite[] sprite;
