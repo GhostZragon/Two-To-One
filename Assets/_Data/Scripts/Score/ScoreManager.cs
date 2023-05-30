@@ -1,7 +1,20 @@
 using TMPro;
 using UnityEditor;
 using UnityEngine;
-
+[CustomEditor(typeof(ScoreManager))]
+public class ScoreManagerCustom : Editor
+{
+    private ScoreManager ScoreManager;
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        ScoreManager = (ScoreManager)target;
+        if(GUILayout.Button("Spawn Score"))
+        {
+            ScoreManager.DisplayScorePopUp();
+        }
+    }
+}
 public class ScoreManager : QuangLibrary
 {
     public static ScoreManager Instance;
@@ -71,7 +84,13 @@ public class ScoreManager : QuangLibrary
         this.currentScoreGrade = ScoreGrade.PERFECT;
     }
 
-
+    public void DisplayScorePopUp()
+    {
+        var go = this.scorePopUp.CreatePopUpText();
+        float score = scoreEveryGrade / 2;
+        go.text = score.ToString();
+        go.transform.position = transform.position;
+    }
     public void DisplayScorePopUp(Vector3 pos)
     {
         var go = this.scorePopUp.CreatePopUpText();

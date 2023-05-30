@@ -29,7 +29,7 @@ public abstract class Spawner : QuangLibrary
             prefab.gameObject.SetActive(false);
         }
     }
-    public virtual void Spawn(Vector3 position, Quaternion roration)
+    public virtual Transform Spawn(Vector3 position, Quaternion roration)
     {
         Transform prefab = GetPrefab();
         Transform newPrefab = GetObjectFromPool(prefab);
@@ -37,6 +37,7 @@ public abstract class Spawner : QuangLibrary
         newPrefab.position = position;
         newPrefab.rotation = roration;
         newPrefab.SetParent(holder);
+        return newPrefab;
 
     }
     public virtual void Despawn(Transform obj)

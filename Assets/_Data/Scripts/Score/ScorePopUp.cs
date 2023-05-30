@@ -49,11 +49,13 @@ public class ScorePopUp : QuangLibrary
     /// <returns>Return a Text GameObject </returns>
     public Text CreatePopUpText()
     {
-        var go = Instantiate(TextPrefab, TextsHolder.transform);
-        go.gameObject.SetActive(true);
+        //var go = Instantiate(TextPrefab, TextsHolder.transform);
+        //go.gameObject.SetActive(true);
+        var go = TextSpawner.Instance.Spawn(transform.position, transform.rotation);
         go.transform.localScale = Vector3.zero;
-        ScaleUpText(go);
-        return go;
+        Text text = go.GetComponent<Text>();
+        ScaleUpText(text);
+        return text;
 
     }
     public void ScaleUpText(Text go)
@@ -80,7 +82,17 @@ public class ScorePopUp : QuangLibrary
     {
         LeanTween.colorText(go.rectTransform, this.color, timeFade).setOnComplete(() =>
         {
-            Destroy(go.gameObject, 0.5f);
+            //Destroy(go.gameObject, 0.5f);
+            DespawnByTrigger despawn = go.GetComponentInChildren<DespawnByTrigger>();
+            if(despawn != null)
+            {
+                go.color = new Color(1, 1, 1, 1);
+                despawn.SetCanDespawn();
+            }
+            else
+            {
+                Debug.LogError("Can't find Despawn component in " + go.gameObject.name);
+            }
         });
         go.transform.LeanScale(Vector3.zero, this.timeFade).setEaseInBack();
     }

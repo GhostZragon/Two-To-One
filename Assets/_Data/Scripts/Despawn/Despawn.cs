@@ -15,9 +15,7 @@ public abstract class Despawn : QuangLibrary
             DespawnObject();
         }
     }
-    public virtual void DespawnObject()
-    {
-        
-    }
+    public abstract void DespawnObject();
+
     protected abstract bool CanDespawn();
 }
