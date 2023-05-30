@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 
 public class Board : BoardLoader
@@ -15,6 +16,7 @@ public class Board : BoardLoader
 
     public List<Cell> clickableCells;
     public List<Cell> unClickableCells;
+    [SerializeField] protected CanvasTranstionActive CanvasTranstionActive;
 
     // Start is called before the first frame update
     protected override void Reset()
@@ -42,9 +44,7 @@ public class Board : BoardLoader
 
     void SpawnCells()
     {
-
         int countCell = 0;
-
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
@@ -56,14 +56,16 @@ public class Board : BoardLoader
                 cell.RandomValue(minValue, maxValue);
 
                 clickableCells.Add(cell);
-                countCell++;
-
+                //countCell++;
+                //Cell _cell = CellSpawner.Instance.Spawn(transform.position, transform.rotation).GetComponent<Cell>();
+                //_cell.SetButtonState(true);
+                //_cell.RandomValue(minValue, maxValue);
+                //_cell.CreateSprite();
+                //_cell.transform.localScale = Vector3.one;
+                //clickableCells.Add(cell);
             }
         }
-
-
     }
-
 
     public void DeleteBoard()
     {
@@ -95,6 +97,7 @@ public class Board : BoardLoader
             item.CreateSprite();
         }
     }
+
     private void ClearListObject(List<Cell> list)
     {
         foreach (Cell obj in list)

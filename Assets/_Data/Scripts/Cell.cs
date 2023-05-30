@@ -4,7 +4,6 @@ using TMPro;
 public class Cell : QuangLibrary
 {
 
-    public Infor infor;
     //public Text valueText;
     [SerializeField] protected TextMeshProUGUI valueText;
     [SerializeField] protected Button btn;
@@ -106,7 +105,6 @@ public class Cell : QuangLibrary
         }
         UpdateValue(_newValue);
     }
-
     private void ScaleUp()
     {
         //Debug.Log("On mouse enter");
@@ -125,8 +123,4 @@ public class Cell : QuangLibrary
 
 
 }
-[System.Serializable]
-public class Infor
-{
-    public int value;
-}
+

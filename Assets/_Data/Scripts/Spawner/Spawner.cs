@@ -7,7 +7,20 @@ public abstract class Spawner : QuangLibrary
     [SerializeField] protected Transform holder;
     [SerializeField] protected List<Transform> Prefabs;
     [SerializeField] protected List<Transform> poolObjs;
-
+    //private static Spawner instance;
+    //public static Spawner Instance { get => instance; }
+    //protected override void Awake()
+    //{
+    //    base.Awake();
+    //    if(instance != null)
+    //    {
+    //        Debug.LogError("There is more than one Spawner in the scene");
+    //    }
+    //    else
+    //    {
+    //        instance = this;
+    //    }
+    //}
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -43,7 +56,7 @@ public abstract class Spawner : QuangLibrary
     public virtual void Despawn(Transform obj)
     {
         obj.gameObject.SetActive(false);
-        Debug.Log("Working "+transform.name);
+        //Debug.Log("Working "+transform.name);
         poolObjs.Add(obj);
     }
     public virtual Transform GetObjectFromPool(Transform _prefab)

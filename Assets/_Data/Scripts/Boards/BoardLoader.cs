@@ -8,7 +8,6 @@ public abstract class BoardLoader : QuangLibrary
     [SerializeField] protected GameObject cellPrefab;
     [SerializeField] protected SelectionManager selectionManager;
     [SerializeField] protected CellCalculation cellCalculation;
-    [SerializeField] protected CanvasTranstionActive CanvasTranstionActive;
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -17,13 +16,8 @@ public abstract class BoardLoader : QuangLibrary
         this.LoadGridLayout();
         this.LoadCellPrefab();
         this.LoadCellCalculation();
-        this.LoadCanvasTransitionActive();
     }
-    protected virtual void LoadCanvasTransitionActive()
-    {
-        if (CanvasTranstionActive != null) return;
-        CanvasTranstionActive = board.GetComponent<CanvasTranstionActive>();
-    }
+
     protected virtual void LoadCellCalculation()
     {
         if (cellCalculation != null) return;
