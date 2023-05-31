@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DespawnByTrigger : Despawn
 {
+    public Spawner spawner;
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -16,7 +17,7 @@ public class DespawnByTrigger : Despawn
     }
     public override void DespawnObject()
     {
-        TextSpawner.Instance.Despawn(transform.parent);
+        spawner.Despawn(transform.parent);
     }
     public void SetCanDespawn()
     {

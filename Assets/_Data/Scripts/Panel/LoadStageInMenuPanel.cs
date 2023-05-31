@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
@@ -11,6 +12,7 @@ public class LoadStageInMenuPanel : QuangLibrary
     public GameObject holder;
     public StageManager stageManager;
     private GridLayoutGroup gridLayoutGroup;
+    public static Action OnResetStageValue;
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -38,7 +40,7 @@ public class LoadStageInMenuPanel : QuangLibrary
     {
         gridLayoutGroup = holder.GetComponent<GridLayoutGroup>();
         SpawnStagePanel();
-
+        OnResetStageValue += ResetStageDisplay;
 
     }
     private void SpawnStagePanel()
@@ -59,6 +61,14 @@ public class LoadStageInMenuPanel : QuangLibrary
             stagePanels.Add(go);
         }
         //gridLayoutGroup.enabled = false;
+    }
+    public void ResetStageDisplay()
+    {
+        if (stagePanels.Count == 0) return;
+        foreach(var item in stagePanels)
+        {
+            item.LoadStage(stageManager.stageSO.stages[item.index]);
+        }
     }
     public void CheckStageIndex(int index)
     {

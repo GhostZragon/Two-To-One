@@ -26,15 +26,15 @@ public static class MathState
                 Debug.Log($"{a} + {b} = {value}");
                 break;
             case MathOperation.subtraction:
-                value = subtraction(_a, _a);
+                value = subtraction(_a, _b);
                 Debug.Log($"{a} - {b} = {value}");
                 break;
             case MathOperation.multiplication:
-                value = multiplication(a, b);
+                value = multiplication(_a, _b);
                 Debug.Log($"{a} * {b} = {value}");
                 break;
             case MathOperation.division:
-                value = division(a, b);
+                value = division(_a, _b);
                 Debug.Log($"{a} / {b} = {value}");
                 break;
             default:

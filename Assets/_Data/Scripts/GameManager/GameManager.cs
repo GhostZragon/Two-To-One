@@ -25,6 +25,15 @@ public class GameManager : QuangLibrary
     [SerializeField] protected ScoreManager scoreManager;
     [SerializeField] protected GameObject DisplayHolder;
     [SerializeField] protected GameObject MenuPanel;
+
+    public enum GameState
+    {
+        MENU,
+        PLAYING,
+        PAUSE,
+        ENDGAME
+    }
+    public GameState gameState = GameState.MENU;
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -81,22 +90,30 @@ public class GameManager : QuangLibrary
     }
     public void StartNewStage()
     {
+        //if(gameState == GameState.PLAYING) return;
         StartCoroutine(StartNewStageCoroutine());
+        //gameState = GameState.PLAYING;
     }
     public void BackToMenu()
     {
+        //if(gameState == GameState.MENU) return;
         StartCoroutine(BackToMenuCoroutine(0.5f));
+        //gameState = GameState.MENU;
     }
     public void NextStage()
     {
+        //if(gameState == GameState.PLAYING) return;
         StartCoroutine(NextStageCoroutine(0.5f));
+        //gameState = GameState.PLAYING;
     }
     public void EndStage()
     {
         StartCoroutine(EndStageCoroutine(0.5f));
+        //gameState = GameState.PAUSE;
     }
     public IEnumerator StartNewStageCoroutine()
     {
+        SelectionManager.Instance.ChangeCanSelecting(false);
         int time = 3;
         Debug.Log("first time");
 
@@ -140,12 +157,14 @@ public class GameManager : QuangLibrary
         CalculationAction.Instance.FinishedCurrentGameSession();
         MenuManager.Instance.ShowEndStageMenu();
         HeartControll.ResetHeartsAction();
+        if(LoadStageInMenuPanel.OnResetStageValue != null)
+            LoadStageInMenuPanel.OnResetStageValue();
     }
 
     IEnumerator NextStageCoroutine(float time)
     {
         yield return new WaitForSeconds(time);
-        ResetScoreAndTimeValue();
+        //MenuManager.Instance.ShowPlayGameMenu();
         stageManager.SetNextStage();
         StartNewStage();
     }
