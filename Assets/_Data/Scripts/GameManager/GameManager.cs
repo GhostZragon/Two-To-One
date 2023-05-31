@@ -90,39 +90,43 @@ public class GameManager : QuangLibrary
     }
     public void StartNewStage()
     {
-        //if(gameState == GameState.PLAYING) return;
+        if (gameState == GameState.PLAYING) return;
         StartCoroutine(StartNewStageCoroutine());
-        //gameState = GameState.PLAYING;
+        gameState = GameState.PLAYING;
     }
     public void BackToMenu()
     {
-        //if(gameState == GameState.MENU) return;
+        if (gameState == GameState.MENU) return;
         StartCoroutine(BackToMenuCoroutine(0.5f));
-        //gameState = GameState.MENU;
+        gameState = GameState.MENU;
     }
     public void NextStage()
     {
-        //if(gameState == GameState.PLAYING) return;
+        if (gameState == GameState.PLAYING) return;
         StartCoroutine(NextStageCoroutine(0.5f));
-        //gameState = GameState.PLAYING;
+        gameState = GameState.PLAYING;
     }
     public void EndStage()
     {
         StartCoroutine(EndStageCoroutine(0.5f));
-        //gameState = GameState.PAUSE;
+        gameState = GameState.PAUSE;
     }
+    /// <summary>
+    /// Start game session.
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator StartNewStageCoroutine()
     {
+        // make cell cannot select
         SelectionManager.Instance.ChangeCanSelecting(false);
         int time = 3;
         Debug.Log("first time");
 
-        // bat Canvas chua cac thong tin
+        // Show gameplay canvas to player
         MenuManager.Instance.ShowPlayGameMenu();
         // reset diem va score grade
-        ResetScoreAndTimeValue();
-
-        // load data cho board de spawn va tao bang
+        this.ResetScoreAndTimeValue();
+        CellDisplayManager.Instance.RefreshTrueValueText("");
         stageManager.LoadDataForGameStage();
         stageManager.InitBoard();
         while (time > 0)
@@ -130,45 +134,50 @@ public class GameManager : QuangLibrary
             yield return new WaitForSeconds(1);
             time--;
         }
-        // time = 0
-        // bat dau dem thoi gian
         timerManager.ChangeCountingStatement(true);
         Debug.Log("start game");
-        // tao cau hoi cho player
         stageManager.CreateAnswer();
         SelectionManager.Instance.ChangeCanSelecting(true);
     }
-
     IEnumerator BackToMenuCoroutine(float time)
     {
         yield return new WaitForSeconds(time);
-        ResetScoreAndTimeValue();
-        stageManager.DeleteBoard();
+        this.EndSession();
+        //this.ResetScoreAndTimeValue();
         MenuManager.Instance.ShowChooseStageMenu();
     }
 
     IEnumerator EndStageCoroutine(float time)
     {
         yield return new WaitForSeconds(time);
+        EndSession();
+        stageManager.SetMaxScore();
+        MenuManager.Instance.ShowEndStageMenu();
+    }
+    private void EndSession()
+    {
+        // End stage but don't pass with end game rule.
         timerManager.ChangeCountingStatement(false);
         stageManager.DeleteBoard();
-        stageManager.SetMaxScore();
+        //stageManager.SetMaxScore();
         EndGamePanel.Instance.LoadStringScore();
         CalculationAction.Instance.FinishedCurrentGameSession();
-        MenuManager.Instance.ShowEndStageMenu();
+        //MenuManager.Instance.ShowEndStageMenu();
         HeartControll.ResetHeartsAction();
-        if(LoadStageInMenuPanel.OnResetStageValue != null)
+        if (LoadStageInMenuPanel.OnResetStageValue != null)
             LoadStageInMenuPanel.OnResetStageValue();
     }
-
     IEnumerator NextStageCoroutine(float time)
     {
         yield return new WaitForSeconds(time);
         //MenuManager.Instance.ShowPlayGameMenu();
         stageManager.SetNextStage();
-        StartNewStage();
+        StartCoroutine(StartNewStageCoroutine());
     }
-    public void ResetScoreAndTimeValue()
+    /// <summary>
+    /// This method will: Reset score and time value equal zero, reset score grade, stop time counting.
+    /// </summary>
+    private void ResetScoreAndTimeValue()
     {
         scoreManager.ResetScore();
         scoreManager.ResetScoreGrade();
