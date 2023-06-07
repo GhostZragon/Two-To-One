@@ -15,14 +15,16 @@ public class CalculationAction : QuangLibrary
     public void Correct()
     {
         // Display "Correct" with green color
-        ProcessResult("Correct", Color.green);
         ScoreManager.Instance.IncreaseScore();
+        ProcessResult("Correct", Color.green);
+        AudioManager.OnCorrectAnswer();
     }
     public void Wrong()
     {
         // Display "Wrong" with red color
-        ProcessResult("Wrong", Color.red);
         ScoreManager.Instance.DecreaseScore();
+        ProcessResult("Wrong", Color.red);
+        AudioManager.OnFalseAnswer();
     }
     // after calculation is correct or wrong, this function will be called
     private void ProcessResult(string str, Color color)
@@ -35,16 +37,28 @@ public class CalculationAction : QuangLibrary
 
         
         ScoreManager.Instance.scoreDisplay.RefreshText(str, color);
+        if (GameManager.Instance.finishedGame)
+        {
+            ScoreManager.Instance.scoreDisplay.RefreshText("", Color.green);
+            ScoreManager.Instance.scoreDisplay.RefreshText();
+            Debug.Log("Finished game");
+            return;
+        }
+        else
+        {
+            // Stop timer counting
+            StopTimerAction();
+            // Start new phase in current game session
+            StartCoroutine(StartNewPhase());
+            Debug.Log("Duoc goi sau khi coroutine chay xong");
+        }
+
+
         
-        
-        // Stop timer counting
-        StopTimerAction();
-        // Start new phase in current game session
-        StartCoroutine(StartNewPhase());
-        Debug.Log("Duoc goi sau khi coroutine chay xong");
     }
     IEnumerator StartNewPhase()
     {
+
         // make circle wait 1 second
         float waitTime = 1f;
         TimerManager.instance.timeDisplay.StartCoroutine("FillRefreshTime");
@@ -59,6 +73,8 @@ public class CalculationAction : QuangLibrary
             ScoreManager.Instance.scoreDisplay.RefreshText(count.ToString(), Color.green);
             yield return new WaitForSeconds(waitTime);
             count--;
+            if (GameManager.Instance.IsCounting == true)
+                AudioManager.OnTimerSound();
         }
         //yield return new WaitForSeconds(3f);
         //Function need to be called after 3 seconds
@@ -96,11 +112,13 @@ public class CalculationAction : QuangLibrary
     {
         // Stop timer counting
         TimerManager.instance.ChangeCountingStatement(false);
+        //TimerManager.instance.isPlaying = false;
     }
     public static void StartTimerAction()
     {
         // Start timer counting
         TimerManager.instance.ChangeCountingStatement(true);
+        //TimerManager.instance.isPlaying = true;
     }
 
     private void ResetTimerAction()

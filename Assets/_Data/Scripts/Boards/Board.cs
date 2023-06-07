@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
-public class Board : BoardLoader
+public class Board : QuangLibrary
 {
     [Header("Random min max value")]
     [SerializeField] public int minValue = -10;
@@ -15,13 +16,34 @@ public class Board : BoardLoader
 
     public List<Cell> clickableCells;
     public List<Cell> unClickableCells;
-
-    // Start is called before the first frame update
-    protected override void Reset()
+    [SerializeField] protected CanvasTranstionActive CanvasTranstionActive;
+    [SerializeField] protected GridLayoutGroup gridLayout;
+    [SerializeField] protected SelectionManager selectionManager;
+    [SerializeField] protected CellCalculation cellCalculation;
+    protected override void LoadComponent()
     {
-        base.Reset();
-        this.DeleteBoard();
+        base.LoadComponent();
+        this.LoadSelectionManager();
+        this.LoadGridLayout();
+        this.LoadCellCalculation();
     }
+    protected virtual void LoadCellCalculation()
+    {
+        if (cellCalculation != null) return;
+        cellCalculation = FindObjectOfType<CellCalculation>();
+    }
+    protected virtual void LoadGridLayout()
+    {
+        if (this.gridLayout != null) return;
+        //gridLayout = board.GetComponent<GridLayoutGroup>();
+    }
+    protected virtual void LoadSelectionManager()
+    {
+        if (selectionManager != null) return;
+        selectionManager = FindObjectOfType<SelectionManager>();
+
+    }
+    // Start is called before the first frame update
     
     public void CreateBoard()
     {
@@ -30,48 +52,55 @@ public class Board : BoardLoader
         //CheckRowCol();
         StartCoroutine(CanvasTranstionActive.PopOut(0.5f));
         gridLayout.constraintCount = col;
-        //if (GameManager.Instance.SpawningBoard == false) return;
-        
-
         SpawnCells();
-        //RandomNewPosBoard();
-        //SortCell();
-        //cellCalculation.MakeTrueAnswer();
-
     }
 
     void SpawnCells()
     {
-
         int countCell = 0;
-
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
             {
-                GameObject go = Instantiate(cellPrefab, board);
-                go.SetActive(true);
-                go.name = "Cell " + countCell;
-                Cell cell = go.GetComponent<Cell>();
-                cell.RandomValue(minValue, maxValue);
+                //GameObject go = Instantiate(cellPrefab, board);
+                //go.SetActive(true);
+                //go.name = "Cell " + countCell;
+                //Cell cell = go.GetComponent<Cell>();
+                //cell.RandomValue(minValue, maxValue);
 
-                clickableCells.Add(cell);
+                //clickableCells.Add(cell);
                 countCell++;
-
+                Cell _cell = CellSpawner.Instance.Spawn(transform.position, transform.rotation).GetComponent<Cell>();
+                _cell.SetButtonState(true);
+                _cell.RandomValue(minValue, maxValue);
+                _cell.CreateSprite();
+                _cell.transform.localScale = Vector3.one;
+                clickableCells.Add(_cell);
+                _cell.gameObject.SetActive(true);
             }
         }
-
-
+        Debug.Log("Working");
     }
-
 
     public void DeleteBoard()
     {
         StartCoroutine(CanvasTranstionActive.PopIn(0.4f));
-        ClearListObject(clickableCells);
-        ClearListObject(unClickableCells);
+        //ClearListObject(clickableCells);
+        //ClearListObject(unClickableCells);
+        DeleteCellInList(clickableCells);
+        DeleteCellInList(unClickableCells);
         //SetObjectInPool();
 
+    }
+
+    void DeleteCellInList(List<Cell> list)
+    {
+        foreach (var item in list)
+        {
+            DespawnByTrigger despawn = item.GetComponentInChildren<DespawnByTrigger>();
+            despawn.DespawnObject();
+        }
+        list.Clear();
     }
     private void SetObjectInPool()
     {
@@ -95,6 +124,7 @@ public class Board : BoardLoader
             item.CreateSprite();
         }
     }
+
     private void ClearListObject(List<Cell> list)
     {
         foreach (Cell obj in list)

@@ -10,7 +10,6 @@ public class EndGamePanel : QuangLibrary
     [SerializeField] protected TextMeshProUGUI ScoreTxt;
     [SerializeField] protected Button BackMenu;
     [SerializeField] protected Button NextStage;
-    [SerializeField] protected ScoreManager scoreManager;
     [SerializeField] protected GameObject _object;
     protected override void Awake()
     {
@@ -20,7 +19,6 @@ public class EndGamePanel : QuangLibrary
     protected override void LoadComponent()
     {
         base.LoadComponent();
-        this.LoadScoreManager();
         this.LoadGameObject();
         this.LoadButtons();
         this.LoadScoreText();
@@ -48,14 +46,9 @@ public class EndGamePanel : QuangLibrary
         if(this._object != null) return;
         this._object = transform.Find("EndStagePanel").gameObject;
     }
-    protected virtual void LoadScoreManager()
-    {
-        if (scoreManager != null) return;
-        scoreManager = FindObjectOfType<ScoreManager>();
-    }
     public void LoadStringScore()
     {
-        ScoreTxt.text = scoreManager.GetScore().ToString();
+        ScoreTxt.text = ScoreManager.Instance.GetScore().ToString();
 
     }
     private void Start()

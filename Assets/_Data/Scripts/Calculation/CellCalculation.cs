@@ -75,7 +75,7 @@ public class CellCalculation : CellCalculationLoader
         Btn _btn2 = SelectionManager.Instance.btn2;
         StartCoroutine(waitForTime.DelayedScorePopUp(_btn1, 0));
         StartCoroutine(waitForTime.DelayedScorePopUp(_btn2, 0.3f));
-
+        
         board.TransferToUnClickableCells(_btn1.Cell, _btn2.Cell);
         Debug.Log("Dap an dung");
         if (board.clickableCells.Count == 0)

@@ -1,23 +1,7 @@
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CustomEditor(typeof(Test))]
-public class CusstomTest : Editor
-{
-    private Test test;
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        Test test = (Test)target;
-        if (GUILayout.Button("Reset Timer"))
-        {
-            test.ResetTimer();
-            test.ResetScoreState();
-        }
-    }
-}
 public class Test : QuangLibrary
 {
     public Image image;

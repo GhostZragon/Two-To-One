@@ -1,30 +1,40 @@
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
-[CustomEditor(typeof(GameManager))]
-public class GameManaerEditor : Editor
-{
-    private GameManager gameManager;
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        GameManager gameManager = (GameManager)target;
-        if (GUILayout.Button("EndStage"))
-        {
-            gameManager.EndStage();
-        }
-    }
-}
+//[CustomEditor(typeof(GameManager))]
+//public class GameManaerEditor : Editor
+//{
+//    private GameManager gameManager;
+//    public override void OnInspectorGUI()
+//    {
+//        base.OnInspectorGUI();
+//        GameManager gameManager = (GameManager)target;
+//        if (GUILayout.Button("EndStage"))
+//        {
+//            gameManager.EndStage();
+//        }
+//    }
+//}
 public class GameManager : QuangLibrary
 {
     public static GameManager Instance;
     public bool IsCounting = false; // fill update and timer update
+    public bool finishedGame = false;
     //public bool PlayAble = false; // cell value Update
     [SerializeField] protected StageManager stageManager;
     [SerializeField] protected TimerManager timerManager;
     [SerializeField] protected ScoreManager scoreManager;
     [SerializeField] protected GameObject DisplayHolder;
     [SerializeField] protected GameObject MenuPanel;
+
+    public enum GameState
+    {
+        MENU,
+        PLAYING,
+        PAUSE,
+        ENDGAME
+    }
+    public GameState gameState = GameState.MENU;
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -66,10 +76,12 @@ public class GameManager : QuangLibrary
     }
     private void Start()
     {
+        Application.targetFrameRate = 60;
         timerManager.ChangeCountingStatement(false);
         //MenuManager.Instance.ShowChooseStageMenu();
         //MenuManager.Instance.ShowPlayGameMenu();
         //return;
+        AudioManager.OnMenuMusic(true);
         StartCoroutine(TestTime());
     }
     public float LoadTime = 1.5f;
@@ -81,75 +93,111 @@ public class GameManager : QuangLibrary
     }
     public void StartNewStage()
     {
+        if (gameState == GameState.PLAYING) return;
+        AudioManager.OnClickUI();
         StartCoroutine(StartNewStageCoroutine());
+        gameState = GameState.PLAYING;
     }
     public void BackToMenu()
     {
+        if (gameState == GameState.MENU) return;
+        AudioManager.OnClickUI();
         StartCoroutine(BackToMenuCoroutine(0.5f));
+        gameState = GameState.MENU;
     }
     public void NextStage()
     {
+        if (gameState == GameState.PLAYING) return;
+        AudioManager.OnClickUI();
         StartCoroutine(NextStageCoroutine(0.5f));
+        gameState = GameState.PLAYING;
     }
     public void EndStage()
     {
         StartCoroutine(EndStageCoroutine(0.5f));
+        gameState = GameState.PAUSE;
     }
+    /// <summary>
+    /// Start game session.
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator StartNewStageCoroutine()
     {
+        // make cell cannot select
+        finishedGame = false;
+        SelectionManager.Instance.ChangeCanSelecting(false);
         int time = 3;
         Debug.Log("first time");
-
-        // bat Canvas chua cac thong tin
+        AudioManager.OnMenuMusic(false);
+        AudioManager.OnPlayGameMusic(true);
+        // Show gameplay canvas to player
         MenuManager.Instance.ShowPlayGameMenu();
         // reset diem va score grade
-        ResetScoreAndTimeValue();
-
-        // load data cho board de spawn va tao bang
+        this.ResetScoreAndTimeValue();
+        CellDisplayManager.Instance.RefreshTrueValueText("");
         stageManager.LoadDataForGameStage();
         stageManager.InitBoard();
+
+
         while (time > 0)
         {
             yield return new WaitForSeconds(1);
             time--;
         }
-        // time = 0
-        // bat dau dem thoi gian
+
         timerManager.ChangeCountingStatement(true);
         Debug.Log("start game");
-        // tao cau hoi cho player
         stageManager.CreateAnswer();
         SelectionManager.Instance.ChangeCanSelecting(true);
     }
-
     IEnumerator BackToMenuCoroutine(float time)
     {
+        AudioManager.OnMenuMusic(true);
         yield return new WaitForSeconds(time);
-        ResetScoreAndTimeValue();
-        stageManager.DeleteBoard();
+        this.EndSession();
+        //this.ResetScoreAndTimeValue();
         MenuManager.Instance.ShowChooseStageMenu();
+        //call sound here
+
     }
 
     IEnumerator EndStageCoroutine(float time)
     {
+        AudioManager.OnPlayGameMusic(false);
+
         yield return new WaitForSeconds(time);
+        EndSession();
+        stageManager.SetMaxScore();
+        MenuManager.Instance.ShowEndStageMenu();
+        // Play sound
+        AudioManager.OnWinGameMusic();
+
+    }
+    private void EndSession()
+    {
+        // End stage but don't pass with end game rule.
         timerManager.ChangeCountingStatement(false);
         stageManager.DeleteBoard();
-        stageManager.SetMaxScore();
+        //stageManager.SetMaxScore();
         EndGamePanel.Instance.LoadStringScore();
         CalculationAction.Instance.FinishedCurrentGameSession();
-        MenuManager.Instance.ShowEndStageMenu();
+        //MenuManager.Instance.ShowEndStageMenu();
         HeartControll.ResetHeartsAction();
+        if (LoadStageInMenuPanel.OnResetStageValue != null)
+            LoadStageInMenuPanel.OnResetStageValue();
+        finishedGame = true;
     }
-
     IEnumerator NextStageCoroutine(float time)
     {
         yield return new WaitForSeconds(time);
-        ResetScoreAndTimeValue();
+        //MenuManager.Instance.ShowPlayGameMenu();
         stageManager.SetNextStage();
-        StartNewStage();
+        StartCoroutine(StartNewStageCoroutine());
     }
-    public void ResetScoreAndTimeValue()
+    /// <summary>
+    /// This method will: Reset score and time value equal zero, reset score grade, stop time counting.
+    /// </summary>
+    private void ResetScoreAndTimeValue()
     {
         scoreManager.ResetScore();
         scoreManager.ResetScoreGrade();

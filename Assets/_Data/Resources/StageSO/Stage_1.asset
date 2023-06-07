@@ -27,13 +27,13 @@ MonoBehaviour:
     col: 4
   - operation: 0
     bestScore: 0
-    minValue: -10
-    maxValue: 10
+    minValue: 1
+    maxValue: 40
     row: 4
     col: 6
   - operation: 1
     bestScore: 0
-    minValue: -10
-    maxValue: 10
+    minValue: 20
+    maxValue: 40
     row: 4
     col: 6

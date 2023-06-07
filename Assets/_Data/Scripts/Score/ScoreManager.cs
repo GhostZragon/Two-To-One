@@ -1,7 +1,20 @@
 using TMPro;
 using UnityEditor;
 using UnityEngine;
-
+//[CustomEditor(typeof(ScoreManager))]
+//public class ScoreManagerCustom : Editor
+//{
+//    private ScoreManager ScoreManager;
+//    public override void OnInspectorGUI()
+//    {
+//        base.OnInspectorGUI();
+//        ScoreManager = (ScoreManager)target;
+//        if(GUILayout.Button("Spawn Score"))
+//        {
+//            ScoreManager.DisplayScorePopUp();
+//        }
+//    }
+//}
 public class ScoreManager : QuangLibrary
 {
     public static ScoreManager Instance;
@@ -46,32 +59,40 @@ public class ScoreManager : QuangLibrary
         if (this.scorePopUp != null) return;
         scorePopUp = GetComponentInChildren<ScorePopUp>();
     }
-
-    public void Start()
-    {
-        ResetScoreGrade();
-        ResetScore();
-    }
     private void Update()
     {
         ScoreEveryGrade();
     }
+    /// <summary>
+    /// Reset score to 0 and refresh score text
+    /// </summary>
     public void ResetScore()
     {
         this.currentScore = 0;
         ScoreTextToString(currentScore);
 
     }
+    /// <summary>
+    /// Return current score 
+    /// </summary>
+    /// <returns></returns>
     public int GetScore()
     {
         return this.currentScore;
     }
+    /// <summary>
+    /// Reset score grade to perfect
+    /// </summary>
     public void ResetScoreGrade()
     {
         this.currentScoreGrade = ScoreGrade.PERFECT;
     }
 
-
+    public void DisplayScorePopUp()
+    {
+        //This method use for test
+        DisplayScorePopUp(transform.position);
+    }
     public void DisplayScorePopUp(Vector3 pos)
     {
         var go = this.scorePopUp.CreatePopUpText();
@@ -79,18 +100,27 @@ public class ScoreManager : QuangLibrary
         go.text = score.ToString();
         go.transform.position = pos;
     }
+    /// <summary>
+    /// Increase score by scoreEveryGrade
+    /// </summary>
     public void IncreaseScore()
     {
         currentScore += scoreEveryGrade;
         UpdateScoreText();
         //this.scoreText.TimeText = this.currentScore.ToString();
     }
+    /// <summary>
+    /// Descrease score by 100 
+    /// </summary>
     public void DecreaseScore()
     {
         currentScore -= 100;
         UpdateScoreText();
         HeartControll.DecreaseHeartAction();
     }
+    /// <summary>
+    /// Refresh score text and pop up score text
+    /// </summary>
     void UpdateScoreText()
     {
         ScoreTextToString(currentScore);

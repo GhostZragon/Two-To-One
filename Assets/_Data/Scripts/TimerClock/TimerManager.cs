@@ -6,6 +6,7 @@ public class TimerManager : QuangLibrary
     public float _defaultPlayTime = 3;
     public static TimerManager instance;
     public TimeDisplay timeDisplay;
+    public bool isPlaying = false;
     protected override void Awake()
     {
         base.Awake();
@@ -54,6 +55,7 @@ public class TimerManager : QuangLibrary
     private void CheckOverTime()
     {
         //List call back function
+        if (!GameManager.Instance.IsCounting) return;
         if (_currentPlayTime < 0 && !hasBeenCalled)
         {
             hasBeenCalled = true;
@@ -74,6 +76,7 @@ public class TimerManager : QuangLibrary
     private void EndTimePhase()
     {
         //call back function
+        AudioManager.OnTimerSound();
         ScoreManager.Instance.UpdateScoreGrade();
         //ScoreManager.Instance.scoreDisplay.RefreshTrueValueText();
     }

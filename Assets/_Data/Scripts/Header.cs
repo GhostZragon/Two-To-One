@@ -1,23 +1,6 @@
 using TMPro;
-using UnityEditor;
-using UnityEngine;
 
-[CustomEditor(typeof(Header))]
-public class CustomHeader : Editor
-{
-    private Header header;
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        Header header = (Header)target;
 
-        if (GUILayout.Button("Make Text"))
-        {
-            header.StringToText();
-        }
-
-    }
-}
 public class Header : QuangLibrary
 {
     public TextMeshProUGUI textMeshProUGUI;
