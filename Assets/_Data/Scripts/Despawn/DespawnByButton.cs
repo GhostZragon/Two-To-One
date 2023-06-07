@@ -1,22 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
-
-[CustomEditor(typeof(DespawnByButton))]
-public class DespawnByButtonCustom: Editor
-{
-    private DespawnByButton despawnByButton;
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        despawnByButton = (DespawnByButton) target;
-        if(GUILayout.Button("Despawn"))
-        {
-            despawnByButton.OnButtonDown();
-        }
-    }
-}
 public class DespawnByButton : Despawn
 {
     protected override void OnEnable()

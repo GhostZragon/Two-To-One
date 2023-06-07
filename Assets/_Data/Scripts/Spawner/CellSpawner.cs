@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CellSpawner : Spawner
 {
-    private static Spawner instance;
-    public static Spawner Instance { get => instance; }
+    private static CellSpawner instance;
+    public static CellSpawner Instance { get => instance; }
     protected override void Awake()
     {
         base.Awake();

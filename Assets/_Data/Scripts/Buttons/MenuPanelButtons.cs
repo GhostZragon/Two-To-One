@@ -21,6 +21,7 @@ public class MenuPanelButtons : GameManagerButtonAction
     {
         PlayButton.onClick.AddListener(PlayGameAction);
         ExitButton.onClick.AddListener(ExitGameAction);
+        TutorialButton.onClick.AddListener(ShowTutorialCanvas);
     }
 
     protected virtual void LoadButtons()
@@ -45,16 +46,24 @@ public class MenuPanelButtons : GameManagerButtonAction
         button = _trans.Find(name).GetComponent<Button>();
     }
 
+    private void ClicKSound()
+    {
+        AudioManager.OnClickUI();
+    }
     public void PlayGameAction()
     {
         GameManager.StartNewStage();
+        ClicKSound();
     }
     public void ExitGameAction()
     {
+
+        ClicKSound();
         Application.Quit();
     }
     public void ShowTutorialCanvas()
     {
+        ClicKSound();
         if (!isTutorialCanvasActive)
         {
             ;

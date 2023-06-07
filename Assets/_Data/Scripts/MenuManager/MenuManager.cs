@@ -2,24 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-[CustomEditor(typeof(MenuManager))]
-public class MenuManagerCustom : Editor
-{
-    private MenuManager menuManager;
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        MenuManager menuManager = (MenuManager)target;
-        if (GUILayout.Button("Pop Out"))
-        {
-            menuManager.PopUp();
-        }
-        if (GUILayout.Button("Pop In"))
-        {
-            menuManager.PopIn();
-        }
-    }
-}
+//[CustomEditor(typeof(MenuManager))]
+//public class MenuManagerCustom : Editor
+//{
+//    private MenuManager menuManager;
+//    public override void OnInspectorGUI()
+//    {
+//        base.OnInspectorGUI();
+//        MenuManager menuManager = (MenuManager)target;
+//        if (GUILayout.Button("Pop Out"))
+//        {
+//            menuManager.PopUp();
+//        }
+//        if (GUILayout.Button("Pop In"))
+//        {
+//            menuManager.PopIn();
+//        }
+//    }
+//}
 public class MenuManager : QuangLibrary
 {
     [SerializeField] protected GameObject DisplayHolder;

@@ -45,11 +45,13 @@ public class ScoreDisplay : DisplayCanvasLoader
         {
             scoreRateText.text = "Correct";
             scoreRateText.color = Color.green;
+
         }
         else if (!_isCorrect)
         {
             scoreRateText.text = "Wrong";
             scoreRateText.color = Color.red;
+
         }
         ShowPopUpText();
     }

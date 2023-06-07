@@ -36,6 +36,7 @@ public abstract class Spawner : QuangLibrary
     {
         Prefabs = new List<Transform>();
         Transform _prefabs = transform.Find("Prefabs");
+        if (_prefabs == null) return;
         foreach(Transform prefab in _prefabs)
         {
             Prefabs.Add(prefab);

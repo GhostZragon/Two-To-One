@@ -1,24 +1,25 @@
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
-[CustomEditor(typeof(GameManager))]
-public class GameManaerEditor : Editor
-{
-    private GameManager gameManager;
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        GameManager gameManager = (GameManager)target;
-        if (GUILayout.Button("EndStage"))
-        {
-            gameManager.EndStage();
-        }
-    }
-}
+//[CustomEditor(typeof(GameManager))]
+//public class GameManaerEditor : Editor
+//{
+//    private GameManager gameManager;
+//    public override void OnInspectorGUI()
+//    {
+//        base.OnInspectorGUI();
+//        GameManager gameManager = (GameManager)target;
+//        if (GUILayout.Button("EndStage"))
+//        {
+//            gameManager.EndStage();
+//        }
+//    }
+//}
 public class GameManager : QuangLibrary
 {
     public static GameManager Instance;
     public bool IsCounting = false; // fill update and timer update
+    public bool finishedGame = false;
     //public bool PlayAble = false; // cell value Update
     [SerializeField] protected StageManager stageManager;
     [SerializeField] protected TimerManager timerManager;
@@ -75,10 +76,12 @@ public class GameManager : QuangLibrary
     }
     private void Start()
     {
+        Application.targetFrameRate = 60;
         timerManager.ChangeCountingStatement(false);
         //MenuManager.Instance.ShowChooseStageMenu();
         //MenuManager.Instance.ShowPlayGameMenu();
         //return;
+        AudioManager.OnMenuMusic(true);
         StartCoroutine(TestTime());
     }
     public float LoadTime = 1.5f;
@@ -91,18 +94,21 @@ public class GameManager : QuangLibrary
     public void StartNewStage()
     {
         if (gameState == GameState.PLAYING) return;
+        AudioManager.OnClickUI();
         StartCoroutine(StartNewStageCoroutine());
         gameState = GameState.PLAYING;
     }
     public void BackToMenu()
     {
         if (gameState == GameState.MENU) return;
+        AudioManager.OnClickUI();
         StartCoroutine(BackToMenuCoroutine(0.5f));
         gameState = GameState.MENU;
     }
     public void NextStage()
     {
         if (gameState == GameState.PLAYING) return;
+        AudioManager.OnClickUI();
         StartCoroutine(NextStageCoroutine(0.5f));
         gameState = GameState.PLAYING;
     }
@@ -118,10 +124,12 @@ public class GameManager : QuangLibrary
     public IEnumerator StartNewStageCoroutine()
     {
         // make cell cannot select
+        finishedGame = false;
         SelectionManager.Instance.ChangeCanSelecting(false);
         int time = 3;
         Debug.Log("first time");
-
+        AudioManager.OnMenuMusic(false);
+        AudioManager.OnPlayGameMusic(true);
         // Show gameplay canvas to player
         MenuManager.Instance.ShowPlayGameMenu();
         // reset diem va score grade
@@ -129,11 +137,14 @@ public class GameManager : QuangLibrary
         CellDisplayManager.Instance.RefreshTrueValueText("");
         stageManager.LoadDataForGameStage();
         stageManager.InitBoard();
+
+
         while (time > 0)
         {
             yield return new WaitForSeconds(1);
             time--;
         }
+
         timerManager.ChangeCountingStatement(true);
         Debug.Log("start game");
         stageManager.CreateAnswer();
@@ -141,18 +152,26 @@ public class GameManager : QuangLibrary
     }
     IEnumerator BackToMenuCoroutine(float time)
     {
+        AudioManager.OnMenuMusic(true);
         yield return new WaitForSeconds(time);
         this.EndSession();
         //this.ResetScoreAndTimeValue();
         MenuManager.Instance.ShowChooseStageMenu();
+        //call sound here
+
     }
 
     IEnumerator EndStageCoroutine(float time)
     {
+        AudioManager.OnPlayGameMusic(false);
+
         yield return new WaitForSeconds(time);
         EndSession();
         stageManager.SetMaxScore();
         MenuManager.Instance.ShowEndStageMenu();
+        // Play sound
+        AudioManager.OnWinGameMusic();
+
     }
     private void EndSession()
     {
@@ -166,6 +185,7 @@ public class GameManager : QuangLibrary
         HeartControll.ResetHeartsAction();
         if (LoadStageInMenuPanel.OnResetStageValue != null)
             LoadStageInMenuPanel.OnResetStageValue();
+        finishedGame = true;
     }
     IEnumerator NextStageCoroutine(float time)
     {

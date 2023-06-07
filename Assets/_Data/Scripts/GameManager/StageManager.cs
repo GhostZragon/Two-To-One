@@ -1,25 +1,25 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-[CustomEditor(typeof(StageManager))]
-public class StageManagerCustom : Editor
-{
-    private StageManager stageManager;
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        StageManager stageManager = (StageManager)target;
-        if (GUILayout.Button("Load Stage"))
-        {
-            stageManager.LoadDataForGameStage();
-        }
-        if (GUILayout.Button("Create Board"))
-        {
-            stageManager.InitBoard();
-        }
+//[CustomEditor(typeof(StageManager))]
+//public class StageManagerCustom : Editor
+//{
+//    private StageManager stageManager;
+//    public override void OnInspectorGUI()
+//    {
+//        base.OnInspectorGUI();
+//        StageManager stageManager = (StageManager)target;
+//        if (GUILayout.Button("Load Stage"))
+//        {
+//            stageManager.LoadDataForGameStage();
+//        }
+//        if (GUILayout.Button("Create Board"))
+//        {
+//            stageManager.InitBoard();
+//        }
 
-    }
-}
+//    }
+//}
 public class StageManager : QuangLibrary
 {
     public static StageManager Instance;

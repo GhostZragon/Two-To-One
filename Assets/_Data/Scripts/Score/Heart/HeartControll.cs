@@ -60,7 +60,7 @@ public class HeartControll : DisplayCanvasLoader
             ResetIndex();
             ResetHeart();
             GameManager.Instance.EndStage();
-            
+            GameManager.Instance.finishedGame = true;
         }
     }
     private void ResetHeart()

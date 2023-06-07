@@ -12,5 +12,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f809a536edda543bfb4f95248c5d34, type: 3}
   m_Name: Audio_1
   m_EditorClassIdentifier: 
-  audioClips: []
-  audioSource: {fileID: 0}
+  list:
+  - name: ClickCell
+    clip: {fileID: 8300000, guid: 4a270c4b7b3b6f14cbf18b5d5f6e38c8, type: 3}
+    source: {fileID: 0}
+    isLoop: 0
+    volume: 1
+    pitch: 1
+  - name: ClickUI
+    clip: {fileID: 8300000, guid: 302659b27b5c7674a9c40f0fcf38073a, type: 3}
+    source: {fileID: 0}
+    isLoop: 0
+    volume: 1
+    pitch: 1
+  - name: PlayGameMusic
+    clip: {fileID: 8300000, guid: 531edab2cf797bf4d812624ec782845e, type: 3}
+    source: {fileID: 0}
+    isLoop: 1
+    volume: 0.16
+    pitch: 1
+  - name: False
+    clip: {fileID: 8300000, guid: 68ed7427e1c395e4b8c548b45bea8c8e, type: 3}
+    source: {fileID: 0}
+    isLoop: 0
+    volume: 1
+    pitch: 2
+  - name: Correct
+    clip: {fileID: 8300000, guid: 7faa376848e2b5344b0ef955d507dd54, type: 3}
+    source: {fileID: 0}
+    isLoop: 0
+    volume: 1
+    pitch: 1
+  - name: WinGame
+    clip: {fileID: 8300000, guid: 3ce8b6544f68e83418d1213518f5fd04, type: 3}
+    source: {fileID: 0}
+    isLoop: 0
+    volume: 1
+    pitch: 1
+  - name: MenuMusic
+    clip: {fileID: 8300000, guid: 2589bf83b84ec5b448711712bbfd55fe, type: 3}
+    source: {fileID: 0}
+    isLoop: 1
+    volume: 0.16
+    pitch: 1
+  - name: ClockSFX
+    clip: {fileID: 8300000, guid: e1c176b1cc1c07f40a0de93bbe739efd, type: 3}
+    source: {fileID: 0}
+    isLoop: 0
+    volume: 1
+    pitch: 2
+  clip: {fileID: 0}
