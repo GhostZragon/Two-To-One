@@ -26,26 +26,20 @@ public class AudioManager : QuangLibrary
     [SerializeField] protected GameObject holder;
     [SerializeField] protected string audioName;
     [SerializeField] protected List<String> audioNames;
-    public static Action OnClicKCell;
-    public static Action OnClickUI;
-    public static Action<bool> OnMenuMusic;
-    public static Action<bool> OnPlayGameMusic;
-    public static Action OnWinGameMusic;
-    public static Action OnCorrectAnswer;
-    public static Action OnFalseAnswer;
-    public static Action OnTimerSound;
+
+
+    public static Action<string, string> OnPlaySound;
+    public static void PlaySound(AudioName audioName, string state)
+    {
+        Debug.Log(audioName.ToString());
+        OnPlaySound(audioName.ToString(), state);
+    }
     protected override void Awake()
     {
         base.Awake();
         this.LoadSounds();
-        OnClicKCell += ClickCell;
-        OnClickUI += ClickUI;
-        OnMenuMusic += MenuMusic;
-        OnPlayGameMusic += PlayGameMusic;
-        OnWinGameMusic += WinGameMusic;
-        OnCorrectAnswer += CorrectAnswer;
-        OnFalseAnswer += FalseAnswer;
-        OnTimerSound += TimerSoundSFX;
+
+        OnPlaySound += PlaySound;
     }
     /*
      * ClickCell
@@ -56,6 +50,18 @@ public class AudioManager : QuangLibrary
      * TrueAnswer
      * FalseAnswer
      */
+    public enum AudioName
+    {
+        ClockSFX,
+        ClickCell,
+        ClickUI,
+        MenuMusic,
+        PlayGameMusic,
+        WinGame,
+        Correct,
+        False
+    }
+
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -98,46 +104,8 @@ public class AudioManager : QuangLibrary
             obj.source.loop = obj.isLoop;
         }
     }
-    private void TimerSoundSFX()
-    {
-        PlaySound("ClockSFX", "play");
-    }
-    public void PlaySound()
-    {
-        audioName = audioNames[index];
-        PlaySound(audioName,"play");
-    }
-    private void ClickCell()
-    {
-        PlaySound("ClickCell", "play");
-    }
-    private void ClickUI()
-    {
-        PlaySound("ClickUI", "play");
-    }
-    private void MenuMusic(bool boolen)
-    {
-        string s = boolen ? "play" : "stop";
-        PlaySound("MenuMusic", s);
-    }
-
-    private void PlayGameMusic(bool boolen)
-    {
-        string s = boolen ? "play" : "stop";
-        PlaySound("PlayGameMusic", s);
-    }
-    private void WinGameMusic()
-    {
-        PlaySound("WinGame","play");
-    }
-    private void CorrectAnswer()
-    {
-        PlaySound("Correct", "play");
-    }
-    private void FalseAnswer()
-    {
-        PlaySound("False", "play");
-    }
+   
+    
     /// <summary>
     /// Play or Stop sound from audio manager.
     /// </summary>

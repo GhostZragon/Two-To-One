@@ -81,7 +81,7 @@ public class GameManager : QuangLibrary
         //MenuManager.Instance.ShowChooseStageMenu();
         //MenuManager.Instance.ShowPlayGameMenu();
         //return;
-        AudioManager.OnMenuMusic(true);
+        AudioManager.PlaySound(AudioManager.AudioName.MenuMusic,"play");
         StartCoroutine(TestTime());
     }
     public float LoadTime = 1.5f;
@@ -94,23 +94,30 @@ public class GameManager : QuangLibrary
     public void StartNewStage()
     {
         if (gameState == GameState.PLAYING) return;
-        AudioManager.OnClickUI();
+        ClickUISound();
+
+
         StartCoroutine(StartNewStageCoroutine());
         gameState = GameState.PLAYING;
     }
     public void BackToMenu()
     {
         if (gameState == GameState.MENU) return;
-        AudioManager.OnClickUI();
+        ClickUISound();
+
         StartCoroutine(BackToMenuCoroutine(0.5f));
         gameState = GameState.MENU;
     }
     public void NextStage()
     {
         if (gameState == GameState.PLAYING) return;
-        AudioManager.OnClickUI();
+        ClickUISound();
         StartCoroutine(NextStageCoroutine(0.5f));
         gameState = GameState.PLAYING;
+    }
+    private void ClickUISound()
+    {
+        AudioManager.PlaySound(AudioManager.AudioName.ClickUI,"play");
     }
     public void EndStage()
     {
@@ -128,8 +135,10 @@ public class GameManager : QuangLibrary
         SelectionManager.Instance.ChangeCanSelecting(false);
         int time = 3;
         Debug.Log("first time");
-        AudioManager.OnMenuMusic(false);
-        AudioManager.OnPlayGameMusic(true);
+        AudioManager.PlaySound(AudioManager.AudioName.MenuMusic, "stop");
+        //AudioManager.OnMenuMusic(false);
+        AudioManager.PlaySound(AudioManager.AudioName.PlayGameMusic, "play");
+        //AudioManager.OnPlayGameMusic(true);
         // Show gameplay canvas to player
         MenuManager.Instance.ShowPlayGameMenu();
         // reset diem va score grade
@@ -152,7 +161,7 @@ public class GameManager : QuangLibrary
     }
     IEnumerator BackToMenuCoroutine(float time)
     {
-        AudioManager.OnMenuMusic(true);
+        AudioManager.PlaySound(AudioManager.AudioName.MenuMusic,"play");
         yield return new WaitForSeconds(time);
         this.EndSession();
         //this.ResetScoreAndTimeValue();
@@ -163,14 +172,14 @@ public class GameManager : QuangLibrary
 
     IEnumerator EndStageCoroutine(float time)
     {
-        AudioManager.OnPlayGameMusic(false);
-
+        //AudioManager.OnPlayGameMusic(false);
+        AudioManager.PlaySound(AudioManager.AudioName.PlayGameMusic, "stop");
         yield return new WaitForSeconds(time);
         EndSession();
         stageManager.SetMaxScore();
         MenuManager.Instance.ShowEndStageMenu();
         // Play sound
-        AudioManager.OnWinGameMusic();
+        AudioManager.PlaySound(AudioManager.AudioName.WinGame, "play");
 
     }
     private void EndSession()

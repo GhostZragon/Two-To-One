@@ -74,7 +74,7 @@ public class StagePanel : QuangLibrary, IPointerClickHandler, IPointerEnterHandl
         Debug.Log("My panel index: " + index);
         stageManager.SetCurrentStage(index);
         loadStageInMenuPanel.CheckStageIndex(index);
-        AudioManager.OnClickUI();
+        AudioManager.PlaySound(AudioManager.AudioName.ClickUI, "play");
     }
     public void SetIndexPanel(int _index)
     {

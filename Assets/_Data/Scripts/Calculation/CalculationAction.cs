@@ -17,14 +17,15 @@ public class CalculationAction : QuangLibrary
         // Display "Correct" with green color
         ScoreManager.Instance.IncreaseScore();
         ProcessResult("Correct", Color.green);
-        AudioManager.OnCorrectAnswer();
+        //AudioManager.OnCorrectAnswer();
+        AudioManager.PlaySound(AudioManager.AudioName.Correct, "play");
     }
     public void Wrong()
     {
         // Display "Wrong" with red color
         ScoreManager.Instance.DecreaseScore();
         ProcessResult("Wrong", Color.red);
-        AudioManager.OnFalseAnswer();
+        AudioManager.PlaySound(AudioManager.AudioName.False, "play");
     }
     // after calculation is correct or wrong, this function will be called
     private void ProcessResult(string str, Color color)
@@ -74,7 +75,7 @@ public class CalculationAction : QuangLibrary
             yield return new WaitForSeconds(waitTime);
             count--;
             if (GameManager.Instance.IsCounting == true)
-                AudioManager.OnTimerSound();
+                AudioManager.PlaySound(AudioManager.AudioName.ClockSFX,"play");
         }
         //yield return new WaitForSeconds(3f);
         //Function need to be called after 3 seconds

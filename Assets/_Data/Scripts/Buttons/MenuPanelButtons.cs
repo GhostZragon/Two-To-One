@@ -48,7 +48,7 @@ public class MenuPanelButtons : GameManagerButtonAction
 
     private void ClicKSound()
     {
-        AudioManager.OnClickUI();
+        AudioManager.PlaySound(AudioManager.AudioName.ClickUI, "play");
     }
     public void PlayGameAction()
     {

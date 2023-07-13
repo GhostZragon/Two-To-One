@@ -45,7 +45,7 @@ public class SelectionManager : SelectionManagerLoader
     }
     public void OnCellClick(Transform newCell)
     {
-        AudioManager.OnClicKCell();
+        AudioManager.PlaySound(AudioManager.AudioName.ClickCell,"play");
         ManageCellSelection(newCell);
     }
     private void ManageCellSelection(Transform newCell)
