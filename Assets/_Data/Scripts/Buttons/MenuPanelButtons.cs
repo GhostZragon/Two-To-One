@@ -64,19 +64,13 @@ public class MenuPanelButtons : GameManagerButtonAction
     public void ShowTutorialCanvas()
     {
         ClicKSound();
-        if (!isTutorialCanvasActive)
-        {
-            ;
-            StartCoroutine(TutorialCanvas.PopOut());
-            isTutorialCanvasActive = true;
-            
-        }
-        else
-        {
-            StartCoroutine(TutorialCanvas.PopIn());
-            isTutorialCanvasActive = false;
-        }
-        
+        StartCoroutine(TutorialCanvas.PopOut());
+        isTutorialCanvasActive = true;
     }
-
+    public void HideTutorialCanvas()
+    {
+        ClicKSound();
+        StartCoroutine(TutorialCanvas.PopIn());
+        isTutorialCanvasActive = false;
+    }
 }

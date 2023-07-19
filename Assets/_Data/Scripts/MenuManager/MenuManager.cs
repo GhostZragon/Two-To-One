@@ -95,19 +95,21 @@ public class MenuManager : QuangLibrary
     {
         ShowObject(DisplayHolder);
     }
-    public void ChangeGameObjectActive(object canvas, bool state)
-    {
-        (canvas as GameObject)?.SetActive(state);
-    }
-    public void PopUp()
-    {
-        float a = 0.56f;
-        Vector3 vector = new Vector3(a, a, a);
-        MenuPanel.transform.localScale = Vector3.zero;
-        MenuPanel.LeanScale(vector, time).setEaseOutBack();
-    }
-    public void PopIn()
-    {
-        MenuPanel.LeanScale(Vector3.zero, time).setEaseInBack();
-    }
+
+
+    //public void ChangeGameObjectActive(object canvas, bool state)
+    //{
+    //    (canvas as GameObject)?.SetActive(state);
+    //}
+    //public void PopUp()
+    //{
+    //    float a = 0.56f;
+    //    Vector3 vector = new Vector3(a, a, a);
+    //    MenuPanel.transform.localScale = Vector3.zero;
+    //    MenuPanel.LeanScale(vector, time).setEaseOutBack();
+    //}
+    //public void PopIn()
+    //{
+    //    MenuPanel.LeanScale(Vector3.zero, time).setEaseInBack();
+    //}
 }

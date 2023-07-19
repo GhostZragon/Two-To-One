@@ -72,17 +72,12 @@ public class ScoreManager : QuangLibrary
         ScoreTextToString(currentScore);
 
     }
-    /// <summary>
-    /// Return current score 
-    /// </summary>
-    /// <returns></returns>
+
     public int GetScore()
     {
         return this.currentScore;
     }
-    /// <summary>
-    /// Reset score grade to perfect
-    /// </summary>
+
     public void ResetScoreGrade()
     {
         this.currentScoreGrade = ScoreGrade.PERFECT;
