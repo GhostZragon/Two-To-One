@@ -84,7 +84,7 @@ public class GameManager : QuangLibrary
         AudioManager.PlaySound(AudioManager.AudioName.MenuMusic,"play");
         StartCoroutine(TestTime());
     }
-    public float LoadTime = 1.5f;
+    public float LoadTime = 0;
     IEnumerator TestTime()
     {
         yield return new WaitForSeconds(LoadTime);
@@ -124,6 +124,23 @@ public class GameManager : QuangLibrary
         StartCoroutine(EndStageCoroutine(0.5f));
         gameState = GameState.PAUSE;
     }
+    bool isStop = false;
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            isStop = !isStop;
+            if(isStop)
+            {
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Time.timeScale = 1;
+            }
+
+        }
+    }
     /// <summary>
     /// Start game session.
     /// </summary>
@@ -143,6 +160,7 @@ public class GameManager : QuangLibrary
         MenuManager.Instance.ShowPlayGameMenu();
         // reset diem va score grade
         this.ResetScoreAndTimeValue();
+        scoreManager.scoreDisplay.RefreshText();
         CellDisplayManager.Instance.RefreshTrueValueText("");
         stageManager.LoadDataForGameStage();
         stageManager.InitBoard();

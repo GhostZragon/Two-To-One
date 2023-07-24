@@ -27,7 +27,7 @@ MonoBehaviour:
     col: 4
   - operation: 2
     bestScore: 0
-    minValue: 1
+    minValue: 2
     maxValue: 10
     row: 4
     col: 6

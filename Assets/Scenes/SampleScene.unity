@@ -1451,11 +1451,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 469033323}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 75.00037, y: 687}
+  m_AnchoredPosition: {x: -1066, y: 630}
   m_SizeDelta: {x: 509.91, y: 180.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &378101879
@@ -1512,8 +1512,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1771,16 +1771,16 @@ RectTransform:
   m_Children:
   - {fileID: 1860586416}
   - {fileID: 1481420966}
+  - {fileID: 378101878}
   - {fileID: 1877493123}
   - {fileID: 621970866}
-  - {fileID: 378101878}
   m_Father: {fileID: 1789420914}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1689, y: 60}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1926, y: 0}
+  m_SizeDelta: {x: 1141.08, y: 533.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &469033324
 MonoBehaviour:
@@ -2008,7 +2008,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 56.000122, y: -519}
+  m_AnchoredPosition: {x: 56.000122, y: -817}
   m_SizeDelta: {x: 72.145, y: 17.98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &514231244
@@ -2614,7 +2614,7 @@ RectTransform:
   - {fileID: 785528852}
   - {fileID: 514231243}
   m_Father: {fileID: 469033323}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2705,7 +2705,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278255615
-  m_fontColor: {r: 0.99941266, g: 1, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3063,8 +3063,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2996.23, y: 1160.17}
+  m_AnchoredPosition: {x: 0, y: 4.1}
+  m_SizeDelta: {x: 2996.23, y: 1726.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &785528853
 MonoBehaviour:
@@ -5106,7 +5106,7 @@ RectTransform:
   m_GameObject: {fileID: 1295514262}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1223294591}
@@ -5807,10 +5807,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: -451
+    m_Right: -532
+    m_Top: 472
+    m_Bottom: -101
   m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
@@ -6641,7 +6641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92716bf02a93184458292515db82f0e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stagePanels: []
+  stagePanelsShowOnScreen: []
   stagePanelPrefab: {fileID: 1295514262}
   holder: {fileID: 1481420965}
   stageManager: {fileID: 2104876516}
@@ -7035,7 +7035,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 469033323}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -7546,7 +7546,7 @@ MonoBehaviour:
     \r\n\u0110\u1EC3 chi\u1EBFn th\u1EAFng ng\u01B0\u1EDDi ch\u01A1i ph\u1EA3i ho\xE0n
     th\xE0nh h\u1EBFt t\u1EA5t c\u1EA3 c\xE2u h\u1ECFi c\u1EE7a m\xE0n ch\u01A1i
     v\xE0 thua khi tr\u1EA3 l\u1EDDi sai 3 l\u1EA7n (bao g\u1ED3m vi\u1EC7c h\u1EBFt
-    th\u1EDDi gian tr\u1EA3 l\u1EDDi c\xE2u h\u1ECFi sai)\r\n----------------------------------------------------------------------------\r\n\r\n\nChi
+    th\u1EDDi gian tr\u1EA3 l\u1EDDi c\xE2u h\u1ECFi sai)\r\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\r\nChi
     ti\u1EBFt c\xE1ch ch\u01A1i:\nKhi game b\u1EAFt \u0111\u1EA7u ng\u01B0\u1EDDi
     ch\u01A1i s\u1EBD c\xF3 1 ch\xFAt th\u1EDDi gian \u0111\u1EC3 nh\u1EDB v\u1ECB
     tr\xED c\u0169ng nh\u01B0 gi\xE1 tr\u1ECB c\u1EE7a c\xE1c \xF4, sau kho\u1EA3ng
@@ -7566,7 +7566,7 @@ MonoBehaviour:
     bi\u1EBFn m\u1EA5t. Tr\xE1i tim s\u1EBD m\u1EA5t \u0111i khi h\u1EBFt th\u1EDDi
     gian m\xE0 kh\xF4ng tr\u1EA3 l\u1EDDi, tr\u1EA3 l\u1EDDi sai \u0111\xE1p \xE1n\r\n\r\nC\xE1c
     ph\xEDm trong game:\r\n\r\nChu\u1ED9t tr\xE1i: ch\u1ECDn \xF4\r\nPh\xEDm F: Tr\u1EA3
-    l\u1EDDi c\xE2u h\u1ECFi\r\n\r\n\r\n\r\n\r\n"
+    l\u1EDDi c\xE2u h\u1ECFi\r\n\r\n---------------------------------------------------------------------------------------------------------------------------------------------------------------"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7593,10 +7593,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 53.85
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0

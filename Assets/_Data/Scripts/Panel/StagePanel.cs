@@ -68,17 +68,17 @@ public class StagePanel : QuangLibrary, IPointerClickHandler, IPointerEnterHandl
         mathOperation.text = MathState.GetStringMathOperation(_stage.operation);
 
     }
+    public void SetIndexPanel(int _index)
+    {
+        this.index = _index;
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("My panel index: " + index);
         stageManager.SetCurrentStage(index);
-        loadStageInMenuPanel.CheckStageIndex(index);
+        loadStageInMenuPanel.CheckStageIndex();
         AudioManager.PlaySound(AudioManager.AudioName.ClickUI, "play");
-    }
-    public void SetIndexPanel(int _index)
-    {
-        this.index = _index;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

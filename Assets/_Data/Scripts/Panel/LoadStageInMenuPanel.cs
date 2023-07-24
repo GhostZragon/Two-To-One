@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LoadStageInMenuPanel : QuangLibrary
 {
-    public List<StagePanel> stagePanels;
+    public List<StagePanel> stagePanelsShowOnScreen;
     public GameObject stagePanelPrefab;
     public GameObject holder;
     public StageManager stageManager;
@@ -40,7 +40,7 @@ public class LoadStageInMenuPanel : QuangLibrary
         gridLayoutGroup = holder.GetComponent<GridLayoutGroup>();
         SpawnStagePanel();
         OnResetStageValue += ResetStageDisplay;
-        CheckStageIndex(0);
+        CheckStageIndex();
     }
     private void SpawnStagePanel()
     {
@@ -57,21 +57,21 @@ public class LoadStageInMenuPanel : QuangLibrary
             go.gameObject.SetActive(true);
             go.LoadStage(stageManager.stageSO.stages[i]);
             go.SetIndexPanel(i);
-            stagePanels.Add(go);
+            stagePanelsShowOnScreen.Add(go);
         }
         //gridLayoutGroup.enabled = false;
     }
     public void ResetStageDisplay()
     {
-        if (stagePanels.Count == 0) return;
-        foreach(var item in stagePanels)
+        if (stagePanelsShowOnScreen.Count == 0) return;
+        foreach(var item in stagePanelsShowOnScreen)
         {
             item.LoadStage(stageManager.stageSO.stages[item.index]);
         }
     }
-    public void CheckStageIndex(int index)
+    public void CheckStageIndex()
     {
-        foreach(var item in stagePanels)
+        foreach(var item in stagePanelsShowOnScreen)
         {
             if(item.index == stageManager.ReturnCurrentIndex())
             {
