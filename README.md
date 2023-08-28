@@ -1,6 +1,6 @@
-# Two-To-One 
-## Engine: Unity 2D
-## Programming Language: C#
+## Two-To-One 
+### Engine: Unity 2D
+### Programming Language: C#
 ### Link:
 #### Video Demo: [Youtube](https://youtu.be/zcZnKpUGgD4 "GoogleDrive")
 #### Tải game: [Google Drive](https://drive.google.com/file/d/1r31vvh5_dk3SvK_wm2D5N5Tte-Oikfet/view?usp=sharing "GoogleDrive") (Window Application)
