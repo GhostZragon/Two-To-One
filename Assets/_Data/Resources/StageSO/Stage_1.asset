@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stages:
   - operation: 0
-    bestScore: 1750
+    bestScore: 0
     minValue: 1
     maxValue: 20
     row: 3
