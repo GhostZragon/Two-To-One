@@ -22,7 +22,7 @@ public class SelectionManager : SelectionManagerLoader
     public static SelectionManager Instance;
     public bool canSelecting = true;
 
-
+    
     protected override void Awake()
     {
         base.Awake();
@@ -45,12 +45,14 @@ public class SelectionManager : SelectionManagerLoader
     }
     public void OnCellClick(Transform newCell)
     {
-        AudioManager.OnClicKCell();
+        AudioManager.PlaySound(AudioManager.AudioName.ClickCell,"play");
         ManageCellSelection(newCell);
     }
+    bool btn1NotNull => btn1.Transform != null;
+    bool btn2NotNull => btn2.Transform != null;
     private void ManageCellSelection(Transform newCell)
     {
-        if (btn1.Transform != null && btn1.Transform != newCell && btn2.Transform == null)
+        if (btn1NotNull && btn1.Transform != newCell && !btn2NotNull)
         {
             btn2 = new Btn(newCell);
         }
@@ -58,7 +60,7 @@ public class SelectionManager : SelectionManagerLoader
         {
             ResetCellSizeAndState();
         }
-        else if (btn1.Transform == null)
+        else if (!btn1NotNull)
         {
             btn1 = new Btn(newCell);
         }

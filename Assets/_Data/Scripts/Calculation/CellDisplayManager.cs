@@ -39,7 +39,7 @@ public class CellDisplayManager : QuangLibrary
     }
     private void Update()
     {
-        if(!GameManager.Instance.IsCounting) return;
+        //if(!GameManager.Instance.IsCounting) return;
         RefreshCellValue();
 
     }
@@ -48,23 +48,7 @@ public class CellDisplayManager : QuangLibrary
         string a, b, c;
         //string d = "";
         string d = MathState.GetStringMathOperation(CellCalculation.Instance.math);
-        //switch (CellCalculation.Instance.math)
-        //{
-        //    case MathState.MathOperation.addition:
-        //        d = "+";
-        //        break;
-        //    case MathState.MathOperation.subtraction:
-        //        d = "-";
-        //        break;
-        //    case MathState.MathOperation.multiplication:
-        //        d = "x";
-        //        break;
-        //    case MathState.MathOperation.division:
-        //        d = "/";
-        //        break;
-        //    default:
-        //        break;
-        //}
+
         Btn btn1 = SelectionManager.Instance.btn1;
         Btn btn2 = SelectionManager.Instance.btn2;
         if (btn1.Cell == null)

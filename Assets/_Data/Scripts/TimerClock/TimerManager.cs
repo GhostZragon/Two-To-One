@@ -76,7 +76,7 @@ public class TimerManager : QuangLibrary
     private void EndTimePhase()
     {
         //call back function
-        AudioManager.OnTimerSound();
+        AudioManager.PlaySound(AudioManager.AudioName.ClockSFX, "play");
         ScoreManager.Instance.UpdateScoreGrade();
         //ScoreManager.Instance.scoreDisplay.RefreshTrueValueText();
     }
