@@ -8,7 +8,7 @@
 ## Giới thiệu một chút về game
 
 - Game tên **Two To One** được phát triển bởi 1 người trong 2 tháng, game thuộc thể loại 2D casual, toán học được lấy cảm hứng
-từ 2 trò chơi chính là **cờ caro** và **[**Ten Crush**](https://www.youtube.com/shorts/cOfEM2ubNb8 "YoutubeLink")** trên youtube, trò chơi được làm ra để chuẩn bị cho project học kỳ 1 tại trung tâm.
+từ 2 trò chơi chính là **cờ caro** và **[**Ten Crush**](https://www.youtube.com/shorts/cOfEM2ubNb8 "YoutubeLink")** trên youtube.
 ## Cách chơi game
 
 - Để qua được màn chơi người chơi cần trả lời hết câu hỏi mà trò chơi đưa ra.
