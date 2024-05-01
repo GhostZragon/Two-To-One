@@ -16,14 +16,5 @@ từ 2 trò chơi chính là **cờ caro** và **[**Ten Crush**](https://www.you
 - Game sẽ kết thúc khi người chơi trả lời sai 3 câu.
 - Khi kết thúc phiên hiện tại, trò chơi sẽ hiển thị số điểm mà người chơi đạt được trong màn chơi đó.
 
-## GamePlay
-
-https://github.com/GhostZragon/Two-To-One/assets/115866288/8f17eb7b-bbbf-4725-838b-134f24d7c2b4
-
-
-https://github.com/GhostZragon/Two-To-One/assets/115866288/1d78b3bc-4506-4521-97b3-b5579b97958a
-
-
-
 ## Asset sử dụng trong game
 https://assetstore.unity.com/packages/tools/animation/leantween-3595
