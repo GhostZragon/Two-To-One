@@ -21,7 +21,10 @@ public class Stage
             bestScore = newScore;
         }
     }
-
+    public void SetMaxScoreNoAgru(int newScore)
+    {
+        bestScore = newScore;
+    }
     public float GetBestScore()
     {
         return bestScore;

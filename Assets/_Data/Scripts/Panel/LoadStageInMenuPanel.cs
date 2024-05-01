@@ -44,7 +44,8 @@ public class LoadStageInMenuPanel : QuangLibrary
     }
     private void SpawnStagePanel()
     {
-        if(holder.transform.childCount > 0)
+        StageManager.Instance.stageSO.Load();
+        if (holder.transform.childCount > 0)
         {
             for(int i = 0; i < holder.transform.childCount; i++)
             {
@@ -68,6 +69,9 @@ public class LoadStageInMenuPanel : QuangLibrary
         {
             item.LoadStage(stageManager.stageSO.stages[item.index]);
         }
+        Debug.Log("Reset Stage Display");
+        StageManager.Instance.stageSO.Load();
+
     }
     public void CheckStageIndex()
     {

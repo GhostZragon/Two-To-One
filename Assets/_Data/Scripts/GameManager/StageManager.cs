@@ -33,6 +33,7 @@ public class StageManager : QuangLibrary
         base.Awake();
         Instance = this;
     }
+
     protected override void LoadComponent()
     {
         base.LoadComponent();
@@ -40,7 +41,9 @@ public class StageManager : QuangLibrary
         this.LoadStageSO();
         this.LoadCellCalculation();
     }
-
+    public void OnApplicationQuit()
+    {
+    }
     protected virtual void LoadCellCalculation()
     {
         if (cellCalculation != null) return;
@@ -72,6 +75,7 @@ public class StageManager : QuangLibrary
     public void SetMaxScore()
     {
         currentStage.SetMaxScore(ScoreManager.Instance.GetScore());
+        stageSO.Save();
     }
     public void SetCurrentStage(int index)
     {
